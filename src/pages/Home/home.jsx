@@ -109,35 +109,19 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="testimonials container">
-        <h3>Testimoni Pelanggan</h3>
-        <div className="testi-row">
-          <div className="testi">
-            <img src={avatar1} alt="customer" />
-            <h5>Tommy</h5>
-            <p>"Kopi terbaik yang pernah saya coba! Suasana cozy dan pelayanan ramah."</p>
-          </div>
-          <div className="testi">
-            <img src={avatar2} alt="customer" />
-            <h5>Rina</h5>
-            <p>"Menu beragam dan rasanya konsisten setiap kunjungan."</p>
-          </div>
-          <div className="testi">
-            <img src={avatar3} alt="customer" />
-            <h5>Budi</h5>
-            <p>"Tempat nongkrong yang nyaman untuk kerja dan berkumpul."</p>
-          </div>
-          <div className="testi">
-            <img src={avatar4} alt="customer" />
-            <h5>Budi</h5>
-            <p>"Tempat nongkrong yang nyaman untuk kerja dan berkumpul."</p>
-          </div>
-          <div className="testi">
-            <img src={avatar5} alt="customer" />
-            <h5>Budi</h5>
-            <p>"Tempat nongkrong yang nyaman untuk kerja dan berkumpul."</p>
-          </div>
+      <section className="testimonials">
+        <h2>Testimoni Pelanggan</h2>
+        <div className="testimonial-avatars">
+          <img src={avatar5} alt="Christina" className="avatar avatar-small" />
+          <img src={avatar3} alt="Eric" className="avatar avatar-medium" />
+          <img src={avatar2} alt="Juan" className="avatar avatar-large" />
+          <img src={avatar4} alt="Divaris" className="avatar avatar-medium" />
+          <img src={avatar1} alt="Pavel" className="avatar avatar-small" />
         </div>
+        <p className="testimonial-name">Tommy</p>
+        <p className="testimonial-text">
+          "Kopi terbaik yang pernah saya coba! <br /> Suasana cafe-nya sangat nyaman dan cozy."
+        </p>
       </section>
     </div>
   );

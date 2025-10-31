@@ -1,14 +1,11 @@
 .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    /* keep footer in normal document flow so it doesn't overlap content */
+    position: relative;
     width: 100%;
-    height: var(--footer-height);
     background-color: #017143;
     color: #ffffff;
     padding: 40px 0 20px;
     box-sizing: border-box;
-    z-index: 50;
 }
 
 /* jika footer awalnya menggunakan .footer-container, batasi tinggi dan scrolling di dalamnya */
@@ -19,9 +16,7 @@
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 40px;
     padding: 0 20px;
-    height: 100%;
     align-items: start;
-    overflow: auto;
 }
 
 /* Logo Section */
@@ -117,7 +112,7 @@
 /* Footer Bottom */
 .footer-bottom {
     text-align: center;
-    display: 1;
+    display: block;
     margin-top: 40px;
     padding-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -125,7 +120,34 @@
 
 .footer-bottom p {
     font-size: 14px;
-    opacity: 0.8;
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* Accessibility: make links more distinguishable */
+.footer a {
+    color: #ffffff;
+}
+
+/* Small adjustments for very small screens */
+@media screen and (max-width: 480px) {
+    .footer {
+        padding: 32px 0 24px;
+    }
+
+    .footer-logo h2 {
+        font-size: 20px;
+    }
+
+    .footer-desc {
+        font-size: 13px;
+    }
+
+    .footer-contact li {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
 }
 
 /* Media Queries */
