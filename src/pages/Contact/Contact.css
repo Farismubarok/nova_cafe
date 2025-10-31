@@ -1,0 +1,107 @@
+.contact-page {
+  font-family: "Poppins", sans-serif;
+  color: #222;
+  background-color: #ffffff;
+}
+
+/* Header */
+.contact-header {
+  background-color: #0a774a;
+  color: #fff;
+  text-align: center;
+  padding: 60px 0;
+}
+
+.contact-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.contact-header p {
+  font-size: 16px;
+  margin-top: 8px;
+  opacity: 0.9;
+}
+
+/* Main Section */
+.contact-main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 50px;
+  padding: 60px 100px;
+  flex-wrap: wrap;
+}
+
+/* Left Cards */
+.contact-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-card {
+  display: flex;
+  align-items: flex-start;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+.icon {
+  color: #0a774a;
+  margin-right: 15px;
+  margin-top: 3px;
+}
+
+.contact-card h4 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.contact-card p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* Image Right */
+.contact-right img {
+  width: 650px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 1200px) {
+  .contact-right img {
+    width: 400px;
+  }
+}
+
+@media (max-width: 900px) {
+  .contact-main {
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+
+  .contact-right img {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 30px;
+  }
+}
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
