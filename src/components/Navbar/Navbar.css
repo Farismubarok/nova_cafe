@@ -39,11 +39,11 @@ nav {
 
 /* Logo Styles */
 .logo {
-    display: grid;
+    display: flex;
     align-items: center;
     background-color: #017143;
     padding: 10px 16px;
-    border-radius: 10px;
+    border-radius: 28px;
     
 }
 

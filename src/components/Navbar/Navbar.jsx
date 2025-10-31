@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./navbar.css";
@@ -11,29 +11,39 @@ import bagLogo from "../../assets/icon/shopping bag.svg";
 const Navbar = () => {
   const { isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="navbar">
+    <header>
+    {/* navbar logo */}
+    <nav className='navbar'> 
       <div className="logo">
-        <Link to="/">
-          <img src={logo} alt="Nova Cafe" />
-          <h1>Nova Cafe</h1>
-        </Link>
+        <img src={logo} alt="Nova Cafe"/>
+        <h1>Nova Cafe</h1>
       </div>
-
-      <ul className="nav-links">
+      {/* Mobile menu toggle (hamburger) */}
+      <button
+        className={`navbar-toggle ${isMenuOpen ? 'open' : ''}`}
+        aria-label="Toggle navigation"
+        aria-expanded={isMenuOpen}
+        onClick={() => setIsMenuOpen(prev => !prev)}
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+      {/* navbar links */}
+      <ul className={`nav-links ${isMenuOpen ? 'open' : ''}`} onClick={() => setIsMenuOpen(false)}>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/menu">Menu</Link></li>
         <li><Link to="/contact">Contact</Link></li>
         <li><Link to="/about">About Us</Link></li>
       </ul>
-
+      {/* Button CTA (sebelum login) */}
       {!isLoggedIn ? (
         <div className="navbar-auth">
-          <button className="btn-login" onClick={() => navigate("/login")}>
-            Log in
-          </button>
-          <button className="btn-signup">Sign Up</button>
+          <button className="btn-login" onClick={() => navigate('/login')}>Log in</button>
+          <button className="btn-signup" onClick={() => navigate('/signup')}>Sign Up</button>
         </div>
       ) : (
         <div className="navbar-user">
@@ -53,12 +63,11 @@ const Navbar = () => {
             <img src={bagLogo} alt="Cart" />
             <span>Cart</span>
           </div>
-          <button className="btn-logout" onClick={logout}>
-            Logout
-          </button>
+          <button className="btn-logout" onClick={logout}>Logout</button>
         </div>
       )}
     </nav>
+    </header>
   );
 };
 

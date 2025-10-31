@@ -1,16 +1,5 @@
-:root {
-  --brand: #017143;
-  --max-width: 1200px;
-  --container-pad: 0px;
-  --shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
 
-/* Container & Layout */
-.container {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--container-pad);
-  padding: 0px;
+
 /* =========================
    GLOBAL STYLES
 ========================= */
@@ -755,5 +744,4 @@ ul {
   .testimonial-text {
     font-size: 14px;
   }
-}
 }
