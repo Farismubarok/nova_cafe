@@ -1,0 +1,209 @@
+/* ================================
+   CART PAGE - Nova Cafe Style
+   ================================ */
+
+.cart-page {
+  font-family: "Poppins", sans-serif;
+  padding: 60px 100px;
+  background-color: #ffffff;
+  color: #222;
+  min-height: 80vh;
+}
+
+/* Title */
+.cart-page h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+/* ================================
+   CART ITEM LIST
+   ================================ */
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 40px;
+}
+
+.cart-card {
+  display: flex;
+  align-items: center;
+  background: #f3f3f3;
+  border-radius: 12px;
+  padding: 15px 20px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+  justify-content: space-between;
+  transition: all 0.2s ease;
+}
+
+.cart-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+}
+
+.cart-card img {
+  width: 90px;
+  height: 90px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* ================================
+   ITEM INFORMATION
+   ================================ */
+.cart-info {
+  flex: 1;
+  margin-left: 18px;
+}
+
+.cart-info h4 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #111;
+}
+
+.cart-info p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 3px 0;
+}
+
+/* ================================
+   PRICE & ACTION BUTTON
+   ================================ */
+.cart-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.cart-price p {
+  color: #0b8344;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.cart-price button {
+  background: none;
+  border: none;
+  color: #e63946;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 4px;
+  transition: color 0.2s;
+}
+
+.cart-price button:hover {
+  color: #c70000;
+  text-decoration: underline;
+}
+
+/* ================================
+   CART SUMMARY (Total & Checkout)
+   ================================ */
+.cart-summary {
+  background: #0b8344;
+  color: #fff;
+  border-radius: 14px;
+  padding: 22px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.total-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-info .left p,
+.total-info .right p {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.total-info h4 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* ================================
+   CHECKOUT BUTTON
+   ================================ */
+.checkout-btn {
+  background-color: #ffffff;
+  color: #0b8344;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkout-btn:hover {
+  background-color: #e5f3ea;
+  transform: scale(1.02);
+}
+
+/* ================================
+   EMPTY CART STATE
+   ================================ */
+.cart-page h2 + .checkout-btn {
+  margin-top: 20px;
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+   ================================ */
+@media (max-width: 992px) {
+  .cart-page {
+    padding: 40px 50px;
+  }
+
+  .cart-card img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .cart-info h4 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cart-page {
+    padding: 20px;
+  }
+
+  .cart-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .cart-price {
+    align-items: flex-start;
+  }
+
+  .cart-summary {
+    align-items: center;
+  }
+
+  .checkout-btn {
+    width: 100%;
+    border-radius: 10px;
+  }
+}
