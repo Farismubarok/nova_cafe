@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./detailorder.css";
 
-
 const DetailOrder = () => {
   const location = useLocation();
   const item = location.state; // Data dari MenuPage (name, price, img)
