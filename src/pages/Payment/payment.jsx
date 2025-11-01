@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./payment.css";
-import icedCoffee from "../../assets/image/iced-coffee.jpg";
+import icedCoffee from "../../assets/image/iced coffee.png";
 
 const Payment = () => {
   const [deliveryMethod, setDeliveryMethod] = useState("Pickup di Toko");
