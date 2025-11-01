@@ -1,6 +1,6 @@
 import React from "react";
 import "./Contact.css";
-import Phone from "../../assets/icon/phone.svg";
+import Phone from "../../assets/icon/green phone.svg";
 import Mail from "../../assets/icon/mail.svg";
 import Clock from "../../assets/icon/clock.svg";
 import MapPin from "../../assets/icon/locate.svg";
