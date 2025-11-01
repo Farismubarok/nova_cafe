@@ -1,5 +1,7 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./menu.css";
+
 
 const menuData = {
   Coffee: [
@@ -39,6 +41,13 @@ const menuData = {
 };
 
 const MenuPage = () => {
+  const navigate = useNavigate();
+
+  const handleOrder = (item) => {
+    // Arahkan ke halaman detail dan kirim data produk yang diklik
+    navigate("/detail-order", { state: item });
+  };
+
   return (
     <div className="menu-page">
       {/* Header Banner */}
@@ -70,7 +79,8 @@ const MenuPage = () => {
                 <div className="menu-info">
                   <h4>{item.name}</h4>
                   <p>Rp. {item.price.toLocaleString("id-ID")}</p>
-                  <button className="add-btn">Tambah ke Keranjang</button>
+                  <p>Rp. {item.price.toLocaleString("id-ID")}</p>
+                  <button className="add-btn" onClick={() => handleOrder(item)}>Tambah ke Keranjang</button>
                 </div>
               </div>
             ))}
