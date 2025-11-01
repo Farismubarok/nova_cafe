@@ -22,7 +22,7 @@ const AboutUs = () => {
       <section className="about-hero">
         <div className="about-hero-inner">
           <h1>Tentang Nova Cafe</h1>
-          <p>Lebih dari sekadar kopi, kami adalah tempat dimana cerita dimulai dan persahabatan terajut.</p>
+          <p>Lebih dari sekadar kopi, kami adalah tempat dimana cerita <br /> dimulai dan persahabatan terjalin</p>
         </div>
       </section>
 
@@ -30,13 +30,19 @@ const AboutUs = () => {
         <div className="about-text">
           <h1>Cerita Kami</h1>
           <p>
-            Nova Cafe dimulai dari sebuah mimpi sederhana: menyediakan pengalaman ngopi yang hangat dan
-            berkualitas. Dengan biji kopi pilihan dan barista berpengalaman, kami menyajikan minuman yang
-            konsisten dan suasana yang mengundang untuk berkumpul.
+            Nova Cafe dimulai dari sebuah mimpi sederhana: membawa pengalaman kopi premium yang 
+            terjangkau untuk semua orang. Didirikan pada tahun 2025, kami memulai perjalanan dengan 
+            satu outlet kecil di Jakarta. 
           </p>
           <p>
-            Sejak pembukaan, kami terus berkembang sambil tetap menjaga nilai-nilai kebersamaan, kualitas,
-            dan pelayanan ramah. Setiap cangkir menceritakan sedikit dari perjalanan kami.
+            Dengan fokus pada kualitas biji kopi, keahlian barista, dan suasana yang hangat, 
+            Nova Cafe dengan cepat menjadi tempat favorit bagi para pecinta kopi. Kami percaya 
+            bahwa setiap cangkir kopi memiliki cerita, dan kami bangga menjadi bagian dari cerita Anda.
+          </p>
+          <p>
+            Hari ini, Nova Cafe telah berkembang menjadi salah satu coffee shop pilihan 
+            dengan 15 cabang di berbagai kota. Namun, komitmen kami tetap sama: memberikan 
+            kopi terbaik dengan pelayanan terbaik dalam suasana yang nyaman dan hangat.
           </p>
         </div>
 
