@@ -1,0 +1,60 @@
+.menu-page {
+  padding: 50px 100px;
+  font-family: "Poppins", sans-serif;
+}
+
+.menu-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  border-bottom: 3px solid #0b8344;
+  display: inline-block;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+.menu-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.menu-card:hover {
+  transform: translateY(-4px);
+}
+
+.menu-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.menu-info {
+  padding: 10px;
+}
+
+.menu-price {
+  color: #0b8344;
+  font-weight: 600;
+}
+
+.menu-btn {
+  margin-top: 10px;
+  background-color: #0b8344;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.menu-btn:hover {
+  background-color: #096e38;
+}
