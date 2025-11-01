@@ -1,14 +1,17 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./detailorder.css";
-import nasiGorengImg from "../../assets/image/nas gor.png";
 
 const DetailOrder = () => {
+  const location = useLocation();
+  const item = location.state; // Data dari MenuPage (name, price, img)
+
   const [portion, setPortion] = useState("Small");
   const [spicy, setSpicy] = useState("Small");
   const [toppings, setToppings] = useState([]);
   const [quantity, setQuantity] = useState(1);
 
-  const basePrice = 75000;
+  const basePrice = item?.price || 75000;
 
   const toppingOptions = [
     { name: "Whipped Cream", price: 5000 },
@@ -37,18 +40,26 @@ const DetailOrder = () => {
     return "Rp. " + price.toLocaleString("id-ID");
   };
 
+  if (!item) {
+    return (
+      <div style={{ padding: "100px", textAlign: "center" }}>
+        <h2>Tidak ada data produk</h2>
+        <p>Silakan kembali ke halaman menu.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="detail-order-page">
       {/* Product Info */}
       <section className="order-header">
-        <img src={nasiGorengImg} alt="Nasi Goreng" />
+        <img src={item.img} alt={item.name} />
         <div className="order-info">
-          <h2>Nasi Goreng</h2>
+          <h2>{item.name}</h2>
           <p className="price">{formatPrice(basePrice)}</p>
           <p className="desc">
-            Nikmati kelezatan nasi goreng khas kami dengan cita rasa gurih yang
-            autentik. Dimasak dengan bumbu pilihan, potongan ayam juicy, sayuran
-            segar, dan topping telur mata sapi sempurna.
+            Nikmati {item.name} khas kami dengan cita rasa gurih dan autentik.
+            Dimasak dengan bahan pilihan berkualitas untuk rasa yang memanjakan.
           </p>
         </div>
       </section>

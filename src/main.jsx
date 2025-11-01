@@ -5,7 +5,7 @@ import { AuthProvider } from "./context/AuthContext";  // ✅ penting!
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthProvider>      {/* ✅ Bungkus di sini */}
+    <AuthProvider>      
       <App />
     </AuthProvider>
   </React.StrictMode>

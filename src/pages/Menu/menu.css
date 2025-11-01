@@ -1,60 +1,81 @@
+/* ===============================
+   MENU PAGE (Nova Cafe)
+   =============================== */
+
 .menu-page {
-  padding: 50px 100px;
   font-family: "Poppins", sans-serif;
+  color: #222;
+  padding: 50px 100px;
+  background-color: #fff;
 }
 
-.menu-title {
-  font-size: 2rem;
-  font-weight: 600;
+/* Banner */
+.menu-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0b8344;
+  color: #fff;
+  border-radius: 16px;
+  padding: 40px;
+  margin-top: 40px;
+}
+
+.banner-text {
+  max-width: 50%;
+}
+
+.banner-text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.banner-text p {
+  font-size: 1rem;
+  line-height: 1.5;
   margin-bottom: 20px;
-  border-bottom: 3px solid #0b8344;
-  display: inline-block;
 }
 
+.order-btn {
+  background: #fff;
+  color: #0b8344;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.order-btn:hover {
+  background: #e6f4ea;
+}
+
+.banner-img {
+  width: 280px;
+  border-radius: 12px;
+}
+
+/* Menu Section */
+.menu-section {
+  margin-top: 60px;
+}
+
+.menu-section h3 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #0b8344;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+/* Menu Grid */
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 25px;
 }
 
+/* Menu Card */
 .menu-card {
   background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  text-align: center;
-  transition: transform 0.2s ease;
-}
-
-.menu-card:hover {
-  transform: translateY(-4px);
-}
-
-.menu-image {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
-.menu-info {
-  padding: 10px;
-}
-
-.menu-price {
-  color: #0b8344;
-  font-weight: 600;
-}
-
-.menu-btn {
-  margin-top: 10px;
-  background-color: #0b8344;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
-.menu-btn:hover {
-  background-color: #096e38;
-}
