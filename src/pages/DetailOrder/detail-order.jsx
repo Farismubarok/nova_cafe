@@ -1,84 +1,148 @@
-import React from "react";
-import "./MenuPage.css";
+import React, { useState } from "react";
+import "./detailorder.css";
+import nasiGorengImg from "../../assets/image/nas gor.png";
 
-const menuData = {
-  Coffee: [
-    { name: "Iced Coffee", price: 45000, img: "/images/iced-coffee.jpg" },
-    { name: "Americano", price: 45000, img: "/images/americano.jpg" },
-    { name: "Iced Americano", price: 45000, img: "/images/iced-americano.jpg" },
-    { name: "Cappuccino", price: 45000, img: "/images/cappuccino.jpg" },
-    { name: "Macchiato", price: 45000, img: "/images/macchiato.jpg" },
-  ],
-  Tea: [
-    { name: "Hot Matcha", price: 45000, img: "/images/matcha.jpg" },
-    { name: "Thai Tea", price: 45000, img: "/images/thai-tea.jpg" },
-    { name: "Lemon Tea", price: 45000, img: "/images/lemon-tea.jpg" },
-    { name: "Teh Tarik", price: 45000, img: "/images/teh-tarik.jpg" },
-    { name: "Teh Manis", price: 45000, img: "/images/teh-manis.jpg" },
-  ],
-  Frappucino: [
-    { name: "Frappe Mango", price: 45000, img: "/images/frappe-mango.jpg" },
-    { name: "Frappe Choco", price: 45000, img: "/images/frappe-choco.jpg" },
-    { name: "Frappe Thai Tea Milk", price: 45000, img: "/images/frappe-thai.jpg" },
-    { name: "Frappe Matcha", price: 45000, img: "/images/frappe-matcha.jpg" },
-  ],
-  Food: [
-    { name: "Nasi Goreng", price: 45000, img: "/images/nasgor.jpg" },
-    { name: "Chicken Teriyaki", price: 45000, img: "/images/teriyaki.jpg" },
-    { name: "Meatball", price: 45000, img: "/images/meatball.jpg" },
-    { name: "Spaghetti", price: 45000, img: "/images/spaghetti.jpg" },
-    { name: "French Fries", price: 45000, img: "/images/fries.jpg" },
-  ],
-  Refreshers: [
-    { name: "Bubblegum", price: 45000, img: "/images/bubblegum.jpg" },
-    { name: "Lemon Mint", price: 45000, img: "/images/lemon-mint.jpg" },
-    { name: "Orange", price: 45000, img: "/images/orange.jpg" },
-    { name: "Raspberry", price: 45000, img: "/images/raspberry.jpg" },
-    { name: "Watermelon", price: 45000, img: "/images/watermelon.jpg" },
-  ],
-};
+const DetailOrder = () => {
+  const [portion, setPortion] = useState("Small");
+  const [spicy, setSpicy] = useState("Small");
+  const [toppings, setToppings] = useState([]);
+  const [quantity, setQuantity] = useState(1);
 
-const MenuPage = () => {
+  const basePrice = 75000;
+
+  const toppingOptions = [
+    { name: "Whipped Cream", price: 5000 },
+    { name: "Extra Whipped Cream", price: 15000 },
+    { name: "Caramel Drizzle", price: 5000 },
+    { name: "Mocha Drizzle", price: 6000 },
+    { name: "Caramel Syrup", price: 5000 },
+    { name: "Vanilla Syrup", price: 5000 },
+  ];
+
+  const handleToppingChange = (name) => {
+    setToppings((prev) =>
+      prev.includes(name) ? prev.filter((t) => t !== name) : [...prev, name]
+    );
+  };
+
+  const calculateTotal = () => {
+    const toppingTotal = toppings.reduce((sum, t) => {
+      const toppingItem = toppingOptions.find((item) => item.name === t);
+      return sum + (toppingItem ? toppingItem.price : 0);
+    }, 0);
+    return (basePrice + toppingTotal) * quantity;
+  };
+
+  const formatPrice = (price) => {
+    return "Rp. " + price.toLocaleString("id-ID");
+  };
+
   return (
-    <div className="menu-page">
-      {/* Header Banner */}
-      <section className="menu-banner">
-        <div className="banner-text">
-          <h4>Refreshing Drink</h4>
-          <h2>Matcha Cream Cloud</h2>
-          <p>
-            Matcha pilihan dengan aroma khas dan rasa autentik menyegarkan,
-            setiap tegukan memberikan kesegaran alami.
+    <div className="detail-order-page">
+      {/* Product Info */}
+      <section className="order-header">
+        <img src={nasiGorengImg} alt="Nasi Goreng" />
+        <div className="order-info">
+          <h2>Nasi Goreng</h2>
+          <p className="price">{formatPrice(basePrice)}</p>
+          <p className="desc">
+            Nikmati kelezatan nasi goreng khas kami dengan cita rasa gurih yang
+            autentik. Dimasak dengan bumbu pilihan, potongan ayam juicy, sayuran
+            segar, dan topping telur mata sapi sempurna.
           </p>
-          <button className="order-btn">Order Now</button>
         </div>
-        <img
-          src="/images/matcha-banner.jpg"
-          alt="Matcha Cream Cloud"
-          className="banner-img"
-        />
       </section>
 
-      {/* Menu Sections */}
-      {Object.keys(menuData).map((category) => (
-        <section key={category} className="menu-section">
-          <h3>{category}</h3>
-          <div className="menu-grid">
-            {menuData[category].map((item, index) => (
-              <div className="menu-card" key={index}>
-                <img src={item.img} alt={item.name} />
-                <div className="menu-info">
-                  <h4>{item.name}</h4>
-                  <p>Rp. {item.price.toLocaleString("id-ID")}</p>
-                  <button className="add-btn">Tambah ke Keranjang</button>
-                </div>
-              </div>
+      <hr />
+
+      {/* Portion & Spicy Options */}
+      <section className="options-section">
+        <div className="option-group">
+          <h3>Porsi Options</h3>
+          <div className="option-buttons">
+            {["Small", "Medium", "Large"].map((size) => (
+              <button
+                key={size}
+                className={portion === size ? "active" : ""}
+                onClick={() => setPortion(size)}
+              >
+                {size}
+              </button>
             ))}
           </div>
-        </section>
-      ))}
+        </div>
+
+        <div className="option-group">
+          <h3>Spicy Options</h3>
+          <div className="option-buttons">
+            {["Small", "Medium", "Large"].map((level) => (
+              <button
+                key={level}
+                className={spicy === level ? "active" : ""}
+                onClick={() => setSpicy(level)}
+              >
+                {level}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Topping */}
+      <section className="topping-section">
+        <h3>Tambah Topping</h3>
+        <div className="topping-grid">
+          {toppingOptions.map((topping) => (
+            <label key={topping.name} className="topping-item">
+              <input
+                type="checkbox"
+                checked={toppings.includes(topping.name)}
+                onChange={() => handleToppingChange(topping.name)}
+              />
+              {topping.name}
+              <span>+ {formatPrice(topping.price)}</span>
+            </label>
+          ))}
+        </div>
+      </section>
+
+      {/* Notes */}
+      <section className="notes-section">
+        <h3>Catatan</h3>
+        <textarea
+          placeholder="Tulis catatan khusus untuk pesanan anda"
+          rows={3}
+        ></textarea>
+      </section>
+
+      {/* Quantity & Total */}
+      <section className="summary-section">
+        <div className="quantity-box">
+          <p>Jumlah</p>
+          <div className="quantity-controls">
+            <button
+              onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
+            >
+              −
+            </button>
+            <span>{quantity}</span>
+            <button onClick={() => setQuantity(quantity + 1)}>+</button>
+          </div>
+        </div>
+
+        <div className="total-box">
+          <p>Total Harga</p>
+          <h3>{formatPrice(calculateTotal())}</h3>
+        </div>
+      </section>
+
+      {/* Buttons */}
+      <section className="action-buttons">
+        <button className="add-cart-btn">Tambah Keranjang</button>
+        <button className="order-now-btn">Pesan Sekarang</button>
+      </section>
     </div>
   );
 };
 
-export default MenuPage;
+export default DetailOrder;

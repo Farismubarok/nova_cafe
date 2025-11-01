@@ -108,3 +108,25 @@
 .add-btn:hover {
   background-color: #086b37;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .menu-page {
+    padding: 0 20px;
+  }
+
+  .menu-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .banner-text {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .banner-img {
+    width: 100%;
+    max-width: 300px;
+  }
+}
