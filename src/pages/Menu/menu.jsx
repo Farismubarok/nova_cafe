@@ -1,5 +1,5 @@
 import React from "react";
-import "./MenuPage.css";
+import "./menu.css";
 
 const menuData = {
   Coffee: [
