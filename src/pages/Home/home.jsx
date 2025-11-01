@@ -24,7 +24,7 @@ import avatar5 from '../../assets/image/christina.jpg';
 // alias imports to match JSX variable names used elsewhere
 const interiorCafe = cafeImg;
 const greenCafe = cafeImg;
-const barista = productImg3;
+// const barista = productImg3;
 const oops = productImg1;
 const kateLaine = productImg2;
 const matcha = productImg3;
@@ -57,12 +57,6 @@ const Home = () => {
             <Link to="/menu" className="btn-primary">
               Lihat Menu
               <img src={iconNext} alt="next" style={{width:20,height:20,marginLeft:8}} />
-            </Link>
-            <Link to="/order" className="btn-primary">
-              Order Online
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" strokeWidth="2"/>
-              </svg>
             </Link>
           </div>
         </div>
@@ -113,7 +107,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Barista Section */}
+      {/* Barista Section
       <section className="barista" id="barista">
         <div className="barista-content">
           <p className="barista-text">
@@ -125,12 +119,11 @@ const Home = () => {
         <div className="barista-image">
           <img src={barista} alt="Barista" />
         </div>
-      </section>
+      </section> */}
 
       {/* Winter Special Section */}
       <section className="winter-special">
         <div className="winter-content">
-          <img src="https://c.animaapp.com/Mm7fThRj/img/group-4@2x.png" alt="Decoration" className="winter-decoration" />
           <h2 className="winter-title">
             Feel the magic of the season<br />
             <span className="winter-highlight">Special winter</span>
