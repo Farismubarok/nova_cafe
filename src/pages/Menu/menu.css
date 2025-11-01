@@ -80,3 +80,28 @@
 .menu-card {
   background-color: #fff;
 }
+
+.menu-card p {
+  margin-top: 8px;
+  text-align: left;
+  margin-bottom: 6px;
+  margin-left: 4px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.menu-card h4{
+  text-align: start;
+  margin-left: 4px;
+}
+
+.add-btn {
+  background-color: #0b8344;
+  color: #fff;
+  border: none;
+  padding: 8px 30px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
