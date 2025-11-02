@@ -80,7 +80,7 @@ const MenuPage = () => {
                   <h4>{item.name}</h4>
                   <p>Rp. {item.price.toLocaleString("id-ID")}</p>
                   <p>Rp. {item.price.toLocaleString("id-ID")}</p>
-                  <button className="add-btn" onClick={() => handleOrder(item)}>Tambah ke Keranjang</button>
+                  <button className="add-btn" onClick={() => handleOrder(item)}>Add</button>
                 </div>
               </div>
             ))}

@@ -132,8 +132,7 @@ const DetailOrder = () => {
           <p>Jumlah</p>
           <div className="quantity-controls">
             <button
-              onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
-            >
+              onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}>
               −
             </button>
             <span>{quantity}</span>
