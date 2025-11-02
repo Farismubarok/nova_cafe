@@ -13,6 +13,7 @@ import Cart from "./pages/Cart/cart.jsx";
 import Login from "./pages/Login/login.jsx";
 import Payment from "./pages/Payment/payment.jsx";
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
+import Profile from "./pages/Profile/profile.jsx"
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/detail-order" element={<DetailOrder />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </main>
         <Footer />
