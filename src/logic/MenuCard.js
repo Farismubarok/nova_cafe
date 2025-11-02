@@ -1,37 +1,4 @@
 // src/Components/MenuCard/MenuCardLogic.js
-<<<<<<< HEAD
-=======
-//coffe
-import menu1 from "../../src/assets/image/iced coffee.png";
-import menu2 from "../../src/assets/image/hot americano.png";
-import menu3 from "../../src/assets/image/iced americano.png";
-import menu4 from "../../src/assets/image/hot cappucino.png";
-import menu5 from "../../src/assets/image/machiato.png";
-//tea
-import menu6 from "../../src/assets/image/hot matcha.png";
-import menu7 from "../../src/assets/image/iced thai tea.png";
-import menu8 from "../../src/assets/image/lemon tea.png";
-import menu9 from "../../src/assets/image/teh tarik.png";
-import menu10 from "../../src/assets/image/tea.png";
-// farppucino
-import menu11 from "../../src/assets/image/mango.png";
-import menu12 from "../../src/assets/image/choco.png";
-import menu13 from "../../src/assets/image/mango honey.png";
-import menu14 from "../../src/assets/image/MATCHA.png";
-import menu15 from "../../src/assets/image/strawberry.png";
-// food
-import menu16 from "../../src/assets/image/nas gor.png";
-import menu17 from "../../src/assets/image/teriyaki.png";
-import menu18 from "../../src/assets/image/mmeat ball.png";
-import menu19 from "../../src/assets/image/spaghetti meatball.png";
-import menu20 from "../../src/assets/image/french firies cheesy.png";
-// refresher
-import menu21 from "../../src/assets/image/bublegum.png";
-import menu22 from "../../src/assets/image/lemon iced mint.png";
-import menu23 from "../../src/assets/image/lemon iced.png";
-import menu24 from "../../src/assets/image/raspberry.png";
-import menu25 from "../../src/assets/image/watermellon.png";
->>>>>>> cfe1a60fe796cbe1d17863a8e43e0120c7f58510
 
 // 🧊 Import Gambar — Dikelompokkan Berdasarkan Kategori
 
