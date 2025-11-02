@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { fetchUserProfile } from "../../logic/ProfileLogic";
 import "./profile.css";
-import { Mail, Phone, Calendar, User, Clock, Heart, LogOut, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
