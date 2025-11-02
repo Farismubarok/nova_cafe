@@ -1,33 +1,32 @@
-import React, { createContext, useState, useContext } from "react";
+// src/context/AuthContext.js
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("isLoggedIn") === "true"
-  );
+  const [user, setUser] = useState(null);
 
-  const login = (email, password) => {
-    // nanti bisa sambung ke backend
-    if (email && password) {
-      localStorage.setItem("isLoggedIn", "true");
-      setIsLoggedIn(true);
-      return true;
-    }
-    return false;
+  useEffect(() => {
+    // Cek localStorage (simulasi user yang sudah login)
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) setUser(storedUser);
+  }, []);
+
+  const login = (userData) => {
+    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
   };
 
   const logout = () => {
-    localStorage.removeItem("isLoggedIn");
-    setIsLoggedIn(false);
+    setUser(null);
+    localStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Hook agar mudah dipakai di komponen lain
 export const useAuth = () => useContext(AuthContext);
