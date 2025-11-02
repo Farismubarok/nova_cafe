@@ -188,6 +188,21 @@ nav {
     right: 6px;
 }
 
+.btn-logout {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+    background-color: #c0392b;
+}
+
 /* Media Queries for Responsiveness */
 @media screen and (max-width: 1024px) {
     nav {

@@ -151,9 +151,7 @@ const Home = () => {
       {/* Popular Menu Section */}
       <section className="popular-menu" id="menu">
         <div className="section-header">
-          <div className="line"></div>
           <h2>Popular on the Nova Cafe</h2>
-          <div className="line"></div>
         </div>
 
         <div className="menu-grid">
