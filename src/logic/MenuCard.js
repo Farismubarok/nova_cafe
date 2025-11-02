@@ -24,11 +24,11 @@ import menu18 from "../../src/assets/image/mmeat ball.png";
 import menu19 from "../../src/assets/image/spaghetti meatball.png";
 import menu20 from "../../src/assets/image/french firies cheesy.png";
 // refresher
-import menu16 from "../../src/assets/image/bublegum.png";
-import menu17 from "../../src/assets/image/lemon iced mint.png";
-import menu18 from "../../src/assets/image/lemon iced.png";
-import menu19 from "../../src/assets/image/raspberry.png";
-import menu20 from "../../src/assets/image/watermellon.png";
+import menu21 from "../../src/assets/image/bublegum.png";
+import menu22 from "../../src/assets/image/lemon iced mint.png";
+import menu23 from "../../src/assets/image/lemon iced.png";
+import menu24 from "../../src/assets/image/raspberry.png";
+import menu25 from "../../src/assets/image/watermellon.png";
 
 // ... tambahkan gambar sesuai jumlah menu
 
