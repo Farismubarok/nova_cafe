@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./detailorder.css";
 
 const DetailOrder = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const item = location.state; // Data dari MenuPage (name, price, img)
 
   const [portion, setPortion] = useState("Small");
@@ -149,7 +150,7 @@ const DetailOrder = () => {
       {/* Buttons */}
       <section className="action-buttons">
         <button className="add-cart-btn">Tambah Keranjang</button>
-        <button className="order-now-btn">Pesan Sekarang</button>
+        <button className="order-now-btn" onClick={() => navigate("/payment", { state: { item, quantity, portion, spicy, toppings } } )}>Pesan Sekarang</button>
       </section>
     </div>
   );

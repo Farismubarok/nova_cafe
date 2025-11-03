@@ -79,7 +79,6 @@ const MenuPage = () => {
                 <div className="menu-info">
                   <h4>{item.name}</h4>
                   <p>Rp. {item.price.toLocaleString("id-ID")}</p>
-                  <p>Rp. {item.price.toLocaleString("id-ID")}</p>
                   <button className="add-btn" onClick={() => handleOrder(item)}>Add</button>
                 </div>
               </div>
