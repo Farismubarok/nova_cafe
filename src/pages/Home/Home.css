@@ -241,7 +241,7 @@ ul {
 }
 
 /* Features Section */
-.features {
+.features{
   display: flex;
   justify-content: center;
   gap: 50px;
@@ -285,7 +285,7 @@ ul {
   flex-wrap: wrap;
 }
 
-.about-images {
+section.about .about-images {
   position: relative;
   display: flex;
   align-items: center;

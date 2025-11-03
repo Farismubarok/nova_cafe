@@ -5,16 +5,25 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loginHistory, setLoginHistory] = useState([]);
 
   useEffect(() => {
-    // Cek localStorage (simulasi user yang sudah login)
     const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedHistory = JSON.parse(localStorage.getItem("loginHistory")) || [];
     if (storedUser) setUser(storedUser);
+    setLoginHistory(storedHistory);
   }, []);
 
   const login = (userData) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
+
+    const newHistory = [
+      ...loginHistory,
+      { user: userData.email, time: new Date().toLocaleString() },
+    ];
+    setLoginHistory(newHistory);
+    localStorage.setItem("loginHistory", JSON.stringify(newHistory));
   };
 
   const logout = () => {
@@ -22,8 +31,11 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
+  // Tambahkan ini 👇
+  const isLoggedIn = !!user;
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, isLoggedIn, loginHistory }}>
       {children}
     </AuthContext.Provider>
   );
