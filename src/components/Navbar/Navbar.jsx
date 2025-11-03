@@ -47,8 +47,10 @@ const Navbar = () => {
         </div>
       ) : (
         <div className="navbar-user">
-          <button onClick={() => navigate("/profile")}>
-            <img src={userLogo} alt="" /><span>Account</span></button>
+          <div className="nav-item">
+            <img src={userLogo} alt="Account" />
+            <span>Account</span>
+          </div>
           <div className="nav-item">
             <img src={historyLogo} alt="History" />
             <span>History</span>
