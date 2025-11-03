@@ -38,21 +38,21 @@ nav {
 .navbar-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
 
 /* Logo Styles */
-.logo {
+.logo-navbar {
     display: flex;
     align-items: center;
     background-color: #017143;
     padding: 10px 16px;
-    border-radius: 28px;
+    border-radius: 12px;
     
 }
 
-.logo img {
+.logo-navbar img {
     height: 28px;
     margin-right: 12px;
 }
 
-.logo h1 {
+.logo-navbar h1 {
     font-size: 20px;
     color: #ffffff;
     margin: 0;
@@ -64,7 +64,7 @@ nav {
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 36px;
+    gap: 15px;
     margin: 0 auto; /* center the links */
     padding: 0;
 }
@@ -144,7 +144,7 @@ nav {
 .navbar-user {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 15px;
 }
 
 .nav-item {
@@ -186,6 +186,19 @@ nav {
     border-radius: 50%;
     top: 6px;
     right: 6px;
+}
+
+.btn-logout {
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 12px;
+    padding: 8px 20px;
+    border: none;
+    font-size: 14px;
+}
+
+.btn-logout:hover {
+    background-color: #c0392b;
 }
 
 /* Media Queries for Responsiveness */

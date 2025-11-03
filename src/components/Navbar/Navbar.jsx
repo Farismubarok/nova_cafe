@@ -17,7 +17,7 @@ const Navbar = () => {
     <header>
     {/* navbar logo */}
     <nav className='navbar'> 
-      <div className="logo">
+      <div className="logo-navbar">
         <img src={logo} alt="Nova Cafe"/>
         <h1>Nova Cafe</h1>
       </div>
@@ -47,7 +47,11 @@ const Navbar = () => {
         </div>
       ) : (
         <div className="navbar-user">
-          <div className="nav-item">
+          <div
+            className="nav-item"
+            onClick={() => navigate("/userprofile")}
+            style={{ cursor: "pointer" }}
+          >
             <img src={userLogo} alt="Account" />
             <span>Account</span>
           </div>

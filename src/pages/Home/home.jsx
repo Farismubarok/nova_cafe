@@ -63,7 +63,7 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="features">
+      <section className="features-home">
         <div className="feature-card animate-fade-in delay-100">
           <img src={feature1} alt="Premium Quality" />
           <h3>Premium Quality</h3>
@@ -88,7 +88,7 @@ const Home = () => {
 
       {/* About Section */}
       <section className="about" id="about">
-        <div className="about-images">
+        <div className="about-images-home">
           <img src={interiorCafe} alt="Cafe Interior" className="about-img-main" />
           <img src={greenCafe} alt="Coffee" className="about-img-small" />
         </div>
@@ -154,7 +154,7 @@ const Home = () => {
           <h2>Popular on the Nova Cafe</h2>
         </div>
 
-        <div className="menu-grid">
+        <div className="menu-grid-home">
           {products.map((_, i) => (
             <div className="menu-card" key={i}>
               <img src={menu} alt="Frappe Mango" />

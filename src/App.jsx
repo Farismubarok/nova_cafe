@@ -1,11 +1,16 @@
 // src/App.jsx
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 
 // Components
 import Navbar from "./components/Navbar/Navbar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
-// import LoginHistory from "./components/LoginHistory.jsx"; // ✅ sesuaikan dengan nama file kamu (huruf kecil)
+// import LoginHistory from "./components/LoginHistory.jsx"; // ✅ Sesuaikan jika dibutuhkan
 
 // Context
 import { AuthProvider } from "./context/AuthContext";
@@ -21,30 +26,42 @@ import Payment from "./pages/Payment/payment.jsx";
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
 import UserProfile from "./pages/Profile/userprofile.jsx";
 
+// ✅ Komponen pembungkus untuk sembunyikan Navbar & Footer di halaman tertentu
+function LayoutWrapper() {
+  const location = useLocation();
+
+  // Jika path /userprofile, maka sembunyikan Navbar & Footer
+  const hideLayout = location.pathname === "/userprofile";
+
+  return (
+    <div className="app">
+      {!hideLayout && <Navbar />}
+
+      <main className="main">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/detail-order" element={<DetailOrder />} />
+          <Route path="/userprofile" element={<UserProfile />} />
+          {/* <Route path="/loginhistory" element={<LoginHistory />} /> */}
+        </Routes>
+      </main>
+
+      {!hideLayout && <Footer />}
+    </div>
+  );
+}
+
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="app">
-          <Navbar />
-
-          <main className="main">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<AboutUs />} />
-              <Route path="/menu" element={<Menu />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/payment" element={<Payment />} />
-              <Route path="/detail-order" element={<DetailOrder />} />
-              <Route path="/userprofile" element={<UserProfile />} />
-              {/* <Route path="/loginhistory" element={<LoginHistory />} /> ✅ Route untuk riwayat login */}
-            </Routes>
-          </main>
-
-          <Footer />
-        </div>
+        <LayoutWrapper />
       </Router>
     </AuthProvider>
   );
