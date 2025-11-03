@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Login.css";
-import logo from '../../assets/logo.jpg';
+import logo from "../../assets/logo.jpg";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,9 +16,24 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const success = login(email, password);
-    if (success) {
-      navigate("/"); // setelah login ke home
+
+    // Simulasi akun (sementara) agar bisa login pakai data yang sudah ada
+    const defaultEmail = "user@example.com";
+    const defaultPassword = "123456";
+
+    if (email === defaultEmail && password === defaultPassword) {
+      const userData = { email };
+      login(userData);
+
+      // Simpan riwayat login ke localStorage
+      const history = JSON.parse(localStorage.getItem("loginHistory")) || [];
+      const newEntry = {
+        email: userData.email,
+        time: new Date().toLocaleString(),
+      };
+      localStorage.setItem("loginHistory", JSON.stringify([...history, newEntry]));
+
+      navigate("/"); // Arahkan ke home setelah login berhasil
     } else {
       setError("Email atau password salah");
     }
@@ -45,6 +60,13 @@ const Login = () => {
               <li>💸 Akses Promo</li>
               <li>⭐ Kumpulkan Poin setiap pembelian</li>
             </ul>
+          </div>
+
+          {/* Tambahkan tombol ke riwayat login */}
+          <div className="history-link">
+            <Link to="/loginhistory" className="btn-history">
+              📜 Lihat Riwayat Login
+            </Link>
           </div>
         </div>
 
@@ -107,4 +129,3 @@ const Login = () => {
 };
 
 export default Login;
-
