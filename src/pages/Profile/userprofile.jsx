@@ -1,16 +1,19 @@
 import React from "react";
+import { FaClock, FaHeart, FaSignOutAlt, FaArrowLeft, FaPhone, FaEnvelope, FaCalendarAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./userprofile.css";
-// import { FaClock, FaHeart, FaSignOutAlt, FaArrowLeft, FaPhone, FaEnvelope, FaCalendarAlt } from "react-icons/fa";
 
 export default function UserProfile() {
+  const navigate = useNavigate();
+
   return (
-    <div className="container">
+    <div className="container-profile">
       {/* Sidebar */}
       <aside className="sidebar">
         <h2 className="logo">☕ Nova Cafe</h2>
         <hr />
         <div className="menu">
-          <button className="menu-item back">
+          <button className="menu-item back" onClick={() => navigate("/menu")}>
             <FaArrowLeft /> Back to menu
           </button>
           <button className="menu-item">
@@ -26,7 +29,6 @@ export default function UserProfile() {
       </aside>
 
       {/* Main Content */}
-      <main className="content">
         <header className="header">
           <img
             src="https://via.placeholder.com/60"
@@ -35,6 +37,7 @@ export default function UserProfile() {
           />
           <h1>User profile</h1>
         </header>
+      <main className="content">
 
         <section className="profile-card">
           <h3>Informasi Pribadi</h3>
@@ -76,7 +79,7 @@ export default function UserProfile() {
   );
 }
 
-// Icon for user (karena react-icons tidak punya FaUser bawaan di versi terbaru)
+// Icon user custom
 const FaUserIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
