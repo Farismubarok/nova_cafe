@@ -25,6 +25,7 @@
   display: flex;
   flex-direction: column;
   padding: 24px 20px;
+  z-index: 10;
 }
 
 .content {
@@ -36,14 +37,28 @@
 }
 
 
-.logo {
-  font-size: 1.4rem;
-  margin-bottom: 16px;
-  font-weight: 600;
+.logo-profile {
   display: flex;
   align-items: center;
-  gap: 6px;
+  border-radius: 12px;
 }
+
+.logo-profile img {
+  height: 50px;
+  margin-right: 12px;
+  border-radius: 15px;
+  box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.3); /* ✅ urutan benar */
+}
+
+.logo-profile h1 {
+  font-size: 25px;
+  color: #ffffff;
+  margin: 0;
+  font-weight: 700;
+  text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.3); /* ✅ pakai text-shadow untuk teks */
+}
+
+
 
 .sidebar hr {
   width: 100%;
@@ -103,9 +118,10 @@
 
 .header {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 40px;
+  align-items: center;     /* sejajarkan vertikal */
+  justify-content: flex-end; /* dorong ke kanan */
+  gap: 25px;               /* jarak antara gambar dan teks */
+  margin-right: 200px;
 }
 
 .header .avatar {
@@ -113,14 +129,19 @@
   height: 60px;
   border-radius: 50%;
   object-fit: cover;
-  margin-left: 50px;
+  order: 2; /* 👈 supaya gambar di kanan */
+  margin-right: 70px;
 }
 
 .header h1 {
-  font-size: 1.8rem;
+  font-size: 20px;
   color: #222;
   font-weight: 600;
+  margin: 0;
+  order: 1; /* 👈 supaya teks di kiri, avatar di kanan */
 }
+
+
 
 .profile-card {
   background: #fff;

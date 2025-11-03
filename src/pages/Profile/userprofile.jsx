@@ -1,6 +1,7 @@
 import React from "react";
 import { FaClock, FaHeart, FaSignOutAlt, FaArrowLeft, FaPhone, FaEnvelope, FaCalendarAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.svg";
 import "./userprofile.css";
 
 export default function UserProfile() {
@@ -8,9 +9,21 @@ export default function UserProfile() {
 
   return (
     <div className="container-profile">
+      <header className="header">
+        <h1>User profile</h1>
+          <img
+            src="https://via.placeholder.com/60"
+            alt="User avatar"
+            className="avatar"
+          />
+        </header>
+
       {/* Sidebar */}
       <aside className="sidebar">
-        <h2 className="logo">☕ Nova Cafe</h2>
+       <div className="logo-profile">
+          <img src={logo} alt="Nova Cafe"/>
+          <h1>Nova Cafe</h1>
+        </div>
         <hr />
         <div className="menu">
           <button className="menu-item back" onClick={() => navigate("/menu")}>
@@ -28,15 +41,9 @@ export default function UserProfile() {
         </div>
       </aside>
 
+        
+
       {/* Main Content */}
-        <header className="header">
-          <img
-            src="https://via.placeholder.com/60"
-            alt="User avatar"
-            className="avatar"
-          />
-          <h1>User profile</h1>
-        </header>
       <main className="content">
 
         <section className="profile-card">
