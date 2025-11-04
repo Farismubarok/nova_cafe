@@ -28,6 +28,8 @@ import Login from "./pages/Login/login.jsx";
 import Payment from "./pages/Payment/payment.jsx";
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
 import UserProfile from "./pages/Profile/userprofile.jsx";
+import Customers from "./pages/Custumer/custumer.jsx";
+import Transaksi from "./pages/Transaksi/transactions.jsx";
 
 // ✅ Komponen pembungkus untuk sembunyikan Navbar & Footer di halaman tertentu
 function LayoutWrapper() {
@@ -36,10 +38,12 @@ function LayoutWrapper() {
   // Jika path /userprofile, maka sembunyikan Navbar & Footer
   const hideLayout = location.pathname === "/userprofile";
   const hideLayoutAdmin = location.pathname === "/admin";
+  const hideLayoutCustomers = location.pathname === "/customers";
+  const hideLayoutTransaksi = location.pathname === "/transactions";
 
   return (
     <div className="app">
-      {!hideLayout && !hideLayoutAdmin && <Navbar />}
+      {!hideLayout && !hideLayoutAdmin && !hideLayoutCustomers && !hideLayoutTransaksi && <Navbar />}
 
       <main className="main">
         <Routes>
@@ -53,6 +57,8 @@ function LayoutWrapper() {
           <Route path="/detail-order" element={<DetailOrder />} />
           <Route path="/userprofile" element={<UserProfile />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/customers" element={<Customers />} />
+          <Route path="/transactions" element={<Transaksi />} />
           {/* <Route path="/loginhistory" element={<LoginHistory />} /> */}
         </Routes>
       </main>
