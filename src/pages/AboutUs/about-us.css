@@ -7,13 +7,19 @@
 .about-hero{
   background: var(--brand);
   color: #fff;
-  padding: 80px 0 80px;
+  padding: 60px 0;
   text-align: center;
 }
 
 .about-hero-inner{ max-width: var(--container); margin: 0 auto; padding: 0 24px; }
 .about-hero h1{ font-size: 28px; margin-bottom: 8px; }
-.about-hero p{ opacity: 0.95;font-size: 18px; font-weight: 100; margin-top: 20px; letter-spacing: 1px; }
+.about-hero p{
+  opacity: 0.95;
+  font-size: 18px; 
+  font-weight: 100; 
+  margin-top: 20px; 
+  letter-spacing: 1px; 
+}
 
 .container{ max-width: var(--container); margin: 0 auto; padding: 40px 24px; }
 
