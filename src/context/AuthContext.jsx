@@ -15,16 +15,17 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
+  setUser(userData);
+  localStorage.setItem("user", JSON.stringify(userData));
 
-    const newHistory = [
-      ...loginHistory,
-      { user: userData.email, time: new Date().toLocaleString() },
-    ];
-    setLoginHistory(newHistory);
-    localStorage.setItem("loginHistory", JSON.stringify(newHistory));
-  };
+  const newHistory = [
+    ...loginHistory,
+    { user: userData.email, time: new Date().toLocaleString() },
+  ];
+  setLoginHistory(newHistory);
+  localStorage.setItem("loginHistory", JSON.stringify(newHistory));
+};
+
 
   const logout = () => {
     setUser(null);
