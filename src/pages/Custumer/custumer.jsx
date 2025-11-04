@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "./admin.css";
+import "./custumer.css";
 import { FaClock, FaHeart, FaSignOutAlt, FaArrowLeft, FaPhone, FaEnvelope, FaCalendarAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { Users, Coffee, CreditCard } from "lucide-react";
 import profileImg from "../../assets/icon/jmk.svg";
 import logo from "../../assets/logo.svg";
 
-const AdminDashboard = () => {
+const Customers = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -61,40 +61,20 @@ const AdminDashboard = () => {
           </div>
         </header>
 
-        {/* Statistik */}
-        <section className="stats-section">
-          <div className="card">
-            <Users size={28} color="#0A774A" />
-            <div>
-              <h3>5</h3>
-              <p>Total Customer</p>
-            </div>
-          </div>
-
-          <div className="card">
-            <Coffee size={28} color="#0A774A" />
-            <div>
-              <h3>{orders.length}</h3>
-              <p>Total Order</p>
-            </div>
-          </div>
-        </section>
-
         {/* Recent Orders */}
         <section className="recent-orders">
-          <h3>Recent Order</h3>
+          <h3>Customer List</h3>
           {loading ? (
             <p className="loading-text">Memuat data...</p>
           ) : (
             <table>
               <thead>
                 <tr>
-                  <th>Order ID</th>
-                  <th>Customer</th>
                   <th>Customer ID</th>
-                  <th>Total</th>
-                  <th>Status</th>
-                  <th>Date</th>
+                  <th>Customer</th>
+                  <th>Contact</th>
+                  <th>Email</th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -122,7 +102,7 @@ const AdminDashboard = () => {
                 ) : (
                   <tr>
                     <td colSpan="6" className="empty-text">
-                      Tidak ada data order
+                      Tidak ada data Customers
                     </td>
                   </tr>
                 )}
@@ -135,4 +115,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default Customers;
