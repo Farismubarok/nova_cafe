@@ -15,6 +15,9 @@ import Footer from "./components/Footer/Footer.jsx";
 // Context
 import { AuthProvider } from "./context/AuthContext";
 
+//pages admin
+import AdminDashboard from "./pages/Admin/admin.jsx";
+
 // Pages
 import Home from "./pages/Home/home.jsx";
 import AboutUs from "./pages/AboutUs/about-us.jsx";
@@ -32,10 +35,11 @@ function LayoutWrapper() {
 
   // Jika path /userprofile, maka sembunyikan Navbar & Footer
   const hideLayout = location.pathname === "/userprofile";
+  const hideLayoutAdmin = location.pathname === "/admin";
 
   return (
     <div className="app">
-      {!hideLayout && <Navbar />}
+      {!hideLayout && !hideLayoutAdmin && <Navbar />}
 
       <main className="main">
         <Routes>
@@ -48,11 +52,12 @@ function LayoutWrapper() {
           <Route path="/payment" element={<Payment />} />
           <Route path="/detail-order" element={<DetailOrder />} />
           <Route path="/userprofile" element={<UserProfile />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           {/* <Route path="/loginhistory" element={<LoginHistory />} /> */}
         </Routes>
       </main>
 
-      {!hideLayout && <Footer />}
+      {!hideLayout && !hideLayoutAdmin && <Footer />}
     </div>
   );
 }

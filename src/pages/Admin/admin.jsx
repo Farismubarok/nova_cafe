@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./admin.css";
+import { FaClock, FaHeart, FaSignOutAlt, FaArrowLeft, FaPhone, FaEnvelope, FaCalendarAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { Users, Coffee, CreditCard } from "lucide-react";
-import profileImg from "../../assets/image/profile.jpg";
-import logo from "../../assets/image/logo.svg";
+import profileImg from "../../assets/icon/jmk.svg";
+import logo from "../../assets/logo.svg";
 
 const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   // Ambil data dari backend
   useEffect(() => {
@@ -25,27 +28,27 @@ const AdminDashboard = () => {
   return (
     <div className="admin-dashboard">
       {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="logo">
-          <img src={logo} alt="Nova Cafe Logo" />
-          <h2>Nova Cafe</h2>
-        </div>
-
-        <nav className="menu">
-          <a href="#" className="active">
-            <Users size={20} /> Dashboard
-          </a>
-          <a href="#">
-            <Users size={20} /> Customer
-          </a>
-          <a href="#">
-            <CreditCard size={20} /> Transaksi
-          </a>
-          <a href="#">
-            <Coffee size={20} /> Menu Management
-          </a>
-        </nav>
-      </aside>
+      <aside className="sidebar-admin">
+             <div className="logo-admin">
+                <img src={logo} alt="Nova Cafe"/>
+                <h1>Nova Cafe</h1>
+              </div>
+              <hr />
+              <div className="menu-admin">
+                <button className="menu-item back" onClick={() => navigate("/dashboard")}>
+                  <FaArrowLeft /> Dashboard
+                </button>
+                <button className="menu-item" onClick={() => navigate("/customers")}>
+                  <FaClock /> Customers
+                </button>
+                <button className="menu-item" onClick={() => navigate("/transactions")}>
+                  <FaHeart /> Transactions
+                </button>
+              </div>
+              <div className="menu-management" onClick={() => navigate("/menu-management")}>
+                <FaSignOutAlt /> Menu Management
+              </div>
+            </aside>
 
       {/* Main Section */}
       <main className="main-content">

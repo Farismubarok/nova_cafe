@@ -15,29 +15,49 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    // Simulasi akun (sementara) agar bisa login pakai data yang sudah ada
-    const defaultEmail = "user@example.com";
-    const defaultPassword = "123456";
+  // Simulasi akun (sementara)
+  const defaultEmail = "user@example.com";
+  const defaultPassword = "123456";
 
-    if (email === defaultEmail && password === defaultPassword) {
-      const userData = { email };
-      login(userData);
+  const adminEmail = "admin@nova.com";
+  const adminPassword = "admin123";
 
-      // Simpan riwayat login ke localStorage
-      const history = JSON.parse(localStorage.getItem("loginHistory")) || [];
-      const newEntry = {
-        email: userData.email,
-        time: new Date().toLocaleString(),
-      };
-      localStorage.setItem("loginHistory", JSON.stringify([...history, newEntry]));
+  // Login admin
+  if (email === adminEmail && password === adminPassword) {
+    const userData = { email, role: "admin" };
+    login(userData);
 
-      navigate("/"); // Arahkan ke home setelah login berhasil
-    } else {
-      setError("Email atau password salah");
-    }
-  };
+    // Simpan riwayat login
+    const history = JSON.parse(localStorage.getItem("loginHistory")) || [];
+    const newEntry = {
+      email: userData.email,
+      time: new Date().toLocaleString(),
+    };
+    localStorage.setItem("loginHistory", JSON.stringify([...history, newEntry]));
+
+    navigate("/admin"); // ✅ Arahkan ke halaman admin
+    return;
+  }
+
+  // Login user biasa
+  if (email === defaultEmail && password === defaultPassword) {
+    const userData = { email, role: "user" };
+    login(userData);
+
+    const history = JSON.parse(localStorage.getItem("loginHistory")) || [];
+    const newEntry = {
+      email: userData.email,
+      time: new Date().toLocaleString(),
+    };
+    localStorage.setItem("loginHistory", JSON.stringify([...history, newEntry]));
+
+    navigate("/"); // ✅ Arahkan ke home
+  } else {
+    setError("Email atau password salah");
+  }
+};
 
   return (
     <div className="login-wrapper">
