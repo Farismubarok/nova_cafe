@@ -4,7 +4,7 @@ export const db = mysql.createConnection({
   host: "localhost",
   user: "root",       // default XAMPP
   password: "",        // kosong di XAMPP default
-  database: "nova_cafe"
+  database: "novaa"
 });
 
 db.connect((err) => {

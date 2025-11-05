@@ -7,7 +7,7 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",       // default XAMPP
   password: "",       // biasanya kosong
-  database: "nova_cafe", // ganti sesuai database kamu
+  database: "novaa", // ganti sesuai database kamu
 });
 
 db.connect((err) => {
