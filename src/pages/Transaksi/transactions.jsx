@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "./admin.css";
+import "./transactions.css";
 import { FaClock, FaHeart, FaSignOutAlt, FaArrowLeft, FaPhone, FaEnvelope, FaCalendarAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { Users, Coffee, CreditCard } from "lucide-react";
 import profileImg from "../../assets/icon/jmk.svg";
 import logo from "../../assets/logo.svg";
 
-const AdminDashboard = () => {
+const Transactions = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ const AdminDashboard = () => {
                 <button className="menu-item" onClick={() => navigate("/customers")}>
                   <FaClock /> Customers
                 </button>
-                <button className="menu-item" onClick={() => navigate("/transactions")}>
+                <button className="menu-item" onClick={() => navigate("/transaksi")}>
                   <FaHeart /> Transactions
                 </button>
               </div>
@@ -60,25 +60,6 @@ const AdminDashboard = () => {
             <span>Nova Admin</span>
           </div>
         </header>
-
-        {/* Statistik */}
-        <section className="stats-section">
-          <div className="card">
-            <Users size={28} color="#0A774A" />
-            <div>
-              <h3>5</h3>
-              <p>Total Customer</p>
-            </div>
-          </div>
-
-          <div className="card">
-            <Coffee size={28} color="#0A774A" />
-            <div>
-              <h3>{orders.length}</h3>
-              <p>Total Order</p>
-            </div>
-          </div>
-        </section>
 
         {/* Recent Orders */}
         <section className="recent-orders">
@@ -135,4 +116,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default Transactions;

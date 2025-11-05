@@ -17,18 +17,30 @@ import Login from "./pages/Login/login.jsx";
 import Payment from "./pages/Payment/payment.jsx";
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
 import UserProfile from "./pages/Profile/userprofile.jsx";
+
 import CartPage from "./pages/Cart/cart.jsx";
+
+import Customers from "./pages/Custumer/custumer.jsx";
+import Transaksi from "./pages/Transaksi/transactions.jsx";
+
 
 function LayoutWrapper() {
   const location = window.location; // keep simple if not using useLocation here in this file
 
+
   const pathname = location.pathname;
   const hideLayout = pathname === "/userprofile";
   const hideLayoutAdmin = pathname === "/admin";
+  // Jika path /userprofile, maka sembunyikan Navbar & Footer
+  const hideLayout = location.pathname === "/userprofile";
+  const hideLayoutAdmin = location.pathname === "/admin";
+  const hideLayoutCustomers = location.pathname === "/customers";
+  const hideLayoutTransaksi = location.pathname === "/transactions";
+
 
   return (
     <div className="app">
-      {!hideLayout && !hideLayoutAdmin && <Navbar />}
+      {!hideLayout && !hideLayoutAdmin && !hideLayoutCustomers && !hideLayoutTransaksi && <Navbar />}
 
       <main className="main">
         <Routes>
@@ -42,6 +54,11 @@ function LayoutWrapper() {
           <Route path="/detail-order" element={<DetailOrder />} />
           <Route path="/userprofile" element={<UserProfile />} />
           <Route path="/admin" element={<AdminDashboard />} />
+
+          <Route path="/customers" element={<Customers />} />
+          <Route path="/transactions" element={<Transaksi />} />
+          {/* <Route path="/loginhistory" element={<LoginHistory />} /> */}
+
         </Routes>
       </main>
 
