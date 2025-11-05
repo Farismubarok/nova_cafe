@@ -29,8 +29,8 @@ function LayoutWrapper() {
 
 
   const pathname = location.pathname;
-  const hideLayout = pathname === "/userprofile";
-  const hideLayoutAdmin = pathname === "/admin";
+  // const hideLayout = pathname === "/userprofile";
+  // const hideLayoutAdmin = pathname === "/admin";
   // Jika path /userprofile, maka sembunyikan Navbar & Footer
   const hideLayout = location.pathname === "/userprofile";
   const hideLayoutAdmin = location.pathname === "/admin";
