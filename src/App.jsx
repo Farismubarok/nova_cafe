@@ -1,24 +1,13 @@
 // src/App.jsx
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
-
-// Components
+import React, { createContext, useContext, useReducer, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
-// import LoginHistory from "./components/LoginHistory.jsx"; // ✅ Sesuaikan jika dibutuhkan
+import { AuthProvider } from "./context/AuthContext.jsx";
+import { CartProvider } from "./context/CartContext.jsx"; // import, jangan definisi ulang
 
-// Context
-import { AuthProvider } from "./context/AuthContext";
-
-//pages admin
+// pages
 import AdminDashboard from "./pages/Admin/admin.jsx";
-
-// Pages
 import Home from "./pages/Home/home.jsx";
 import AboutUs from "./pages/AboutUs/about-us.jsx";
 import Menu from "./pages/Menu/menu.jsx";
@@ -28,14 +17,14 @@ import Login from "./pages/Login/login.jsx";
 import Payment from "./pages/Payment/payment.jsx";
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
 import UserProfile from "./pages/Profile/userprofile.jsx";
+import CartPage from "./pages/Cart/cart.jsx";
 
-// ✅ Komponen pembungkus untuk sembunyikan Navbar & Footer di halaman tertentu
 function LayoutWrapper() {
-  const location = useLocation();
+  const location = window.location; // keep simple if not using useLocation here in this file
 
-  // Jika path /userprofile, maka sembunyikan Navbar & Footer
-  const hideLayout = location.pathname === "/userprofile";
-  const hideLayoutAdmin = location.pathname === "/admin";
+  const pathname = location.pathname;
+  const hideLayout = pathname === "/userprofile";
+  const hideLayoutAdmin = pathname === "/admin";
 
   return (
     <div className="app">
@@ -53,7 +42,6 @@ function LayoutWrapper() {
           <Route path="/detail-order" element={<DetailOrder />} />
           <Route path="/userprofile" element={<UserProfile />} />
           <Route path="/admin" element={<AdminDashboard />} />
-          {/* <Route path="/loginhistory" element={<LoginHistory />} /> */}
         </Routes>
       </main>
 
@@ -65,9 +53,11 @@ function LayoutWrapper() {
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <LayoutWrapper />
-      </Router>
+      <CartProvider>
+        <BrowserRouter>
+          <LayoutWrapper />
+        </BrowserRouter>
+      </CartProvider>
     </AuthProvider>
   );
 }
