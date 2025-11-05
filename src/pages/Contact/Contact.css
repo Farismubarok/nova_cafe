@@ -9,7 +9,7 @@
   background-color: #0a774a;
   color: #fff;
   text-align: center;
-  padding: 60px 0;
+  padding: 73px 0;
 }
 
 .contact-header h2 {
@@ -18,9 +18,11 @@
 }
 
 .contact-header p {
-  font-size: 16px;
-  margin-top: 8px;
-  opacity: 0.9;
+  opacity: 0.95;
+  font-size: 18px; 
+  font-weight: 100; 
+  margin-top: 20px; 
+  letter-spacing: 1px; 
 }
 
 /* Main Section */

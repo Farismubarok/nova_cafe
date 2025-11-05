@@ -1,7 +1,7 @@
-.payment-page {
+ .payment-page {
   font-family: "Poppins", sans-serif;
   background-color: #fff;
-  padding: 60px 100px;
+  padding: 20px;
   color: #222;
 }
 
@@ -9,6 +9,9 @@
   display: flex;
   gap: 40px;
   align-items: flex-start;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
 }
 
 /* LEFT SECTION */
@@ -25,6 +28,7 @@
   padding: 20px 25px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
 }
 
 .order-summary h3 {
@@ -202,18 +206,17 @@
 .confirm-btn {
   width: 100%;
   margin-top: 20px;
-  background-color: #0b8344;
+  background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 10px;
-  padding: 12px;
-  font-size: 1rem;
+  border-radius: 5px;
+  padding: 10px 20px;
   cursor: pointer;
   font-weight: 600;
 }
 
 .confirm-btn:hover {
-  background-color: #09793a;
+  background-color: #45a049;
 }
 
 .secure-text {
@@ -221,4 +224,73 @@
   color: #888;
   font-size: 0.85rem;
   margin-top: 8px;
+}
+
+.payment-summary {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+/* Payment Methods */
+.payment-methods {
+  margin-top: 25px;
+}
+
+.payment-methods h3 {
+  margin-bottom: 10px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.payment-option.active {
+  border-color: #0b8344;
+  background-color: #e5f3ea;
+}
+
+.payment-option input {
+  margin-right: 10px;
+}
+
+/* Terms */
+.terms {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.terms input {
+  margin-right: 8px;
+}
+
+/* Button */
+.confirm-btn {
+  width: 100%;
+  margin-top: 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.confirm-btn:hover {
+  background-color: #45a049;
+}
+
+.secure-text {
+  font-size: 12px;
+  color: #888;
 }
