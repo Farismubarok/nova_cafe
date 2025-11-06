@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { BsFillBasket2Fill } from "react-icons/bs";
 import "./menu.css";
 
 
@@ -77,9 +78,9 @@ const MenuPage = () => {
               <div className="menu-card" key={index}>
                 <img src={item.img} alt={item.name} />
                 <div className="menu-info">
-                  <h4>{item.name}</h4>
-                  <p>Rp. {item.price.toLocaleString("id-ID")}</p>
-                  <button className="add-btn" onClick={() => handleOrder(item)}>Add</button>
+                  <p>{item.name}</p>
+                  <h4>Rp. {item.price.toLocaleString("id-ID")}</h4>
+                  <button className="add-btn" onClick={() => handleOrder(item)}><BsFillBasket2Fill className="icon-small-menu"/> Tambah Ke Keranjang</button>
                 </div>
               </div>
             ))}

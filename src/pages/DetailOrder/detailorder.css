@@ -46,8 +46,8 @@ hr {
 
 /* Option Section */
 .options-section {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, 3fr);
   gap: 50px;
   margin-bottom: 40px;
 }
@@ -74,22 +74,29 @@ hr {
 /* Topping */
 .topping-section {
   margin-bottom: 30px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.topping-section h3 {
+  padding: 20px;
 }
 
 .topping-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(3, 3fr);
+  gap: 50px;
+  row-gap: calc(5px);
+  padding: 0 20px 20px 20px;
 }
 
 .topping-item {
-  border: 1px solid #ddd;
-  border-radius: 8px;
   padding: 10px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  background-color: #f8f8f8;
+  /* margin-left: 100px;
+  margin-right: 100px; */
 }
 
 /* Notes */
@@ -163,6 +170,9 @@ hr {
 .add-cart-btn {
   background: #fff;
   color: #0b8344;
+  display: flex;
+  align-items: center;      /* sejajarkan vertikal */
+  justify-content: center;
 }
 
 .add-cart-btn:hover {
@@ -172,11 +182,21 @@ hr {
 .order-now-btn {
   background: #0b8344;
   color: white;
+  display: flex;
+  align-items: center;      /* sejajarkan vertikal */
+  justify-content: center;  /* sejajarkan horizontal */
 }
 
 .order-now-btn:hover {
   background: #086a36;
 }
+
+.icon-large {
+  font-size: 25px;
+  margin-right: 10px;
+}
+
+
 @media (max-width: 768px) {
   .detail-order-page {
     padding: 20px;

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { BsFillBasket2Fill } from "react-icons/bs";
+import { IoBagHandle } from "react-icons/io5";
 import "./detailorder.css";
 
 const DetailOrder = () => {
@@ -9,6 +11,7 @@ const DetailOrder = () => {
 
   const [portion, setPortion] = useState("Small");
   const [spicy, setSpicy] = useState("Small");
+  const [ice, setIce] = useState("Small");
   const [toppings, setToppings] = useState([]);
   const [quantity, setQuantity] = useState(1);
 
@@ -67,10 +70,10 @@ const DetailOrder = () => {
 
       <hr />
 
-      {/* Portion & Spicy Options */}
+      {/* Portion, Spicy, Ice Options */}
       <section className="options-section">
         <div className="option-group">
-          <h3>Porsi Options</h3>
+          <h3>Size Options</h3>
           <div className="option-buttons">
             {["Small", "Medium", "Large"].map((size) => (
               <button
@@ -85,13 +88,28 @@ const DetailOrder = () => {
         </div>
 
         <div className="option-group">
-          <h3>Spicy Options</h3>
+          <h3>Sugar Options</h3>
           <div className="option-buttons">
             {["Small", "Medium", "Large"].map((level) => (
               <button
                 key={level}
                 className={spicy === level ? "active" : ""}
                 onClick={() => setSpicy(level)}
+              >
+                {level}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="option-group">
+          <h3>Ice Options</h3>
+          <div className="option-buttons">
+            {["Less Ice", "Normal Ice", "Extra Ice"].map((level) => (
+              <button
+                key={level}
+                className={ice === level ? "active" : ""}
+                onClick={() => setIce(level)}
               >
                 {level}
               </button>
@@ -132,8 +150,7 @@ const DetailOrder = () => {
         <div className="quantity-box">
           <p>Jumlah</p>
           <div className="quantity-controls">
-            <button
-              onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}>
+            <button onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}>
               −
             </button>
             <span>{quantity}</span>
@@ -146,11 +163,17 @@ const DetailOrder = () => {
           <h3>{formatPrice(calculateTotal())}</h3>
         </div>
       </section>
-
+ 
       {/* Buttons */}
       <section className="action-buttons">
-        <button className="add-cart-btn">Tambah Keranjang</button>
-        <button className="order-now-btn" onClick={() => navigate("/payment", { state: { item, quantity, portion, spicy, toppings } } )}>Pesan Sekarang</button>
+        <button className="add-cart-btn"><BsFillBasket2Fill className="icon-large"/> Tambah Keranjang</button>
+        <button
+          className="order-now-btn"
+          onClick={() =>
+            navigate("/payment", {
+              state: { item, quantity, portion, spicy, ice, toppings },})}><IoBagHandle className="icon-large" />
+          Pesan Sekarang
+        </button>
       </section>
     </div>
   );

@@ -232,4 +232,25 @@
   .card {
     min-width: 100%;
   }
+   
+  .btn-delete {
+  background: #d9534f;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+  background: #c9302c;
+  transform: scale(1.05);
+}
+
+
 }

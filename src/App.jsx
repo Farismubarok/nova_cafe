@@ -17,6 +17,9 @@ import { AuthProvider } from "./context/AuthContext";
 
 //pages admin
 import AdminDashboard from "./pages/Admin/admin.jsx";
+import Customers from "./pages/Custumer/custumer.jsx";
+import Transaksi from "./pages/Transaksi/transactions.jsx";
+import Management from "./pages/Management/management.jsx";
 
 // Pages
 import Home from "./pages/Home/home.jsx";
@@ -28,8 +31,6 @@ import Login from "./pages/Login/login.jsx";
 import Payment from "./pages/Payment/payment.jsx";
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
 import UserProfile from "./pages/Profile/userprofile.jsx";
-import Customers from "./pages/Custumer/custumer.jsx";
-import Transaksi from "./pages/Transaksi/transactions.jsx";
 
 // ✅ Komponen pembungkus untuk sembunyikan Navbar & Footer di halaman tertentu
 function LayoutWrapper() {
@@ -40,10 +41,11 @@ function LayoutWrapper() {
   const hideLayoutAdmin = location.pathname === "/admin";
   const hideLayoutCustomers = location.pathname === "/customers";
   const hideLayoutTransaksi = location.pathname === "/transactions";
+  const hideLayoutManagement = location.pathname === "/management";
 
   return (
     <div className="app">
-      {!hideLayout && !hideLayoutAdmin && !hideLayoutCustomers && !hideLayoutTransaksi && <Navbar />}
+      {!hideLayout && !hideLayoutAdmin && !hideLayoutCustomers && !hideLayoutTransaksi && !hideLayoutManagement && <Navbar />}
 
       <main className="main">
         <Routes>
@@ -59,11 +61,12 @@ function LayoutWrapper() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/transactions" element={<Transaksi />} />
+          <Route path="/management" element={<Management />} />
           {/* <Route path="/loginhistory" element={<LoginHistory />} /> */}
         </Routes>
       </main>
 
-      {!hideLayout && !hideLayoutAdmin && <Footer />}
+      {!hideLayout && !hideLayoutAdmin && !hideLayoutCustomers && !hideLayoutTransaksi && !hideLayoutManagement && <Footer />}
     </div>
   );
 }

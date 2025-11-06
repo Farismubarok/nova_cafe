@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./transactions.css";
-import { FaClock, FaHeart, FaSignOutAlt, FaArrowLeft, FaPhone, FaEnvelope, FaCalendarAlt } from "react-icons/fa";
+import { FaCreditCard } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { Users, Coffee, CreditCard } from "lucide-react";
 import profileImg from "../../assets/icon/jmk.svg";
 import logo from "../../assets/logo.svg";
+import { IoPersonSharp } from "react-icons/io5";
+import { RxDashboard } from "react-icons/rx";
+import { PiCoffeeFill } from "react-icons/pi";
+
+
 
 const Transactions = () => {
   const [orders, setOrders] = useState([]);
@@ -36,17 +40,19 @@ const Transactions = () => {
               <hr />
               <div className="menu-admin">
                 <button className="menu-item back" onClick={() => navigate("/admin")}>
-                  <FaArrowLeft /> Dashboard
+                  <RxDashboard /> Dashboard
                 </button>
                 <button className="menu-item" onClick={() => navigate("/customers")}>
-                  <FaClock /> Customers
+                  <IoPersonSharp /> Customers
                 </button>
-                <button className="menu-item" onClick={() => navigate("/transaksi")}>
-                  <FaHeart /> Transactions
+                <button
+                  className="menu-item"onClick={() => navigate("/transactions")}>
+                  <FaCreditCard /> Transactions
                 </button>
-              </div>
-              <div className="menu-management" onClick={() => navigate("/menu-management")}>
-                <FaSignOutAlt /> Menu Management
+                <button
+                  className="menu-item"onClick={() => navigate("/management")}>
+                  <PiCoffeeFill /> Menu Management
+                </button>
               </div>
             </aside>
 
