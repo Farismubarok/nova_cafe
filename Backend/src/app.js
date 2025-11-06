@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routers/authRoutes.js";
 import menuRoutes from "./routers/menuRoutes.js";
+import categoryRoutes from "./routers/categoryRoutes.js";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 // Mount routes
 app.use("/auth", authRoutes);
 app.use("/menu", menuRoutes);
+app.use("/categories", categoryRoutes);
 
 // Basic health endpoint
 app.get("/", (req, res) => {
