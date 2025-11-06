@@ -7,16 +7,13 @@ const MenuPage = () => {
   const navigate = useNavigate();
   const { menuItems, loading, error } = useMenu();
 
-  // Group menu items by category
+  // menuItems already comes grouped by category from our hook
   const menuByCategory = useMemo(() => {
-    return menuItems.reduce((acc, item) => {
-      if (!acc[item.category]) {
-        acc[item.category] = [];
-      }
-      acc[item.category].push({
+    return menuItems.reduce((acc, categoryGroup) => {
+      acc[categoryGroup.category.name] = categoryGroup.items.map(item => ({
         ...item,
-        img: item.image // use the image from our hook
-      });
+        img: item.image
+      }));
       return acc;
     }, {});
   }, [menuItems]);
@@ -67,11 +64,27 @@ const MenuPage = () => {
           <div className="menu-grid">
             {menuByCategory[category].map((item) => (
               <div className="menu-card" key={item.id}>
-                <img src={item.img} alt={item.name} />
+                <div className="image-container">
+                  <img 
+                    src={item.img} 
+                    alt={item.name}
+                    loading="lazy"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://png.pngtree.com/png-vector/20220705/ourmid/pngtree-food-logo-png-image_5687686.png";
+                    }}
+                  />
+                </div>
                 <div className="menu-info">
                   <h4>{item.name}</h4>
                   <p>Rp. {item.price.toLocaleString("id-ID")}</p>
-                  <button className="add-btn" onClick={() => handleOrder(item)}>Add</button>
+                  <button 
+                    className="add-btn" 
+                    onClick={() => handleOrder(item)}
+                    aria-label={`Add ${item.name} to order`}
+                  >
+                    Add to Order
+                  </button>
                 </div>
               </div>
             ))}
