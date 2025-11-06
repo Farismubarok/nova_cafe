@@ -1,137 +1,55 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./payment.css";
-import icedCoffee from "../../assets/image/iced coffee.png";
 
 const Payment = () => {
+  const location = useLocation();
+  const { total, items } = location.state || { total: 0, items: [] }; // Retrieve total and items from state
+
   const [deliveryMethod, setDeliveryMethod] = useState("Pickup di Toko");
   const [paymentMethod, setPaymentMethod] = useState("OVO");
-  const [promoCode, setPromoCode] = useState("");
 
-  const subtotal = 92000;
-  const tax = subtotal * 0.1;
+  const subtotal = total; // Use the total passed from the cart
+  const tax = subtotal * 0.1; // 10% tax
   const shipping = 0; // Free Pickup
-  const total = subtotal + tax + shipping;
+  const finalTotal = subtotal + tax + shipping;
 
   return (
     <div className="payment-page">
+      <h2>Halaman Pembayaran</h2>
       <div className="payment-container">
-        {/* Left Column */}
-        <div className="left-section">
-          {/* Ringkasan Pesanan */}
-          <div className="order-summary">
-            <h3>Ringkasan Pesanan</h3>
-            <div className="order-item">
-              <img src={icedCoffee} alt="Iced Coffee" />
-              <div className="item-info">
-                <h4>Iced Coffee</h4>
-                <p>Small</p>
-                <p>Caramel Drizzle</p>
-                <p>Qty: 1</p>
-              </div>
-              <div className="item-price">Rp. 45.000</div>
+        <div className="order-summary">
+          <h3>Ringkasan Pesanan</h3>
+          {items.map((item) => (
+            <div key={item.key}>
+              <p>{item.name} - Qty: {item.quantity} - Rp. {item.totalPrice.toLocaleString("id-ID")}</p>
             </div>
-
-            <div className="order-item">
-              <img src={icedCoffee} alt="Iced Coffee" />
-              <div className="item-info">
-                <h4>Iced Coffee</h4>
-                <p>Small</p>
-                <p>Caramel Drizzle</p>
-                <p>Qty: 1</p>
-              </div>
-              <div className="item-price">Rp. 45.000</div>
-            </div>
-          </div>
-
-          {/* Informasi Pengiriman */}
-          <div className="shipping-info">
-            <h3>Informasi Pengiriman</h3>
-            <div className="delivery-method">
-              <label>Metode Pengambilan</label>
-              <select
-                value={deliveryMethod}
-                onChange={(e) => setDeliveryMethod(e.target.value)}
-              >
-                <option>Pickup di Toko</option>
-                <option>Delivery</option>
-              </select>
-            </div>
-            <p className="delivery-time">⏱ Estimasi waktu: 15–20 menit</p>
-          </div>
+          ))}
+          <p>Subtotal: Rp. {subtotal.toLocaleString("id-ID")}</p>
+          <p>Pajak (10%): Rp. {tax.toLocaleString("id-ID")}</p>
+          <p>Total: Rp. {finalTotal.toLocaleString("id-ID")}</p>
         </div>
 
-        {/* Right Column */}
-        <div className="right-section">
-          <div className="payment-summary">
-            <h3>Ringkasan Pembayaran</h3>
-            <div className="summary-item">
-              <span>Subtotal</span>
-              <span>Rp. {subtotal.toLocaleString("id-ID")}</span>
-            </div>
-            <div className="summary-item">
-              <span>Pajak PPN (10%)</span>
-              <span>Rp. {tax.toLocaleString("id-ID")}</span>
-            </div>
-            <div className="summary-item">
-              <span>Ongkos Kirim</span>
-              <span className="free">Free Pickup</span>
-            </div>
-
-            <div className="promo-section">
-              <label htmlFor="promo">Kode Promo</label>
-              <div className="promo-input">
-                <input
-                  id="promo"
-                  type="text"
-                  placeholder="Masukkan kode promo"
-                  value={promoCode}
-                  onChange={(e) => setPromoCode(e.target.value)}
-                />
-                <button>Pakai</button>
-              </div>
-            </div>
-
-            <div className="total-section">
-              <p>Total Pembayaran</p>
-              <h3>Rp. {total.toLocaleString("id-ID")}</h3>
-            </div>
-          </div>
-
-          {/* Metode Pembayaran */}
-          <div className="payment-methods">
-            <h3>Metode Pembayaran</h3>
-            {["OVO", "GoPay", "DANA", "BCA Virtual Account", "Mandiri Virtual Account", "BNI Virtual Account", "Kartu Kredit/Debit"].map(
-              (method) => (
-                <label
-                  key={method}
-                  className={`payment-option ${
-                    paymentMethod === method ? "active" : ""
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="payment"
-                    value={method}
-                    checked={paymentMethod === method}
-                    onChange={() => setPaymentMethod(method)}
-                  />
-                  {method}
-                </label>
-              )
-            )}
-          </div>
-
-          <div className="terms">
-            <input type="checkbox" id="agree" />
-            <label htmlFor="agree">
-              Saya telah membaca dan menyetujui syarat dan ketentuan yang
-              berlaku
-            </label>
-          </div>
-
-          <button className="confirm-btn">Konfirmasi Pembayaran</button>
-          <p className="secure-text">🔒 Pembayaran aman & terenkripsi</p>
+        <div className="delivery-method">
+          <h3>Metode Pengiriman</h3>
+          <select value={deliveryMethod} onChange={(e) => setDeliveryMethod(e.target.value)}>
+            <option>Pickup di Toko</option>
+            <option>Delivery</option>
+          </select>
         </div>
+
+        <div className="payment-method">
+          <h3>Metode Pembayaran</h3>
+          <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
+            <option>OVO</option>
+            <option>GoPay</option>
+            <option>DANA</option>
+            <option>Kartu Kredit/Debit</option>
+          </select>
+        </div>
+
+        <button className="confirm-btn">Konfirmasi Pembayaran</button>
+        <p className="secure-text">🔒 Pembayaran aman & terenkripsi</p>
       </div>
     </div>
   );

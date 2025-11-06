@@ -1,18 +1,7 @@
-import express from "express";
-import cors from "cors";
 import dotenv from "dotenv";
-import { db } from "./config/db.js";
+import app from "./app.js";
 
 dotenv.config();
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-
-// Tes endpoint dasar
-app.get("/", (req, res) => {
-  res.send("☕ Nova Café Backend berjalan!");
-});
 
 // Jalankan server
 const PORT = process.env.PORT || 5000;
