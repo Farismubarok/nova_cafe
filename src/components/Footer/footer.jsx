@@ -37,8 +37,8 @@ const Footer = () => {
         <div className="footer-section">
           <h3>Quick Links</h3>
           <ul className="footer-links">
-            <li><a href="/">Menu</a></li>
-            <li><a href="/store">Store</a></li>
+            <li><a href="/menu">Menu</a></li>
+            <li><a href="/">Store</a></li>
             <li><a href="/contact">Contact</a></li>
             <li><a href="/about">About Nova</a></li>
           </ul>

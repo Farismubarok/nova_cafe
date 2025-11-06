@@ -185,13 +185,13 @@ ul {
   align-items: center;
   text-align: center;
   color: #fff;
-  padding-top: 90px;
+  padding-top: 40px;
 }
 
 .hero-content {
   max-width: 900px;
   padding-top: 110px;
-  padding-bottom: 110px;
+  padding-bottom: 20px;
 }
 
 .hero-title {
@@ -219,7 +219,7 @@ ul {
   gap: 25px;
   justify-content: center;
   margin-top: 50px;
-  margin-bottom: 130px;
+  margin-bottom: 110px;
 }
 
 .btn-primary {
@@ -392,12 +392,18 @@ ul {
   margin: 10px 0;
 }
 
+.icon-small {
+  font-size: 19px;
+  margin-right: 5px;
+}
+
 .btn-cart {
   background: #017143;
   color: #fff;
   border: none;
-  padding: 8px 14px;
+  padding: 12px 14px;
   border-radius: 6px;
+  font-size: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
