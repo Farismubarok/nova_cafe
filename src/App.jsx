@@ -36,11 +36,12 @@ function LayoutWrapper() {
   const hideLayoutAdmin = location.pathname === "/admin";
   const hideLayoutCustomers = location.pathname === "/customers";
   const hideLayoutTransaksi = location.pathname === "/transactions";
+  const hideLayoutManagement = location.pathname === "/management";
 
 
   return (
     <div className="app">
-      {!hideLayout && !hideLayoutAdmin && !hideLayoutCustomers && !hideLayoutTransaksi && <Navbar />}
+      {!hideLayout && !hideLayoutAdmin && !hideLayoutCustomers && !hideLayoutTransaksi && !hideLayoutManagement && <Navbar />}
 
       <main className="main">
         <Routes>
@@ -57,12 +58,13 @@ function LayoutWrapper() {
 
           <Route path="/customers" element={<Customers />} />
           <Route path="/transactions" element={<Transaksi />} />
+          <Route path="/management" element={<Management />} />
           {/* <Route path="/loginhistory" element={<LoginHistory />} /> */}
 
         </Routes>
       </main>
 
-      {!hideLayout && !hideLayoutAdmin && <Footer />}
+      {!hideLayout && !hideLayoutAdmin && !hideLayoutCustomers && !hideLayoutTransaksi && !hideLayoutManagement && <Footer />}
     </div>
   );
 }

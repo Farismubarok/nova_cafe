@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { BsFillBasket2Fill } from "react-icons/bs";
 import '../Home/Home.css';
+
+// Gambar dan ikon
 import heroBg from '../../assets/image/herobg.jpg';
 import iconNext from '../../assets/icon/next.svg';
 import feature1 from '../../assets/icon/coffee-beans.svg';
@@ -8,6 +11,8 @@ import feature2 from '../../assets/icon/awward.svg';
 import feature3 from '../../assets/icon/clock.svg';
 import feature4 from '../../assets/icon/experience.svg';
 import cafeImg from '../../assets/image/green-cafe.jpg';
+
+// Produk
 import productImg1 from '../../assets/image/Oops!.jpg';
 import productImg2 from '../../assets/image/kate laine.jpg';
 import productImg3 from '../../assets/image/hot matcha.jpg';
@@ -15,16 +20,17 @@ import productImg4 from '../../assets/image/gingerbread.jpg';
 import productImg5 from '../../assets/image/gingerbread latte.jpg';
 import productImg6 from '../../assets/image/garifulina.jpg';
 import menu from '../../assets/image/bublegum.png';
+
+// Avatar pelanggan
 import avatar1 from '../../assets/image/pavel.jpg';
 import avatar2 from '../../assets/image/juan.jpg';
 import avatar3 from '../../assets/image/eric.jpg';
 import avatar4 from '../../assets/image/divaris.jpg';
 import avatar5 from '../../assets/image/christina.jpg';
 
-// alias imports to match JSX variable names used elsewhere
+// alias imports
 const interiorCafe = cafeImg;
 const greenCafe = cafeImg;
-// const barista = productImg3;
 const oops = productImg1;
 const kateLaine = productImg2;
 const matcha = productImg3;
@@ -32,16 +38,41 @@ const gingerbread = productImg4;
 const gingerbreadLatte = productImg5;
 const garifulina = productImg6;
 
-const christina = avatar5;
-const eric = avatar3;
-const juan = avatar2;
-const divaris = avatar4;
-const rashed = avatar1;
-
-
 const Home = () => {
-  const products = [1,2,3,4]; // replace with real data later
-    return (
+  const products = [1, 2, 3, 4];
+
+  // ===== TESTIMONIALS DATA + STATE =====
+  const testimonials = [
+    {
+      name: "Christina",
+      text: "Kopinya luar biasa lembut dan wangi, bikin semangat pagi-pagi!",
+      img: avatar5,
+    },
+    {
+      name: "Eric",
+      text: "Baristanya ramah banget! Aku suka latte art-nya yang unik.",
+      img: avatar3,
+    },
+    {
+      name: "Tommy",
+      text: "Kopi terbaik yang pernah saya coba! Suasana cafe-nya sangat nyaman dan cozy.",
+      img: avatar2,
+    },
+    {
+      name: "Divaris",
+      text: "Tempat yang pas buat kerja santai, Wi-Fi kencang dan suasananya chill.",
+      img: avatar4,
+    },
+    {
+      name: "Rashed",
+      text: "Croissant dan cappuccino-nya kombinasi sempurna. Recommended banget!",
+      img: avatar1,
+    },
+  ];
+
+  const [activeIndex, setActiveIndex] = useState(2); // Default: Tommy di tengah
+
+  return (
     <div className="home-container">
       {/* Hero Section */}
       <section className="hero" id="home" style={{ backgroundImage: `url(${heroBg})` }}>
@@ -56,7 +87,7 @@ const Home = () => {
           <div className="hero-buttons">
             <Link to="/menu" className="btn-primary">
               Lihat Menu
-              <img src={iconNext} alt="next" style={{width:20,height:20,marginLeft:8}} />
+              <img src={iconNext} alt="next" style={{ width: 20, height: 20, marginLeft: 8 }} />
             </Link>
           </div>
         </div>
@@ -98,28 +129,14 @@ const Home = () => {
             Suasana interior yang nyaman, aroma kopi yang khas, dan pelayanan yang ramah kami hadirkan untuk membuat setiap momen menjadi lebih berkesan.<br /><br />
             Hadir sejak awal dengan semangat kebersamaan, Nova Cafe menjadi tempat berkumpulnya teman, keluarga, dan cerita.
           </p>
-          <button className="btn-secondary">
+          <Link to="/about" className="btn-secondary">
             Selengkapnya
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M6 16H26M26 16L16 6M26 16L16 26" stroke="white" strokeWidth="2"/>
+              <path d="M6 16H26M26 16L16 6M26 16L16 26" stroke="white" strokeWidth="2" />
             </svg>
-          </button>
+          </Link>
         </div>
       </section>
-
-      {/* Barista Section
-      <section className="barista" id="barista">
-        <div className="barista-content">
-          <p className="barista-text">
-            Di balik setiap secangkir kopi istimewa Nova Cafe, ada barista yang menguasai seni menyeduh.<br /><br />
-            Tim barista kami telah terlatih untuk menghadirkan racikan terbaik, dari biji pilihan hingga ke meja Anda.<br /><br />
-            Kami tidak sekadar menyajikan kopi, kami menyajikan pengalaman yang autentik dan berkelas.
-          </p>
-        </div>
-        <div className="barista-image">
-          <img src={barista} alt="Barista" />
-        </div>
-      </section> */}
 
       {/* Winter Special Section */}
       <section className="winter-special">
@@ -134,7 +151,7 @@ const Home = () => {
           <button className="btn-winter">
             Order Now
             <svg width="24" height="24" viewBox="0 0 24 12" fill="none">
-              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#017143" strokeWidth="2"/>
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#017143" strokeWidth="2" />
             </svg>
           </button>
         </div>
@@ -158,39 +175,48 @@ const Home = () => {
           {products.map((_, i) => (
             <div className="menu-card" key={i}>
               <img src={menu} alt="Frappe Mango" />
-              <h3>Frappe mango</h3>
-              <p className="price">Rp. 45.000</p>
+              <p>Frappe mango</p>
+              <h4 className="price-home">Rp. 45.000</h4>
               <button className="btn-cart">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M9 11V6L15 6V11M3 11L5 21H19L21 11H3Z" stroke="white" strokeWidth="2"/>
-                </svg>
+                <BsFillBasket2Fill className="icon-small" />
                 Tambah ke Keranjang
               </button>
             </div>
           ))}
         </div>
 
-        <button className="btn-view-all">
+        <Link to="/menu" className="btn-view-all">
           Lihat Semua Menu
           <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-            <path d="M5 13H21M21 13L13 5M21 13L13 21" stroke="#017143" strokeWidth="2"/>
+            <path d="M5 13H21M21 13L13 5M21 13L13 21" stroke="#017143" strokeWidth="2" />
           </svg>
-        </button>
+        </Link>
       </section>
 
       {/* Testimonials Section */}
       <section className="testimonials">
         <h2>Testimoni Pelanggan</h2>
+
         <div className="testimonial-avatars">
-          <img src={christina} alt="Christina" className="avatar avatar-small" />
-          <img src={eric} alt="Eric" className="avatar avatar-medium" />
-          <img src={juan} alt="Juan" className="avatar avatar-large" />
-          <img src={divaris} alt="Divaris" className="avatar avatar-medium" />
-          <img src={rashed} alt="Rashed" className="avatar avatar-small" />
+          {testimonials.map((t, i) => (
+            <img
+              key={i}
+              src={t.img}
+              alt={t.name}
+              onClick={() => setActiveIndex(i)}
+              className={`avatar ${i === activeIndex ? "avatar-large" : "avatar-small"}`}
+              style={{
+                cursor: "pointer",
+                border: i === activeIndex ? "3px solid #017143" : "none",
+                transition: "all 0.3s ease",
+              }}
+            />
+          ))}
         </div>
-        <p className="testimonial-name">Tommy</p>
+
+        <p className="testimonial-name">{testimonials[activeIndex].name}</p>
         <p className="testimonial-text">
-          "Kopi terbaik yang pernah saya coba! <br /> Suasana cafe-nya sangat nyaman dan cozy."
+          "{testimonials[activeIndex].text}"
         </p>
       </section>
     </div>
