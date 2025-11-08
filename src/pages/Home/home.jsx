@@ -177,10 +177,10 @@ const Home = () => {
               <img src={menu} alt="Frappe Mango" />
               <p>Frappe mango</p>
               <h4 className="price-home">Rp. 45.000</h4>
-              <button className="btn-cart">
+              <Link to="/detail-order" className="btn-cart">
                 <BsFillBasket2Fill className="icon-small" />
                 Tambah ke Keranjang
-              </button>
+              </Link>
             </div>
           ))}
         </div>

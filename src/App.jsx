@@ -1,10 +1,10 @@
 // src/App.jsx
-import React, { createContext, useContext, useReducer, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
-import { CartProvider } from "./context/CartContext.jsx"; // import, jangan definisi ulang
+import { CartProvider } from "./context/CartContext.jsx";
 
 // pages
 import AdminDashboard from "./pages/Admin/admin.jsx";
@@ -18,31 +18,30 @@ import Payment from "./pages/Payment/payment.jsx";
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
 import UserProfile from "./pages/Profile/userprofile.jsx";
 
-import CartPage from "./pages/Cart/cart.jsx";
-
 import Customers from "./pages/Custumer/custumer.jsx";
 import Transaksi from "./pages/Transaksi/transactions.jsx";
-import Management from "./pages/Management/management.jsx"
+import Management from "./pages/Management/management.jsx"; // tambahkan jika ada
 
-
+// ====== HANYA bagian ini yang diperbaiki ======
 function LayoutWrapper() {
-  const location = window.location; // keep simple if not using useLocation here in this file
+  const location = useLocation(); // ✅ gunakan hook, bukan window.location
+  const pathname = location.pathname; // ✅ tetap sesuai struktur aslimu
 
-
-  const name = location.pathname;
-  // const hideLayout = pathname === "/userprofile";
-  // const hideLayoutAdmin = pathname === "/admin";
-  // Jika path /userprofile, maka sembunyikan Navbar & Footer
-  const hideLayout = location.pathname === "/userprofile";
-  const hideLayoutAdmin = location.pathname === "/admin";
-  const hideLayoutCustomers = location.pathname === "/customers";
-  const hideLayoutTransaksi = location.pathname === "/transactions";
-  const hideLayoutManagement = location.pathname === "/management";
-
+  // logika asli tetap sama
+  const hideLayout = pathname === "/userprofile";
+  const hideLayoutAdmin = pathname === "/admin";
+  const hideLayoutCustomers = pathname === "/customers";
+  const hideLayoutTransaksi = pathname === "/transactions";
+  const hideLayoutManagement = pathname === "/management";
 
   return (
     <div className="app">
-      {!hideLayout && !hideLayoutAdmin && !hideLayoutCustomers && !hideLayoutTransaksi && !hideLayoutManagement && <Navbar />}
+      {/* Navbar tetap pakai kondisi seperti semula */}
+      {!hideLayout &&
+        !hideLayoutAdmin &&
+        !hideLayoutCustomers &&
+        !hideLayoutTransaksi &&
+        !hideLayoutManagement && <Navbar />}
 
       <main className="main">
         <Routes>
@@ -56,19 +55,23 @@ function LayoutWrapper() {
           <Route path="/detail-order" element={<DetailOrder />} />
           <Route path="/userprofile" element={<UserProfile />} />
           <Route path="/admin" element={<AdminDashboard />} />
-
           <Route path="/customers" element={<Customers />} />
           <Route path="/transactions" element={<Transaksi />} />
           <Route path="/management" element={<Management />} />
           {/* <Route path="/loginhistory" element={<LoginHistory />} /> */}
-
         </Routes>
       </main>
 
-      {!hideLayout && !hideLayoutAdmin && !hideLayoutCustomers && !hideLayoutTransaksi && !hideLayoutManagement && <Footer />}
+      {/* Footer tetap pakai kondisi seperti semula */}
+      {!hideLayout &&
+        !hideLayoutAdmin &&
+        !hideLayoutCustomers &&
+        !hideLayoutTransaksi &&
+        !hideLayoutManagement && <Footer />}
     </div>
   );
 }
+// ====== SAMPAI SINI ======
 
 function App() {
   return (
