@@ -1,10 +1,10 @@
 // src/App.jsx
-import React, { createContext, useContext, useReducer, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
-import { CartProvider } from "./context/CartContext.jsx"; // import, jangan definisi ulang
+import { CartProvider } from "./context/CartContext.jsx";
 
 // pages
 import AdminDashboard from "./pages/Admin/admin.jsx";
@@ -17,31 +17,28 @@ import Login from "./pages/Login/login.jsx";
 import Payment from "./pages/Payment/payment.jsx";
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
 import UserProfile from "./pages/Profile/userprofile.jsx";
-
-import CartPage from "./pages/Cart/cart.jsx";
-
 import Customers from "./pages/Custumer/custumer.jsx";
 import Transaksi from "./pages/Transaksi/transactions.jsx";
-
+import Management from "./pages/Management/management.jsx"; // pastikan file ini ada
 
 function LayoutWrapper() {
-  const location = window.location; // keep simple if not using useLocation here in this file
-
-
+  const location = useLocation();
   const pathname = location.pathname;
-  // const hideLayout = pathname === "/userprofile";
-  // const hideLayoutAdmin = pathname === "/admin";
-  // Jika path /userprofile, maka sembunyikan Navbar & Footer
-  const hideLayout = location.pathname === "/userprofile";
-  const hideLayoutAdmin = location.pathname === "/admin";
-  const hideLayoutCustomers = location.pathname === "/customers";
-  const hideLayoutTransaksi = location.pathname === "/transactions";
-  const hideLayoutManagement = location.pathname === "/management";
 
+  // daftar halaman yang ingin sembunyikan Navbar & Footer
+  const hideLayoutPaths = [
+    "/userprofile",
+    "/admin",
+    "/customers",
+    "/transactions",
+    "/management",
+  ];
+
+  const hideLayout = hideLayoutPaths.includes(pathname);
 
   return (
     <div className="app">
-      {!hideLayout && !hideLayoutAdmin && !hideLayoutCustomers && !hideLayoutTransaksi && !hideLayoutManagement && <Navbar />}
+      {!hideLayout && <Navbar />}
 
       <main className="main">
         <Routes>
@@ -55,16 +52,13 @@ function LayoutWrapper() {
           <Route path="/detail-order" element={<DetailOrder />} />
           <Route path="/userprofile" element={<UserProfile />} />
           <Route path="/admin" element={<AdminDashboard />} />
-
           <Route path="/customers" element={<Customers />} />
           <Route path="/transactions" element={<Transaksi />} />
           <Route path="/management" element={<Management />} />
-          {/* <Route path="/loginhistory" element={<LoginHistory />} /> */}
-
         </Routes>
       </main>
 
-      {!hideLayout && !hideLayoutAdmin && !hideLayoutCustomers && !hideLayoutTransaksi && !hideLayoutManagement && <Footer />}
+      {!hideLayout && <Footer />}
     </div>
   );
 }

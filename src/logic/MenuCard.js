@@ -28,7 +28,7 @@ import frappe5 from "../assets/image/strawberry.png";
 // 🍽️ Food
 import food1 from "../assets/image/nas gor.png";
 import food2 from "../assets/image/teriyaki.png";
-import food3 from "../assets/image/mmeat ball.png";
+// import food3 from "../assets/image/mmeat ball.png";
 import food4 from "../assets/image/spaghetti meatball.png";
 import food5 from "../assets/image/french firies cheesy.png";
 
@@ -36,8 +36,8 @@ import food5 from "../assets/image/french firies cheesy.png";
 import refresher1 from "../assets/image/bublegum.png";
 import refresher2 from "../assets/image/lemon iced mint.png";
 import refresher3 from "../assets/image/lemon iced.png";
-import refresher4 from "../assets/image/raspberry.png";
-import refresher5 from "../assets/image/watermellon.png";
+// import refresher4 from "../assets/image/raspberry.png";
+// import refresher5 from "../assets/image/watermellon.png";
 
 // Mapping gambar lokal sebagai fallback
 const localImages = {
@@ -58,14 +58,14 @@ const localImages = {
   'Frappe Strawberry': frappe5,
   'Nasi Goreng': food1,
   'Chicken Teriyaki': food2,
-  'Meatball': food3,
+  // 'Meatball': food3,
   'Spaghetti Meatball': food4,
   'French Fries Cheesy': food5,
   'Bubblegum': refresher1,
   'Lemon Mint': refresher2,
   'Orange Lemonade': refresher3,
-  'Raspberry': refresher4,
-  'Watermelon': refresher5,
+  // 'Raspberry': refresher4,
+  // 'Watermelon': refresher5,
 };
 
 // Format harga
