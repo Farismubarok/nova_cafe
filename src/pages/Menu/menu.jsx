@@ -78,16 +78,6 @@ const MenuPage = () => {
                 </div>
                 <div className="menu-info">
 
-                  <h4>{item.name}</h4>
-                  <p>Rp. {item.price.toLocaleString("id-ID")}</p>
-                  <button 
-                    className="add-btn" 
-                    onClick={() => handleOrder(item)}
-                    aria-label={`Add ${item.name} to order`}
-                  >
-                    Add to Order
-                  </button>
-
                   <p>{item.name}</p>
                   <h4>Rp. {item.price.toLocaleString("id-ID")}</h4>
                   <button className="add-btn" onClick={() => handleOrder(item)}><BsFillBasket2Fill className="icon-small-menu"/> Tambah Ke Keranjang</button>

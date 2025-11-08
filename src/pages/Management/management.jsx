@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,} from "react";
 import "./management.css";
 import { FaCreditCard, FaTrashAlt, FaEdit, FaPlus } from "react-icons/fa";
+import { BsFillBasket2Fill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import profileImg from "../../assets/icon/jmk.svg";
@@ -10,8 +11,11 @@ import { PiCoffeeFill } from "react-icons/pi";
 
 const Management = () => {
   const navigate = useNavigate();
+
+  // === STATE ===
   const [menus, setMenus] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [editingMenu, setEditingMenu] = useState(null);
   const [newMenu, setNewMenu] = useState({ name: "", price: "", image: "" });
 
@@ -19,11 +23,14 @@ const Management = () => {
   const fetchMenus = async () => {
     try {
       const res = await fetch("http://localhost:5000/menus");
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
       setMenus(data);
-      setLoading(false);
+      setError("");
     } catch (err) {
       console.error("Gagal ambil data:", err);
+      setError(err.message);
+    } finally {
       setLoading(false);
     }
   };
@@ -78,6 +85,11 @@ const Management = () => {
     }
   };
 
+  // === HANDLE ORDER (dummy) ===
+  const handleOrder = (item) => {
+    alert(`✅ ${item.name} ditambahkan ke keranjang!`);
+  };
+
   return (
     <div className="admin-dashboard">
       {/* Sidebar */}
@@ -113,6 +125,7 @@ const Management = () => {
           </div>
         </header>
 
+        {/* === ADMIN CRUD SECTION === */}
         <section className="menu-section">
           <h2>Menu Management</h2>
 
@@ -122,25 +135,19 @@ const Management = () => {
               type="text"
               placeholder="Nama menu"
               value={newMenu.name}
-              onChange={(e) =>
-                setNewMenu({ ...newMenu, name: e.target.value })
-              }
+              onChange={(e) => setNewMenu({ ...newMenu, name: e.target.value })}
             />
             <input
               type="number"
               placeholder="Harga"
               value={newMenu.price}
-              onChange={(e) =>
-                setNewMenu({ ...newMenu, price: e.target.value })
-              }
+              onChange={(e) => setNewMenu({ ...newMenu, price: e.target.value })}
             />
             <input
               type="text"
               placeholder="Link gambar (opsional)"
               value={newMenu.image}
-              onChange={(e) =>
-                setNewMenu({ ...newMenu, image: e.target.value })
-              }
+              onChange={(e) => setNewMenu({ ...newMenu, image: e.target.value })}
             />
             <button type="submit" className="btn-edit">
               <FaPlus /> Tambah
@@ -149,7 +156,9 @@ const Management = () => {
 
           {/* Data Menu */}
           {loading ? (
-            <p>Loading...</p>
+            <p>Loading data menu...</p>
+          ) : error ? (
+            <p className="error">Gagal memuat data menu: {error}</p>
           ) : (
             <div className="menu-grid">
               {menus.map((menu) => (
@@ -182,20 +191,32 @@ const Management = () => {
                             })
                           }
                         />
-                        <button type="submit" className="btn-edit">Simpan</button>
-                        <button
-                          type="button"
-                          onClick={() => setEditingMenu(null)}
-                          className="btn-delete"
-                        >
-                          Batal
-                        </button>
+                        <input
+                          type="text"
+                          value={editingMenu.image}
+                          onChange={(e) =>
+                            setEditingMenu({
+                              ...editingMenu,
+                              image: e.target.value,
+                            })
+                          }
+                        />
+                        <div className="edit-buttons">
+                          <button type="submit" className="btn-edit">Simpan</button>
+                          <button
+                            type="button"
+                            onClick={() => setEditingMenu(null)}
+                            className="btn-delete"
+                          >
+                            Batal
+                          </button>
+                        </div>
                       </form>
                     ) : (
                       <>
                         <p className="menu-name">{menu.name}</p>
                         <p className="menu-price">
-                          Rp {menu.price.toLocaleString("id-ID")}
+                          Rp {Number(menu.price).toLocaleString("id-ID")}
                         </p>
                         <div className="menu-actions">
                           <button
@@ -219,6 +240,45 @@ const Management = () => {
             </div>
           )}
         </section>
+
+        {/* === USER VIEW === */}
+        <div className="menu-page">
+
+          {/* User menu display */}
+          <section className="menu-section">
+            <h3>All Menu</h3>
+            {loading ? (
+              <p>Loading menu items...</p>
+            ) : (
+              <div className="menu-grid">
+                {menus.map((item) => (
+                  <div className="menu-card" key={item.id}>
+                    <div className="image-container">
+                      <img
+                        src={
+                          item.image ||
+                          "https://png.pngtree.com/png-vector/20220705/ourmid/pngtree-food-logo-png-image_5687686.png"
+                        }
+                        alt={item.name}
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="menu-info">
+                      <p>{item.name}</p>
+                      <h4>Rp. {Number(item.price).toLocaleString("id-ID")}</h4>
+                      <button
+                        className="add-btn"
+                        onClick={() => handleOrder(item)}
+                      >
+                        <BsFillBasket2Fill className="icon-small-menu" /> Tambah ke Keranjang
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        </div>
       </main>
     </div>
   );

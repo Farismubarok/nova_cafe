@@ -1,30 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { BsFillBasket2Fill } from "react-icons/bs";
 import { IoBagHandle } from "react-icons/io5";
+import {
+  calculateTotal,
+  drinkToppings,
+  foodToppings,
+  formatPrice as formatPriceUtil,
+} from "../../logic/DetailOrder";
+import { useCart } from "../../context/CartContext";
 import "./detailorder.css";
+
+const formatPrice = (price) => "Rp. " + formatPriceUtil(price || 0);
 
 const DetailOrder = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const item = location.state?.item; // ambil data item dari navigasi
+  const { state } = useLocation();
+  const item = state?.item || state || null;
+  const { addToCart } = useCart();
 
   const [portion, setPortion] = useState("Small");
-  const [spicy, setSpicy] = useState("Small");
+  const [spicy, setSpicy] = useState("Normal");
   const [ice, setIce] = useState("Normal Ice");
   const [toppings, setToppings] = useState([]);
   const [quantity, setQuantity] = useState(1);
 
   const basePrice = item?.price || 75000;
 
-  const toppingOptions = [
-    { name: "Whipped Cream", price: 5000 },
-    { name: "Extra Whipped Cream", price: 15000 },
-    { name: "Caramel Drizzle", price: 5000 },
-    { name: "Mocha Drizzle", price: 6000 },
-    { name: "Caramel Syrup", price: 5000 },
-    { name: "Vanilla Syrup", price: 5000 },
-  ];
+  // Tentukan jenis topping (makanan/minuman)
+  const toppingList = useMemo(
+    () => (item?.category === "Food" ? foodToppings : drinkToppings),
+    [item]
+  );
+
+  useEffect(() => {
+    if (!item) navigate("/menu", { replace: true });
+  }, [item, navigate]);
 
   const handleToppingChange = (name) => {
     setToppings((prev) =>
@@ -34,16 +45,34 @@ const DetailOrder = () => {
     );
   };
 
-  const calculateTotal = () => {
-    const toppingTotal = toppings.reduce((sum, t) => {
-      const toppingItem = toppingOptions.find((item) => item.name === t);
-      return sum + (toppingItem ? toppingItem.price : 0);
-    }, 0);
-    return (basePrice + toppingTotal) * quantity;
+  const total = useMemo(() => {
+    return calculateTotal(basePrice, toppings, quantity, toppingList);
+  }, [basePrice, toppings, quantity, toppingList]);
+
+  const handleAddToCart = () => {
+    if (!item) return;
+
+    addToCart({
+      item: {
+        id: item.id,
+        name: item.name,
+        image: item.image || item.img,
+        price: basePrice,
+      },
+      quantity,
+      portion,
+      spicy,
+      ice,
+      toppings,
+    });
+
+    navigate("/cart");
   };
 
-  const formatPrice = (price) => {
-    return "Rp. " + price.toLocaleString("id-ID");
+  const handleOrderNow = () => {
+    navigate("/payment", {
+      state: { item, quantity, portion, spicy, ice, toppings },
+    });
   };
 
   if (!item) {
@@ -59,7 +88,7 @@ const DetailOrder = () => {
     <div className="detail-order-page">
       {/* Product Info */}
       <section className="order-header">
-        <img src={item.img} alt={item.name} />
+        <img src={item.image || item.img} alt={item.name} />
         <div className="order-info">
           <h2>{item.name}</h2>
           <p className="price">{formatPrice(basePrice)}</p>
@@ -92,7 +121,7 @@ const DetailOrder = () => {
         <div className="option-group">
           <h3>Spicy Options</h3>
           <div className="option-buttons">
-            {["Small", "Medium", "Large"].map((level) => (
+            {["Normal", "Medium", "Hot"].map((level) => (
               <button
                 key={level}
                 className={spicy === level ? "active" : ""}
@@ -104,27 +133,29 @@ const DetailOrder = () => {
           </div>
         </div>
 
-        <div className="option-group">
-          <h3>Ice Options</h3>
-          <div className="option-buttons">
-            {["Less Ice", "Normal Ice", "Extra Ice"].map((level) => (
-              <button
-                key={level}
-                className={ice === level ? "active" : ""}
-                onClick={() => setIce(level)}
-              >
-                {level}
-              </button>
-            ))}
+        {item?.category === "Drink" && (
+          <div className="option-group">
+            <h3>Ice Options</h3>
+            <div className="option-buttons">
+              {["Less Ice", "Normal Ice", "Extra Ice"].map((level) => (
+                <button
+                  key={level}
+                  className={ice === level ? "active" : ""}
+                  onClick={() => setIce(level)}
+                >
+                  {level}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       {/* Toppings */}
       <section className="topping-section">
         <h3>Tambah Topping</h3>
         <div className="topping-grid">
-          {toppingOptions.map((topping) => (
+          {toppingList.map((topping) => (
             <label key={topping.name} className="topping-item">
               <input
                 type="checkbox"
@@ -163,23 +194,16 @@ const DetailOrder = () => {
         </div>
         <div className="total-box">
           <p>Total Harga</p>
-          <h3>{formatPrice(calculateTotal())}</h3>
+          <h3>{formatPrice(total)}</h3>
         </div>
       </section>
 
       {/* Action Buttons */}
       <section className="action-buttons">
-        <button className="add-cart-btn">
+        <button className="add-cart-btn" onClick={handleAddToCart}>
           <BsFillBasket2Fill className="icon-large" /> Tambah Keranjang
         </button>
-        <button
-          className="order-now-btn"
-          onClick={() =>
-            navigate("/payment", {
-              state: { item, quantity, portion, spicy, ice, toppings },
-            })
-          }
-        >
+        <button className="order-now-btn" onClick={handleOrderNow}>
           <IoBagHandle className="icon-large" /> Pesan Sekarang
         </button>
       </section>

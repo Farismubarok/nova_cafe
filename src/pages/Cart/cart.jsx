@@ -12,8 +12,8 @@ const CartPage = () => {
   if (!cartItems || cartItems.length === 0) {
     return (
       <div className="cart-page">
-        <h2>Keranjang Belanja Anda Kosong 😢</h2>
-        <button className="checkout-btn" onClick={() => navigate("/")}>
+        <h2>Keranjang Belanja Anda Kosong </h2>
+        <button className="checkout-btn" onClick={() => navigate("/menu")}>
           Kembali ke Menu
         </button>
       </div>

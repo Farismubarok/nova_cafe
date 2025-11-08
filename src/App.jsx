@@ -17,28 +17,31 @@ import Login from "./pages/Login/login.jsx";
 import Payment from "./pages/Payment/payment.jsx";
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
 import UserProfile from "./pages/Profile/userprofile.jsx";
+
 import Customers from "./pages/Custumer/custumer.jsx";
 import Transaksi from "./pages/Transaksi/transactions.jsx";
-import Management from "./pages/Management/management.jsx"; // pastikan file ini ada
+import Management from "./pages/Management/management.jsx"; // tambahkan jika ada
 
+// ====== HANYA bagian ini yang diperbaiki ======
 function LayoutWrapper() {
-  const location = useLocation();
-  const pathname = location.pathname;
+  const location = useLocation(); // ✅ gunakan hook, bukan window.location
+  const pathname = location.pathname; // ✅ tetap sesuai struktur aslimu
 
-  // daftar halaman yang ingin sembunyikan Navbar & Footer
-  const hideLayoutPaths = [
-    "/userprofile",
-    "/admin",
-    "/customers",
-    "/transactions",
-    "/management",
-  ];
-
-  const hideLayout = hideLayoutPaths.includes(pathname);
+  // logika asli tetap sama
+  const hideLayout = pathname === "/userprofile";
+  const hideLayoutAdmin = pathname === "/admin";
+  const hideLayoutCustomers = pathname === "/customers";
+  const hideLayoutTransaksi = pathname === "/transactions";
+  const hideLayoutManagement = pathname === "/management";
 
   return (
     <div className="app">
-      {!hideLayout && <Navbar />}
+      {/* Navbar tetap pakai kondisi seperti semula */}
+      {!hideLayout &&
+        !hideLayoutAdmin &&
+        !hideLayoutCustomers &&
+        !hideLayoutTransaksi &&
+        !hideLayoutManagement && <Navbar />}
 
       <main className="main">
         <Routes>
@@ -55,13 +58,20 @@ function LayoutWrapper() {
           <Route path="/customers" element={<Customers />} />
           <Route path="/transactions" element={<Transaksi />} />
           <Route path="/management" element={<Management />} />
+          {/* <Route path="/loginhistory" element={<LoginHistory />} /> */}
         </Routes>
       </main>
 
-      {!hideLayout && <Footer />}
+      {/* Footer tetap pakai kondisi seperti semula */}
+      {!hideLayout &&
+        !hideLayoutAdmin &&
+        !hideLayoutCustomers &&
+        !hideLayoutTransaksi &&
+        !hideLayoutManagement && <Footer />}
     </div>
   );
 }
+// ====== SAMPAI SINI ======
 
 function App() {
   return (
