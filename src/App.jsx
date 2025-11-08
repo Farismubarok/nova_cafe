@@ -22,13 +22,14 @@ import CartPage from "./pages/Cart/cart.jsx";
 
 import Customers from "./pages/Custumer/custumer.jsx";
 import Transaksi from "./pages/Transaksi/transactions.jsx";
+import Management from "./pages/Management/management.jsx"
 
 
 function LayoutWrapper() {
   const location = window.location; // keep simple if not using useLocation here in this file
 
 
-  const pathname = location.pathname;
+  const name = location.pathname;
   // const hideLayout = pathname === "/userprofile";
   // const hideLayoutAdmin = pathname === "/admin";
   // Jika path /userprofile, maka sembunyikan Navbar & Footer
