@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar/Navbar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
+import { FavoriteProvider } from "./context/FavoriteContext.jsx";
 
 // pages
 import AdminDashboard from "./pages/Admin/admin.jsx";
@@ -18,30 +19,33 @@ import Register from "./pages/Register/register.jsx";
 import Payment from "./pages/Payment/payment.jsx";
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
 import UserProfile from "./pages/Profile/userprofile.jsx";
+import Favorite from "./pages/Favorite/FavoritePage.jsx";
 
 import Customers from "./pages/Custumer/custumer.jsx";
 import Transaksi from "./pages/Transaksi/transactions.jsx";
-import Management from "./pages/Management/management.jsx"; // tambahkan jika ada
+import Management from "./pages/Management/management.jsx";
 
-// ====== HANYA bagian ini yang diperbaiki ======
 function LayoutWrapper() {
-  const location = useLocation(); // ✅ gunakan hook, bukan window.location
-  const pathname = location.pathname; // ✅ tetap sesuai struktur aslimu
-  // logika asli tetap sama
+  const location = useLocation();
+  const pathname = location.pathname;
+  
+  // Halaman yang menyembunyikan Navbar & Footer
   const hideLayout = pathname === "/userprofile";
   const hideLayoutAdmin = pathname === "/admin";
   const hideLayoutCustomers = pathname === "/customers";
   const hideLayoutTransaksi = pathname === "/transactions";
   const hideLayoutManagement = pathname === "/management";
+  const hideLayoutFavorite = pathname === "/favorite";
 
   return (
     <div className="app">
-      {/* Navbar tetap pakai kondisi seperti semula */}
+      {/* Navbar */}
       {!hideLayout &&
         !hideLayoutAdmin &&
         !hideLayoutCustomers &&
         !hideLayoutTransaksi &&
-        !hideLayoutManagement && <Navbar />}
+        !hideLayoutManagement &&
+        !hideLayoutFavorite && <Navbar />}
 
       <main className="main">
         <Routes>
@@ -59,28 +63,30 @@ function LayoutWrapper() {
           <Route path="/customers" element={<Customers />} />
           <Route path="/transactions" element={<Transaksi />} />
           <Route path="/management" element={<Management />} />
-          {/* <Route path="/loginhistory" element={<LoginHistory />} /> */}
+          <Route path="/favorite" element={<Favorite />} />
         </Routes>
       </main>
 
-      {/* Footer tetap pakai kondisi seperti semula */}
+      {/* Footer */}
       {!hideLayout &&
         !hideLayoutAdmin &&
         !hideLayoutCustomers &&
         !hideLayoutTransaksi &&
-        !hideLayoutManagement && <Footer />}
+        !hideLayoutManagement &&
+        !hideLayoutFavorite && <Footer />}
     </div>
   );
 }
-// ====== SAMPAI SINI ======
 
 function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <BrowserRouter>
-          <LayoutWrapper />
-        </BrowserRouter>
+        <FavoriteProvider>
+          <BrowserRouter>
+            <LayoutWrapper />
+          </BrowserRouter>
+        </FavoriteProvider>
       </CartProvider>
     </AuthProvider>
   );
