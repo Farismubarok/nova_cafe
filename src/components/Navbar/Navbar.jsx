@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
+import { useFavorite } from "../../context/FavoriteContext";
 import "./navbar.css";
 import logo from "../../assets/logo.svg";
 import userLogo from "../../assets/icon/user.svg";
@@ -12,10 +13,12 @@ import bagLogo from "../../assets/icon/shopping bag.svg";
 const Navbar = () => {
   const { isLoggedIn, logout } = useAuth();
   const { cartItems = [] } = useCart();
+  const { favoriteItems = [] } = useFavorite();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const itemCount = cartItems.reduce((sum, item) => sum + (item.quantity || 0), 0);
+  const favoriteCount = favoriteItems.length;
 
   return (
     <header>
@@ -58,15 +61,18 @@ const Navbar = () => {
               <img src={userLogo} alt="Account" />
               <span>Account</span>
             </div>
-            <div className="nav-item">
+            <div className="nav-item" onClick={() => navigate("/history")} style={{ cursor: "pointer" }}>
               <img src={historyLogo} alt="History" />
               <span>History</span>
             </div>
-            <div className="nav-item">
-              <img src={favoriteIcon} alt="Favorite" />
+            <div className="nav-item favorite" onClick={() => navigate("/favorite")} style={{ cursor: "pointer" }}>
+              <div className="favorite-icon-wrapper">
+                <img src={favoriteIcon} alt="Favorite" />
+                {favoriteCount > 0 && <span className="favorite-badge">{favoriteCount}</span>}
+              </div>
               <span>Favorite</span>
             </div>
-            <div className="nav-item cart" onClick={() => navigate("/cart")}>
+            <div className="nav-item cart" onClick={() => navigate("/cart")} style={{ cursor: "pointer" }}>
               <div className="cart-icon-wrapper">
                 <img src={bagLogo} alt="Cart" />
                 {itemCount > 0 && <span className="cart-badge">{itemCount}</span>}
