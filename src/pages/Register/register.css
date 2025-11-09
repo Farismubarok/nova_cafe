@@ -105,7 +105,8 @@
   color: #666;
   font-size: 12px;
 }
-
+.auth-form input[type="text"],
+.auth-form input[type="tel"],
 .auth-form input[type="email"],
 .auth-form input[type="password"] {
   border: 1px solid #aaa;
