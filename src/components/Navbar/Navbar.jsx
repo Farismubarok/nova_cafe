@@ -46,7 +46,7 @@ const Navbar = () => {
         {!isLoggedIn ? (
           <div className="navbar-auth">
             <button className="btn-login" onClick={() => navigate('/login')}>Log in</button>
-            <button className="btn-signup" onClick={() => navigate('/signup')}>Sign Up</button>
+            <button className="btn-signup" onClick={() => navigate('/register')}>Sign Up</button>
           </div>
         ) : (
           <div className="navbar-user">

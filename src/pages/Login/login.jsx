@@ -58,14 +58,12 @@ const Login = () => {
     setError("Email atau password salah");
   }
 };
-
   return (
     <div className="login-wrapper">
       {/* Logo di kiri atas */}
       <div className="login-header">
         <img src={logo} alt="Nova Cafe" className="login-logo" />
       </div>
-
       <div className="login-container">
         {/* Bagian kiri */}
         <div className="login-left">
@@ -81,7 +79,6 @@ const Login = () => {
               <li>⭐ Kumpulkan Poin setiap pembelian</li>
             </ul>
           </div>
-
           {/* Tambahkan tombol ke riwayat login */}
           <div className="history-link">
             <Link to="/loginhistory" className="btn-history">
@@ -89,24 +86,16 @@ const Login = () => {
             </Link>
           </div>
         </div>
-
         {/* Bagian kanan */}
         <div className="login-right">
           <div className="auth-tabs">
             <button
               className={isLogin ? "active" : ""}
-              onClick={() => setIsLogin(true)}
-            >
-              Login
-            </button>
+              onClick={() => setIsLogin(true)}> Login</button>
             <button
               className={!isLogin ? "active" : ""}
-              onClick={() => setIsLogin(false)}
-            >
-              Register
-            </button>
+              onClick={() => setIsLogin(false)}> Register</button>
           </div>
-
           <form onSubmit={handleSubmit} className="auth-form">
             <small>* indicates required field</small>
 
