@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar/Navbar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
-import { FavoriteProvider } from "./context/FavoriteContext.jsx";
 
 // pages
 import AdminDashboard from "./pages/Admin/admin.jsx";
@@ -19,7 +18,6 @@ import Register from "./pages/Register/register.jsx";
 import Payment from "./pages/Payment/payment.jsx";
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
 import UserProfile from "./pages/Profile/userprofile.jsx";
-import Favorite from "./pages/Favorite/FavoritePage.jsx";
 
 import Customers from "./pages/Custumer/custumer.jsx";
 import Transaksi from "./pages/Transaksi/transactions.jsx";
@@ -35,7 +33,6 @@ function LayoutWrapper() {
   const hideLayoutCustomers = pathname === "/customers";
   const hideLayoutTransaksi = pathname === "/transactions";
   const hideLayoutManagement = pathname === "/management";
-  const hideLayoutFavorite = pathname === "/favorite";
 
   return (
     <div className="app">
@@ -44,8 +41,7 @@ function LayoutWrapper() {
         !hideLayoutAdmin &&
         !hideLayoutCustomers &&
         !hideLayoutTransaksi &&
-        !hideLayoutManagement &&
-        !hideLayoutFavorite && <Navbar />}
+        !hideLayoutManagement && <Navbar />}
 
       <main className="main">
         <Routes>
@@ -63,7 +59,6 @@ function LayoutWrapper() {
           <Route path="/customers" element={<Customers />} />
           <Route path="/transactions" element={<Transaksi />} />
           <Route path="/management" element={<Management />} />
-          <Route path="/favorite" element={<Favorite />} />
         </Routes>
       </main>
 
@@ -72,8 +67,7 @@ function LayoutWrapper() {
         !hideLayoutAdmin &&
         !hideLayoutCustomers &&
         !hideLayoutTransaksi &&
-        !hideLayoutManagement &&
-        !hideLayoutFavorite && <Footer />}
+        !hideLayoutManagement && <Footer />}
     </div>
   );
 }
@@ -82,11 +76,9 @@ function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <FavoriteProvider>
-          <BrowserRouter>
-            <LayoutWrapper />
-          </BrowserRouter>
-        </FavoriteProvider>
+        <BrowserRouter>
+          <LayoutWrapper />
+        </BrowserRouter>
       </CartProvider>
     </AuthProvider>
   );

@@ -1,5 +1,6 @@
 // src/context/FavoriteContext.jsx
 import React, { createContext, useContext, useReducer, useEffect } from "react";
+import { useAuth } from "./AuthContext.jsx";
 
 const FavoriteContext = createContext();
 
@@ -30,7 +31,7 @@ function favoriteReducer(state, action) {
     case "LOAD_FAVORITES":
       return {
         ...state,
-        items: action.payload.items || []
+        items: action.payload || []
       };
     case "CLEAR_FAVORITES":
       return initialState;
@@ -41,21 +42,37 @@ function favoriteReducer(state, action) {
 
 export function FavoriteProvider({ children }) {
   const [state, dispatch] = useReducer(favoriteReducer, initialState);
+  const { user } = useAuth();
+  const API_BASE = "http://localhost:5000";
 
-  // Load favorites from localStorage on mount
+  // Load favorites from backend when mounted and when user changes
   useEffect(() => {
-    const savedFavorites = localStorage.getItem("nova_cafe_favorites");
-    if (savedFavorites) {
-      try {
-        const parsedFavorites = JSON.parse(savedFavorites);
-        console.log("Loading favorites from localStorage:", parsedFavorites);
-        dispatch({ type: "LOAD_FAVORITES", payload: parsedFavorites });
-      } catch (error) {
-        console.error("Error loading favorites from localStorage:", error);
-        localStorage.removeItem("nova_cafe_favorites");
+    const load = async () => {
+      const userId = user?.id;
+      
+      if (userId) {
+        try {
+          console.log("Loading favorites for user:", userId);
+          const res = await fetch(`${API_BASE}/favorites/${userId}`);
+          
+          if (res.ok) {
+            const data = await res.json();
+            console.log("Loaded favorites from server:", data);
+            dispatch({ type: "LOAD_FAVORITES", payload: data });
+          } else {
+            console.warn("Failed to load favorites from server", res.status);
+          }
+        } catch (err) {
+          console.error("Error fetching favorites:", err);
+        }
+      } else {
+        dispatch({ type: "CLEAR_FAVORITES" });
       }
-    }
-  }, []);
+    };
+
+    // Load favorites when component mounts and when user changes
+    load();
+  }, [user]);
 
   // Save to localStorage when favorites change
   useEffect(() => {
@@ -63,14 +80,66 @@ export function FavoriteProvider({ children }) {
     localStorage.setItem("nova_cafe_favorites", JSON.stringify(state));
   }, [state]);
 
-  const addToFavorite = (item) => {
+  const addToFavorite = async (item) => {
     console.log("addToFavorite called with:", item);
-    dispatch({ type: "ADD_FAVORITE", payload: item });
+    
+    if (!user?.id) {
+      console.warn("Cannot add favorite: user not logged in");
+      return;
+    }
+
+    try {
+      console.log("Sending add favorite request:", {
+        user_id: user.id,
+        menu_id: item.id
+      });
+
+      const res = await fetch(`${API_BASE}/favorites`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user_id: user.id,
+          menu_id: item.id
+        })
+      });
+
+      console.log("Add favorite response:", res.status);
+      if (res.ok) {
+        const result = await res.json();
+        console.log("Add favorite result:", result);
+        dispatch({ type: "ADD_FAVORITE", payload: item });
+      } else {
+        const errorText = await res.text();
+        console.error("Failed to add favorite on server", errorText);
+      }
+    } catch (err) {
+      console.error("Error adding favorite:", err);
+    }
   };
 
-  const removeFromFavorite = (id) => {
+  const removeFromFavorite = async (id) => {
     console.log("removeFromFavorite called with id:", id);
-    dispatch({ type: "REMOVE_FAVORITE", payload: id });
+    
+    if (!user?.id) {
+      console.warn("Cannot remove favorite: user not logged in");
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/favorites/${user.id}/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (res.ok) {
+        dispatch({ type: "REMOVE_FAVORITE", payload: id });
+      } else {
+        console.error("Failed to remove favorite on server", await res.text());
+      }
+    } catch (err) {
+      console.error("Error removing favorite:", err);
+    }
   };
   
   const clearFavorites = () => dispatch({ type: "CLEAR_FAVORITES" });

@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { authService } from "../../services/authService";
 import "./register.css"; 
 import logo from "../../assets/logo.jpg";
 
 const Register = () => {
   const navigate = useNavigate();
   
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
-    if (!email || !password || !confirm) {
+    if (!name || !email || !password || !confirm || !phoneNumber) {
       setError("Semua field wajib diisi");
       setSuccess("");
       return;
@@ -27,26 +30,25 @@ const Register = () => {
       return;
     }
 
-    // Ambil data user lama dari localStorage
-    const users = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+    try {
+      // Register via API
+      await authService.register({
+        name,
+        email,
+        password,
+        phone: phoneNumber
+      });
 
-    // Cek apakah email sudah terdaftar
-    const existingUser = users.find((u) => u.email === email);
-    if (existingUser) {
-      setError("Email sudah terdaftar");
+      setSuccess("Akun berhasil dibuat! Anda akan diarahkan ke halaman login...");
+      setError("");
+
+      // Arahkan ke halaman login setelah 2 detik
+      setTimeout(() => navigate("/login", { state: { isLogin: true } }), 2000);
+
+    } catch (err) {
+      setError(err.message || "Gagal mendaftar. Silakan coba lagi.");
       setSuccess("");
-      return;
     }
-
-    // Simpan user baru
-    const newUser = { email, password, role: "user" };
-    localStorage.setItem("registeredUsers", JSON.stringify([...users, newUser]));
-
-    setSuccess("Akun berhasil dibuat! Anda akan diarahkan ke halaman login...");
-    setError("");
-
-    // Arahkan ke halaman login setelah 2 detik
-    setTimeout(() => navigate("/login", { state: { isLogin: true } }), 2000);
   };
 
   return (
@@ -89,6 +91,22 @@ const Register = () => {
 
           <form onSubmit={handleRegister} className="auth-form">
             <small>* indicates required field</small>
+
+            <input
+              type="text"
+              placeholder="* Nama"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+
+            <input
+              type="tel"
+              placeholder="* Nomor Telepon"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              required
+            />
 
             <input
               type="email"
