@@ -14,6 +14,7 @@ import Menu from "./pages/Menu/menu.jsx";
 import Contact from "./pages/Contact/contact.jsx";
 import Cart from "./pages/Cart/cart.jsx";
 import Login from "./pages/Login/login.jsx";
+import Register from "./pages/Register/register.jsx";
 import Payment from "./pages/Payment/payment.jsx";
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
 import UserProfile from "./pages/Profile/userprofile.jsx";
@@ -26,7 +27,6 @@ import Management from "./pages/Management/management.jsx"; // tambahkan jika ad
 function LayoutWrapper() {
   const location = useLocation(); // ✅ gunakan hook, bukan window.location
   const pathname = location.pathname; // ✅ tetap sesuai struktur aslimu
-
   // logika asli tetap sama
   const hideLayout = pathname === "/userprofile";
   const hideLayoutAdmin = pathname === "/admin";
@@ -51,6 +51,7 @@ function LayoutWrapper() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/detail-order" element={<DetailOrder />} />
           <Route path="/userprofile" element={<UserProfile />} />
