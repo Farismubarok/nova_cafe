@@ -46,8 +46,8 @@ const DetailOrder = () => {
   };
 
   const total = useMemo(() => {
-    return calculateTotal(basePrice, toppings, quantity, toppingList);
-  }, [basePrice, toppings, quantity, toppingList]);
+    return calculateTotal(basePrice, toppings, quantity, toppingList, portion, spicy, ice);
+  }, [basePrice, toppings, quantity, toppingList, portion, spicy, ice]);
 
   const handleAddToCart = () => {
     if (!item) return;
@@ -70,9 +70,25 @@ const DetailOrder = () => {
   };
 
   const handleOrderNow = () => {
-    navigate("/payment", {
-      state: { item, quantity, portion, spicy, ice, toppings },
+    if (!item) return;
+
+    // Tambahkan ke cart terlebih dahulu
+    addToCart({
+      item: {
+        id: item.id,
+        name: item.name,
+        image: item.image || item.img,
+        price: basePrice,
+      },
+      quantity,
+      portion,
+      spicy,
+      ice,
+      toppings,
     });
+
+    // Langsung ke halaman payment
+    navigate("/payment");
   };
 
   if (!item) {
@@ -118,21 +134,25 @@ const DetailOrder = () => {
           </div>
         </div>
 
-        <div className="option-group">
-          <h3>Spicy Options</h3>
-          <div className="option-buttons">
-            {["Normal", "Medium", "Hot"].map((level) => (
-              <button
-                key={level}
-                className={spicy === level ? "active" : ""}
-                onClick={() => setSpicy(level)}
-              >
-                {level}
-              </button>
-            ))}
+        {/* Spicy hanya untuk makanan */}
+        {item?.category === "Food" && (
+          <div className="option-group">
+            <h3>Spicy Options</h3>
+            <div className="option-buttons">
+              {["Normal", "Medium", "Hot"].map((level) => (
+                <button
+                  key={level}
+                  className={spicy === level ? "active" : ""}
+                  onClick={() => setSpicy(level)}
+                >
+                  {level}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
+        {/* Ice hanya untuk minuman */}
         {item?.category === "Drink" && (
           <div className="option-group">
             <h3>Ice Options</h3>
