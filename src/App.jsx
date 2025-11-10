@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.jsx";
@@ -16,6 +15,7 @@ import Cart from "./pages/Cart/cart.jsx";
 import Login from "./pages/Login/login.jsx";
 import Register from "./pages/Register/register.jsx";
 import Payment from "./pages/Payment/payment.jsx";
+import PaymentSuccess from "./pages/Popup/PaymentSuccess.jsx"; // ← PERBAIKAN
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
 import UserProfile from "./pages/Profile/userprofile.jsx";
 
@@ -53,6 +53,7 @@ function LayoutWrapper() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} /> {/* ← TAMBAHKAN */}
           <Route path="/detail-order" element={<DetailOrder />} />
           <Route path="/userprofile" element={<UserProfile />} />
           <Route path="/admin" element={<AdminDashboard />} />
