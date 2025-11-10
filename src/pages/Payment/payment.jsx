@@ -37,7 +37,9 @@ const Payment = () => {
   const finalTotal = subtotal + tax + shipping;
 
   const handlePaymentConfirmation = () => {
+    const orderId = Math.floor(Math.random() * 90000) + 10000;
     const orderDetails = {
+      orderId,
       items: cartItems,
       deliveryMethod,
       paymentMethod,
@@ -53,9 +55,14 @@ const Payment = () => {
     // Clear cart after successful payment
     clearCart();
     
-    // Navigate to success page
-    alert("Pembayaran berhasil! Total: Rp. " + finalTotal.toLocaleString("id-ID"));
-    navigate("/menu");
+    // Navigate to success page dengan data
+    navigate("/payment-success", {
+      state: {
+        orderId,
+        paymentMethod,
+        totalAmount: finalTotal
+      }
+    });
   };
 
   // Helper function untuk mendapatkan harga tambahan
