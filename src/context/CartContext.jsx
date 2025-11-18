@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from "react";
-import { calculateTotal, drinkToppings, foodToppings } from "../logic/DetailOrder";
 
 const CartContext = createContext();
 
+// ... existing useCart hook
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
@@ -13,37 +13,22 @@ export const useCart = () => {
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
-
-  const addToCart = ({ item, quantity, portion, spicy, ice, toppings, notes }) => {
-    const toppingList = item.category === "Food" ? foodToppings : drinkToppings;
-    
-    const totalPrice = calculateTotal(
-      item.price,
-      toppings,
-      quantity,
-      toppingList,
-      portion,
-      spicy,
-      ice
-    );
-
+  const addToCart = (cartData) => {
+    const { item, quantity, toppings, notes, totalPrice, ...selectedOptions } = cartData;
     const cartItem = {
-      key: Date.now() + Math.random(), // unique key
+      key: Date.now() + Math.random(),
       id: item.id,
       name: item.name,
       img: item.image || item.img,
       price: item.price,
       quantity,
-      portion,
-      spicy,
-      ice,
+      ...selectedOptions,
       toppings,
-      notes: notes || "", // Pastikan notes disimpan
-      totalPrice,
+      notes: notes || "",
+      totalPrice, 
     };
 
-    console.log("Adding to cart:", cartItem); // Debug log
-
+    console.log("Adding to cart:", cartItem);
     setCartItems((prev) => [...prev, cartItem]);
   };
 
@@ -60,7 +45,7 @@ export const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider
+   <CartContext.Provider
       value={{
         cartItems,
         addToCart,

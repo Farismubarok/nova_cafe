@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
-import { sizePrice, spicyPrice, icePrice } from "../../logic/DetailOrder";
+// import { sizePrice, spicyPrice, icePrice } from "../../logic/DetailOrder";
 import "./payment.css";
 
 const Payment = () => {

@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useMemo } from "react";
+// farismubarok/nova_cafe/nova_cafe-548995ea2b5bef148f7ec5bbf5d50506c2e070b1/src/pages/DetailOrder/detail-order.jsx
+
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { BsFillBasket2Fill } from "react-icons/bs";
 import { IoBagHandle } from "react-icons/io5";
 import {
   calculateTotal,
-  drinkToppings,
-  foodToppings,
   formatPrice as formatPriceUtil,
-} from "../../logic/DetailOrder";
+} from "../../logic/DetailOrder"; // HANYA ambil fungsi utility
 import { useCart } from "../../context/CartContext";
+import { menuService } from "../../services/menuService"; // 💡 Import menuService
 import "./detailorder.css";
 
 const formatPrice = (price) => "Rp. " + formatPriceUtil(price || 0);
@@ -16,28 +17,93 @@ const formatPrice = (price) => "Rp. " + formatPriceUtil(price || 0);
 const DetailOrder = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const item = state?.item || state || null;
+  const menuData = state?.item || state || null;
   const { addToCart } = useCart();
 
-  const [portion, setPortion] = useState("Small");
-  const [spicy, setSpicy] = useState("Normal");
-  const [ice, setIce] = useState("Normal Ice");
+  // === STATE BARU UNTUK DATA DINAMIS ===
+  const [menuOptions, setMenuOptions] = useState(null); 
+  const [loading, setLoading] = useState(true);
+
+  // State untuk pilihan (size, sugar, portion, dll.)
+  const [selectedOptions, setSelectedOptions] = useState({}); 
   const [toppings, setToppings] = useState([]);
   const [quantity, setQuantity] = useState(1);
-  const [notes, setNotes] = useState(""); // Tambahkan state notes
+  const [notes, setNotes] = useState("");
 
-  const basePrice = item?.price || 75000;
+  const basePrice = menuData?.price || 0;
+  const menuId = menuData?.id || menuData?.menu_id;
 
-  // Tentukan jenis topping (makanan/minuman)
-  const toppingList = useMemo(
-    () => (item?.category === "Food" ? foodToppings : drinkToppings),
-    [item]
-  );
-
+  // === FETCH DATA DARI BACKEND ===
   useEffect(() => {
-    if (!item) navigate("/menu", { replace: true });
-  }, [item, navigate]);
+    if (!menuId) {
+      navigate("/menu", { replace: true });
+      return;
+    }
 
+    const fetchOptions = async () => {
+      try {
+        setLoading(true);
+        // 💡 Panggil API baru
+        const data = await menuService.getMenuOptionsAndToppings(menuId); 
+        setMenuOptions(data);
+
+        // Inisialisasi selectedOptions dengan nilai default (opsi pertama)
+        const defaultSelections = {};
+        for (const optionName in data.options) {
+          if (data.options[optionName].length > 0) {
+            defaultSelections[optionName] = data.options[optionName][0].value;
+          }
+        }
+        setSelectedOptions(defaultSelections);
+
+      } catch (e) {
+        console.error("Gagal memuat opsi menu:", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOptions();
+  }, [menuId, navigate]);
+
+  const uniqueDynamicToppings = useMemo(() => {
+    if (!menuOptions || !menuOptions.toppings) return [];
+    
+    const seenNames = new Set();
+    // Filter dan ambil hanya item topping pertama dengan nama unik
+    return menuOptions.toppings.filter(topping => {
+        if (seenNames.has(topping.name)) {
+            return false; // Skip duplikat
+        } else {
+            seenNames.add(topping.name);
+            return true;
+        }
+    });
+  }, [menuOptions]);
+
+  // === LOGIKA PERHITUNGAN TOTAL HARGA DINAMIS ===
+  const total = useMemo(() => {
+    if (!menuOptions || basePrice === 0) return 0;
+    
+    return calculateTotal(
+      basePrice,
+      toppings,
+      quantity,
+      menuOptions.toppings || [], // availableToppings
+      selectedOptions, 
+      menuOptions.options || {}   // availableOptions
+    );
+  }, [basePrice, toppings, quantity, selectedOptions, menuOptions]);
+
+  // Handler untuk opsi tunggal (size, spicy, ice, sugar)
+  const handleOptionChange = useCallback((optionName, value) => {
+    setSelectedOptions(prev => ({
+      ...prev,
+      [optionName]: value
+    }));
+  }, []);
+
+  // Handler untuk topping (checkbox)
   const handleToppingChange = (name) => {
     setToppings((prev) =>
       prev.includes(name)
@@ -45,147 +111,111 @@ const DetailOrder = () => {
         : [...prev, name]
     );
   };
-
-  const total = useMemo(() => {
-    return calculateTotal(basePrice, toppings, quantity, toppingList, portion, spicy, ice);
-  }, [basePrice, toppings, quantity, toppingList, portion, spicy, ice]);
+  
+  // --- LOGIKA KERANJANG & PEMBAYARAN ---
+  const createCartData = () => ({
+    item: {
+      id: menuData.id || menuData.menu_id,
+      name: menuData.name,
+      image: menuData.image || menuData.img,
+      price: basePrice,
+      category: menuOptions.item.category,
+    },
+    quantity,
+    ...selectedOptions, // Menyebar semua opsi dinamis (size, sugar, dll.)
+    toppings,
+    notes,
+    totalPrice: total, // 💡 HARGA TOTAL YANG SUDAH DIHITUNG
+  });
 
   const handleAddToCart = () => {
-    if (!item) return;
-
-    const cartData = {
-      item: {
-        id: item.id,
-        name: item.name,
-        image: item.image || item.img,
-        price: basePrice,
-        category: item.category, // Penting untuk menentukan topping
-      },
-      quantity,
-      portion,
-      spicy,
-      ice,
-      toppings,
-      notes, // Tambahkan notes ke cart
-    };
-
-    console.log("Data yang dikirim ke cart:", cartData); // Debug
-    console.log("Notes value:", notes); // Debug notes
-
-    addToCart(cartData);
-
+    if (!menuOptions) return;
+    addToCart(createCartData());
     navigate("/cart");
   };
 
   const handleOrderNow = () => {
-    if (!item) return;
-
-    // Tambahkan ke cart terlebih dahulu
-    addToCart({
-      item: {
-        id: item.id,
-        name: item.name,
-        image: item.image || item.img,
-        price: basePrice,
-      },
-      quantity,
-      portion,
-      spicy,
-      ice,
-      toppings,
-      notes, // Tambahkan notes ke cart
-    });
-
-    // Langsung ke halaman payment
+    if (!menuOptions) return;
+    addToCart(createCartData());
     navigate("/payment");
   };
 
-  if (!item) {
+  if (loading) {
+    return (
+        <div style={{ padding: "100px", textAlign: "center" }}>
+            <h2>Memuat Opsi Menu...</h2>
+        </div>
+    );
+  }
+
+  if (!menuOptions || !menuOptions.item) {
     return (
       <div style={{ padding: "100px", textAlign: "center" }}>
-        <h2>Tidak ada data produk</h2>
+        <h2>Gagal memuat data produk</h2>
         <p>Silakan kembali ke halaman menu.</p>
       </div>
     );
   }
 
+  const dynamicOptions = menuOptions.options || {};
+  const dynamicToppings = menuOptions.toppings || [];
+
+  // --- RENDERING OPSI UTAMA ---
+  const renderOptions = () => {
+    return Object.keys(dynamicOptions).map(optionName => {
+      const options = dynamicOptions[optionName];
+      // Kapitalisasi nama opsi untuk tampilan (misal: 'size' menjadi 'Size')
+      const displayName = optionName.charAt(0).toUpperCase() + optionName.slice(1); 
+      
+      return (
+        <div className="option-group" key={optionName}>
+          <h3>{displayName} Options</h3>
+          <div className="option-buttons">
+            {options.map(option => (
+              <button
+                key={option.value}
+                className={selectedOptions[optionName] === option.value ? "active" : ""}
+                onClick={() => handleOptionChange(optionName, option.value)}
+              >
+                {option.value}
+                {Number(option.price) > 0 && ` (+${formatPrice(option.price)})`}
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    });
+  };
+
+
   return (
     <div className="detail-order-page">
       {/* Product Info */}
       <section className="order-header">
-        <img src={item.image || item.img} alt={item.name} />
+        <img src={menuOptions.item.image || menuData.img} alt={menuOptions.item.name} />
         <div className="order-info">
-          <h2>{item.name}</h2>
+          <h2>{menuOptions.item.name}</h2>
           <p className="price">{formatPrice(basePrice)}</p>
           <p className="desc">
-            Nikmati {item.name} khas kami dengan cita rasa gurih dan autentik.
-            Dimasak dengan bahan pilihan berkualitas untuk rasa yang memanjakan.
+            {menuOptions.item.description || "Nikmati menu khas kami dengan cita rasa gurih dan autentik. Dimasak dengan bahan pilihan berkualitas untuk rasa yang memanjakan."}
           </p>
         </div>
       </section>
 
       <hr />
 
-      {/* Options */}
+      {/* Options (Dynamic from DB) */}
       <section className="options-section">
-        <div className="option-group">
-          <h3>Size Options</h3>
-          <div className="option-buttons">
-            {["Small", "Medium", "Large"].map((size) => (
-              <button
-                key={size}
-                className={portion === size ? "active" : ""}
-                onClick={() => setPortion(size)}
-              >
-                {size}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Spicy hanya untuk makanan */}
-        {item?.category === "Food" && (
-          <div className="option-group">
-            <h3>Spicy Options</h3>
-            <div className="option-buttons">
-              {["Normal", "Medium", "Hot"].map((level) => (
-                <button
-                  key={level}
-                  className={spicy === level ? "active" : ""}
-                  onClick={() => setSpicy(level)}
-                >
-                  {level}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Ice hanya untuk minuman */}
-        {item?.category === "Drink" && (
-          <div className="option-group">
-            <h3>Ice Options</h3>
-            <div className="option-buttons">
-              {["Less Ice", "Normal Ice", "Extra Ice"].map((level) => (
-                <button
-                  key={level}
-                  className={ice === level ? "active" : ""}
-                  onClick={() => setIce(level)}
-                >
-                  {level}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        {renderOptions()}
       </section>
 
-      {/* Toppings */}
+      {/* Toppings (Dynamic from DB) */}
       <section className="topping-section">
         <h3>Tambah Topping</h3>
         <div className="topping-grid">
-          {toppingList.map((topping) => (
-            <label key={topping.name} className="topping-item">
+          {uniqueDynamicToppings.map((topping) => (
+            // Menggunakan topping.id sebagai key tetap aman dan unik
+            <label key={topping.id} className="topping-item">
               <input
                 type="checkbox"
                 checked={toppings.includes(topping.name)}
@@ -195,6 +225,7 @@ const DetailOrder = () => {
               <span>+ {formatPrice(topping.price)}</span>
             </label>
           ))}
+          {uniqueDynamicToppings.length === 0 && <p style={{ gridColumn: 'span 3', color: '#666' }}>Tidak ada topping untuk menu ini.</p>}
         </div>
       </section>
 
@@ -211,13 +242,14 @@ const DetailOrder = () => {
 
       {/* Quantity & Total */}
       <section className="summary-section">
+        {/* ... quantity controls (tetap) ... */}
         <div className="quantity-box">
           <p>Jumlah</p>
           <div className="quantity-controls">
             <button
               onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
             >
-              −
+              -
             </button>
             <span>{quantity}</span>
             <button onClick={() => setQuantity(quantity + 1)}>+</button>

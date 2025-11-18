@@ -1,29 +1,29 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useCart } from "../../context/CartContext";
-import "./cart.css";
+// farismubarok/nova_cafe/nova_cafe-548995ea2b5bef148f7ec5bbf5d50506c2e070b1/src/pages/Cart/cart.jsx
+
+// ... existing imports
 
 const CartPage = () => {
   const { cartItems, removeFromCart, getTotal, clearCart } = useCart();
   const navigate = useNavigate();
 
-  console.log("Cart items:", cartItems); // Debug log
+  // Properti yang BUKAN merupakan opsi kustomisasi yang perlu di-render secara terpisah
+  const excludeProps = ['key', 'id', 'name', 'img', 'price', 'quantity', 'toppings', 'notes', 'totalPrice', 'category'];
   
-  // Debug setiap item
-  cartItems.forEach((item, index) => {
-    console.log(`Item ${index} notes:`, item.notes);
-  });
+  // Helper function untuk rendering opsi dinamis
+  const renderSelectedOptions = (item) => {
+    const optionsToRender = [];
+    for (const key in item) {
+      // Hanya tampilkan properti yang BUKAN properti inti dan BUKAN array
+      if (!excludeProps.includes(key) && typeof item[key] === 'string') {
+        // Kapitalisasi nama opsi untuk tampilan (misal: 'portion' menjadi 'Portion')
+        const displayName = key.charAt(0).toUpperCase() + key.slice(1);
+        optionsToRender.push(<p key={key}>{displayName}: {item[key]}</p>);
+      }
+    }
+    return optionsToRender;
+  };
 
-  if (!cartItems || cartItems.length === 0) {
-    return (
-      <div className="cart-page">
-        <h2>Keranjang Belanja Anda Kosong</h2>
-        <button className="checkout-btn" onClick={() => navigate("/menu")}>
-          Kembali ke Menu
-        </button>
-      </div>
-    );
-  }
+  // ... existing code for empty cart
 
   return (
     <div className="cart-page">
@@ -36,10 +36,9 @@ const CartPage = () => {
             <div className="cart-info">
               <h4>{item.name}</h4>
               <p>Qty: {item.quantity}</p>
-              <p>Porsi: {item.portion}</p>
               
-              {/* Tampilkan ice jika ada */}
-              {item.ice && <p>Es: {item.ice}</p>}
+              {/* 💡 Opsi Kustomisasi Dinamis */}
+              {renderSelectedOptions(item)}
               
               {/* Tampilkan toppings jika ada */}
               {item.toppings?.length > 0 && (
@@ -71,8 +70,6 @@ const CartPage = () => {
           <button 
             className="checkout-btn"
             onClick={() => {
-              console.log("Navigating to payment with items:", cartItems);
-              console.log("Total:", getTotal());
               navigate("/payment");
             }}
           >
