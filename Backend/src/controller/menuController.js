@@ -142,3 +142,21 @@ export const deleteMenu = (req, res) => {
     res.json({ message: "Menu deleted successfully" });
   });
 };
+
+//  FUNGSI BARU: Controller untuk mengambil Opsi dan Topping
+export const getMenuOptionsAndToppings = (req, res) => {
+  const { menuId } = req.params;
+  Menu.getOptionsAndToppings(menuId, (err, results) => {
+    if (err) {
+      console.error("Error fetching menu options:", err);
+      if (err.message === "Menu not found") {
+        return res.status(404).json({ message: "Menu not found" });
+      }
+      return res.status(500).json({ 
+        message: "Error fetching menu options", 
+        error: err.message
+      });
+    }
+    res.json(results);
+  });
+};

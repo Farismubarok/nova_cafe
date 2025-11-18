@@ -3,10 +3,11 @@ import {
   getAllMenus, 
   getMenusByCategory,
   getAllCategories,
+  getMenuOptionsAndToppings,
   getMenuById, 
   createMenu, 
   updateMenu, 
-  deleteMenu 
+  deleteMenu
 } from "../controller/menuController.js";
 
 const router = express.Router();
@@ -19,6 +20,9 @@ router.get("/categories", getAllCategories);
 
 // GET /menu/category/:categoryId - Get menu items by category
 router.get("/category/:categoryId", getMenusByCategory);
+
+// GET /menu/:menuId/options - Get menu item, options, and toppings
+router.get("/:menuId/options", getMenuOptionsAndToppings);
 
 // GET /menu/:menuId - Get single menu item
 router.get("/:menuId", getMenuById);
