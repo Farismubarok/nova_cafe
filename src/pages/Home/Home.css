@@ -393,23 +393,24 @@ ul {
 }
 
 .icon-small {
-  font-size: 19px;
+  font-size: 15px;
   margin-right: 5px;
 }
 
 .btn-cart {
-  background: #017143;
+  width: 100%;
+  padding: 15px 5px;
+  background-color: #0b8344;
   color: #fff;
   border: none;
-  padding: 12px 14px;
-  border-radius: 6px;
-  font-size: 12px;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  transition: background 0.3s;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
 
 .btn-cart:hover {
