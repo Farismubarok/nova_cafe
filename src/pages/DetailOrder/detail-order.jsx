@@ -24,6 +24,7 @@ const DetailOrder = () => {
   const [ice, setIce] = useState("Normal Ice");
   const [toppings, setToppings] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [notes, setNotes] = useState(""); // Tambahkan state notes
 
   const basePrice = item?.price || 75000;
 
@@ -52,19 +53,26 @@ const DetailOrder = () => {
   const handleAddToCart = () => {
     if (!item) return;
 
-    addToCart({
+    const cartData = {
       item: {
         id: item.id,
         name: item.name,
         image: item.image || item.img,
         price: basePrice,
+        category: item.category, // Penting untuk menentukan topping
       },
       quantity,
       portion,
       spicy,
       ice,
       toppings,
-    });
+      notes, // Tambahkan notes ke cart
+    };
+
+    console.log("Data yang dikirim ke cart:", cartData); // Debug
+    console.log("Notes value:", notes); // Debug notes
+
+    addToCart(cartData);
 
     navigate("/cart");
   };
@@ -85,6 +93,7 @@ const DetailOrder = () => {
       spicy,
       ice,
       toppings,
+      notes, // Tambahkan notes ke cart
     });
 
     // Langsung ke halaman payment
@@ -195,6 +204,8 @@ const DetailOrder = () => {
         <textarea
           placeholder="Tulis catatan khusus untuk pesanan anda"
           rows={3}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
         ></textarea>
       </section>
 
