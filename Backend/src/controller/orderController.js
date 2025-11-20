@@ -3,7 +3,24 @@
 import { Order } from "../models/Order.js"; // 💡 IMPORT ORDER MODEL
 // Import lain yang mungkin diperlukan
 // import { db } from "../config/db.js";
+// Backend/src/controller/orderController.js
+import { db } from "../config/db.js";
 
+// Ambil SEMUA order (untuk Admin Dashboard)
+export const getAllOrders = (req, res) => {
+    const sql = `
+        SELECT o.order_id, u.name as customer_name, o.total_price, o.status, o.created_at
+        FROM \`order\` o
+        LEFT JOIN users u ON o.user_id = u.user_id
+        ORDER BY o.created_at DESC
+    `;
+    db.query(sql, (err, results) => {
+        if (err) return res.status(500).json({ message: "Gagal ambil data order" });
+        res.json(results);
+    });
+};
+
+// ... (fungsi createNewOrder yang sudah ada sebelumnya)
 export const createNewOrder = async (req, res) => {
     // Ambil userId dari body (dikirim frontend) atau dari auth (jika ada)
     const userId = req.body.userId || req.body.user_id || (req.user && req.user.id);
@@ -30,6 +47,7 @@ export const createNewOrder = async (req, res) => {
         console.error("Failed to create order:", error);
         res.status(500).json({ message: "Failed to process order", error: error.message });
     }
+
 };
 
 // GET /orders/user/:userId  - return orders with status = 'paid' for the user
@@ -103,4 +121,5 @@ export const getUserPaidOrders = async (req, res) => {
         console.error('getUserPaidOrders outer error', err);
         res.status(500).json({ error: err.message });
     }
+
 };
