@@ -78,7 +78,7 @@ const Login = () => {
               onClick={() => setIsLogin(true)}> Login</button>
             <button
               className={!isLogin ? "active" : ""}
-              onClick={() => setIsLogin(false)}> Register</button>
+              onClick={() => navigate("/register")}> Register</button>
           </div>
           <form onSubmit={handleSubmit} className="auth-form">
             <small>* indicates required field</small>

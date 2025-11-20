@@ -1,21 +1,13 @@
 .history-page {
-  display: flex;
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
   background: #f5f5f5;
 }
 
-.sidebar {
-  width: 250px;
-  background: #065f46;
-  color: white;
-  padding: 2rem;
-}
-
 .main-content {
-  flex: 1;
   padding: 2rem 3rem;
-  margin-left: 300px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .title {
