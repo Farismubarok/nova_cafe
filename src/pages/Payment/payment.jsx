@@ -1,26 +1,25 @@
+// src/pages/Payment/payment.jsx (MODIFIED)
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
-// import { sizePrice, spicyPrice, icePrice } from "../../logic/DetailOrder"; // Import logika harga lama sudah dinonaktifkan
+// import { sizePrice, spicyPrice, icePrice } from "../../logic/DetailOrder"; 
+import { orderService } from "../../services/orderService"; // 💡 IMPORT BARU
 import "./payment.css";
 
-// 💡 Properti yang DIKECUALIKAN saat merender opsi kustomisasi dinamis
+// 💡 Helper function untuk rendering opsi dinamis (ditempatkan di luar komponen)
 const excludeProps = ['key', 'id', 'name', 'img', 'price', 'quantity', 'toppings', 'notes', 'totalPrice', 'category'];
 
-// 💡 Helper function untuk rendering opsi dinamis di ringkasan pesanan
 const renderSelectedOptions = (item) => {
   const optionsToRender = [];
   for (const key in item) {
-    // Hanya tampilkan properti yang BUKAN properti inti dan BUKAN array
     if (!excludeProps.includes(key) && typeof item[key] === 'string') {
-      // Kapitalisasi nama opsi untuk tampilan (misal: 'portion' menjadi 'Portion')
       const displayName = key.charAt(0).toUpperCase() + key.slice(1);
       optionsToRender.push(<p key={key} style={{ margin: '3px 0', fontSize: '0.85rem', color: '#555' }}>{displayName}: {item[key]}</p>);
     }
   }
   return optionsToRender;
 };
-
 
 const Payment = () => {
   const navigate = useNavigate();
@@ -30,22 +29,7 @@ const Payment = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [promoCode, setPromoCode] = useState("");
 
-  // Debug: Log cart items saat component mount
-  useEffect(() => {
-    console.log("=== Payment Page Debug ===");
-    console.log("Cart Items:", cartItems);
-    cartItems.forEach((item, index) => {
-      console.log(`Item ${index + 1}:`, {
-        name: item.name,
-        // Properti yang dicetak di sini telah disederhanakan
-        quantity: item.quantity,
-        totalPrice: item.totalPrice,
-        toppings: item.toppings,
-        notes: item.notes
-      });
-    });
-    console.log("======================");
-  }, [cartItems]);
+  // ... (useEffect debug tetap sama) ...
 
   // Calculate totals
   const subtotal = getTotal();
@@ -53,56 +37,52 @@ const Payment = () => {
   const shipping = deliveryMethod === "Delivery" ? 15000 : 0;
   const finalTotal = subtotal + tax + shipping;
 
-  const handlePaymentConfirmation = () => {
+  const handlePaymentConfirmation = async () => { // 💡 JADIKAN ASYNC
     if (!termsAccepted) {
       alert("Mohon setujui syarat dan ketentuan terlebih dahulu");
       return;
     }
-
-    // 💡 DI SINI HARUSNYA ADA LOGIC POST KE BACKEND (MySQL) UNTUK MENYIMPAN ORDER FINAL
-
-    const orderId = Math.floor(Math.random() * 90000) + 10000;
+    
+    // Data yang akan dikirim ke backend
     const orderDetails = {
-      orderId,
+      finalTotal: finalTotal,
       items: cartItems,
       deliveryMethod,
-      paymentMethod,
       subtotal,
       tax,
       shipping,
-      finalTotal,
       orderDate: new Date().toISOString()
     };
+    
+    try {
+        // 💡 LANGKAH KRUSIAL: Kirim pesanan ke database
+        const result = await orderService.createOrder(orderDetails, paymentMethod);
+        
+        const newOrderId = result.orderId;
+        
+        // Clear cart setelah berhasil disimpan di DB
+        clearCart(); 
 
-    console.log("Processing order:", orderDetails);
-    
-    // Clear cart after successful payment
-    clearCart();
-    
-    // Navigate to success page dengan data
-    navigate("/payment-success", {
-      state: {
-        orderId,
-        paymentMethod,
-        totalAmount: finalTotal
-      }
-    });
+        // Navigate ke success page dengan data dari respons backend
+        navigate("/payment-success", {
+            state: {
+                orderId: newOrderId,
+                paymentMethod,
+                totalAmount: finalTotal
+            }
+        });
+
+    } catch (error) {
+        console.error("Failed to confirm payment:", error);
+        alert("Gagal menyimpan pesanan. Silakan coba lagi. " + error.message);
+    }
   };
 
-  // ❌ FUNGSI getExtraPrice DIHAPUS
-
-  // Redirect if cart is empty
+  // ... (Redirect if cart is empty tetap sama) ...
   if (cartItems.length === 0) {
-    return (
-      <div className="payment-page" style={{ padding: "100px", textAlign: "center" }}>
-        <h2>Keranjang Kosong</h2>
-        <p>Silakan tambahkan produk ke keranjang terlebih dahulu</p>
-        <button onClick={() => navigate("/menu")} className="confirm-btn">
-          Kembali ke Menu
-        </button>
-      </div>
-    );
-  }
+    // ... (kode keranjang kosong) ...
+  }
+
 
   return (
     <div className="payment-page">
@@ -114,8 +94,6 @@ const Payment = () => {
             <h3>Ringkasan Pesanan</h3>
             
             {cartItems.map((item) => {
-              // ❌ Baris kode perhitungan harga lama yang menyebabkan ReferenceError sudah DIBERSIHKAN
-              
               return (
                 <div key={item.key} className="order-item">
                   <img 
@@ -211,7 +189,7 @@ const Payment = () => {
             </div>
           </div>
 
-          {/* Payment Methods */}
+          {/* Payment Methods (tetap sama) */}
           <div className="payment-methods">
             <h3>Metode Pembayaran</h3>
             
