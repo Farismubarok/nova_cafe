@@ -22,6 +22,7 @@ import UserProfile from "./pages/Profile/userprofile.jsx";
 import Customers from "./pages/Custumer/custumer.jsx";
 import Transaksi from "./pages/Transaksi/transactions.jsx";
 import Management from "./pages/Management/management.jsx";
+import HistoryPage from "./pages/History/history.jsx";
 
 function LayoutWrapper() {
   const location = useLocation();
@@ -56,6 +57,7 @@ function LayoutWrapper() {
           <Route path="/payment-success" element={<PaymentSuccess />} /> {/* ← TAMBAHKAN */}
           <Route path="/detail-order" element={<DetailOrder />} />
           <Route path="/userprofile" element={<UserProfile />} />
+          <Route path="/history" element={<HistoryPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/transactions" element={<Transaksi />} />

@@ -8,6 +8,7 @@ import menuRoutes from "./routers/menuRoutes.js";
 import categoryRoutes from "./routers/categoryRoutes.js";
 import favoriteRoutes from "./routers/favoriteRoutes.js";
 import orderRoutes from "./routers/orderRoutes.js";
+import cartRoutes from "./routers/cartRoutes.js";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use("/menu", menuRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/favorites", favoriteRoutes);
 app.use("/orders", orderRoutes);
+app.use("/cart", cartRoutes);
 
 // Basic health endpoint
 app.get("/", (req, res) => {
