@@ -39,10 +39,7 @@ const HistoryPage = () => {
 
   return (
     <div className="history-page">
-      <aside className="sidebar">
-        <h2>Nova Cafe</h2>
-      </aside>
-      <main className="main-content">
+      <main className="main-content full-width">
         <h3 className="title">Riwayat Pesanan</h3>
 
         {loading ? (
