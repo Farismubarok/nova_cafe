@@ -1,3 +1,8 @@
+/* src/pages/Profile/userprofile.css */
+
+/* =========================================
+   1. LAYOUT & GLOBAL SETTINGS
+   ========================================= */
 * {
   margin: 0;
   padding: 0;
@@ -7,184 +12,372 @@
 
 .container-profile {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
+  background-color: #f4f6f8; /* Background abu-abu muda yang lembut */
   width: 100%;
-  background: #f5f5f5;
-  overflow: hidden; /* biar tidak ada scroll aneh */
+  position: relative;
 }
 
-/* Sidebar tetap menempel di kiri */
+/* =========================================
+   2. SIDEBAR (FIXED LEFT)
+   ========================================= */
 .sidebar {
-  position: fixed; /* 👈 ini penting */
+  position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
   width: 260px;
-  background-color: #0b7741;
+  background-color: #0b7741; /* Warna Hijau Utama */
   color: #fff;
   display: flex;
   flex-direction: column;
-  padding: 24px 20px;
-  z-index: 10;
+  padding: 30px 24px;
+  z-index: 100;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
 }
 
-.content {
-  flex: 1;
-  margin-left: 260px; /* 👈 kasih jarak agar tidak tertutup sidebar */
-  padding: 50px 70px;
-  background-color: #fafafa;
-  overflow-y: auto;
-}
-
-
+/* Logo Area */
 .logo-profile {
   display: flex;
   align-items: center;
-  border-radius: 12px;
+  gap: 12px;
+  margin-bottom: 40px;
 }
 
 .logo-profile img {
-  height: 50px;
-  margin-right: 12px;
-  border-radius: 15px;
-  box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.3); /* ✅ urutan benar */
+  height: 40px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
 .logo-profile h1 {
-  font-size: 25px;
-  color: #ffffff;
-  margin: 0;
+  font-size: 22px;
   font-weight: 700;
-  text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.3); /* ✅ pakai text-shadow untuk teks */
+  color: #ffffff;
+  letter-spacing: 0.5px;
 }
-
-
 
 .sidebar hr {
-  width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 25px;
 }
 
+/* Menu Items */
 .menu {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  width: 100%;
+  gap: 12px;
 }
 
 .menu-item {
-  background: none;
+  background: transparent;
   border: none;
-  color: white;
+  color: rgba(255, 255, 255, 0.85);
   text-align: left;
-  font-size: 1rem;
+  font-size: 15px;
+  font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
   cursor: pointer;
-  padding: 10px 0;
-  transition: 0.2s;
+  transition: all 0.2s ease;
 }
 
 .menu-item:hover {
-  opacity: 0.85;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  transform: translateX(5px);
 }
 
 .menu-item.back {
   font-weight: 600;
+  color: #ffffff;
 }
 
+/* Logout Button */
 .logout {
   margin-top: auto;
+  padding: 14px 16px;
+  border-radius: 8px;
+  color: #ffcccc;
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   cursor: pointer;
-  padding-top: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  transition: background 0.2s;
+  background: rgba(255, 0, 0, 0.1);
 }
 
-/* Content */
+.logout:hover {
+  background: rgba(255, 0, 0, 0.2);
+  color: #fff;
+}
+
+/* =========================================
+   3. MAIN CONTENT AREA
+   ========================================= */
 .content {
   flex: 1;
-  padding: 50px 70px;
-  background-color: #fafafa;
+  margin-left: 260px; /* Memberi ruang untuk sidebar */
+  padding: 40px 50px;
   display: flex;
   flex-direction: column;
+  align-items: center; /* Center card secara horizontal */
 }
 
+/* Header Mobile (Jika ada) */
 .header {
-  display: flex;
-  align-items: center;     /* sejajarkan vertikal */
-  justify-content: flex-end; /* dorong ke kanan */
-  gap: 25px;               /* jarak antara gambar dan teks */
-  margin-right: 200px;
-}
-
-.header .avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  order: 2; /* 👈 supaya gambar di kanan */
-  margin-right: 70px;
-}
-
-.header h1 {
-  font-size: 20px;
-  color: #222;
-  font-weight: 600;
-  margin: 0;
-  order: 1; /* 👈 supaya teks di kiri, avatar di kanan */
-}
-
-
-
-.profile-card {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-  padding: 32px 40px;
-  max-width: 1200px;
+  display: none; /* Hidden di desktop */
   width: 100%;
-  margin-top: 100px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
-.profile-card h3 {
-  margin-bottom: 20px;
+/* =========================================
+   4. PROFILE CARD COMPONENT
+   ========================================= */
+.profile-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  padding: 40px;
+  width: 100%;
+  max-width: 850px; /* Lebar maksimal card */
+  border: 1px solid #eee;
+}
+
+/* Card Header (Title & Edit Button) */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 30px;
+}
+
+.card-header h3 {
+  font-size: 24px;
   color: #333;
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: 700;
+}
+
+/* =========================================
+   5. INFO BOXES (GRID LAYOUT)
+   ========================================= */
+.info-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 Kolom */
+  gap: 25px;
 }
 
 .info-box {
-  background: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  padding: 14px 20px;
-  margin-bottom: 16px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
   display: flex;
-  align-items: center;
-  gap: 16px;
-  transition: 0.2s ease;
+  align-items: flex-start;
+  gap: 15px;
+  transition: all 0.3s ease;
 }
 
 .info-box:hover {
+  border-color: #0b7741;
+  box-shadow: 0 5px 15px rgba(11, 119, 65, 0.1);
   transform: translateY(-2px);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
 
-.icon {
+/* Icon Wrapper inside info box */
+.icon-wrapper {
+  background-color: #e8f5e9;
   color: #0b7741;
-  font-size: 20px;
-  min-width: 24px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.info-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .label {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 2px;
+  font-size: 0.85rem;
+  color: #888;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.value {
+  font-size: 1.1rem;
+  color: #222;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.value.disabled {
+  color: #999;
+}
+
+/* =========================================
+   6. FORM ELEMENTS (EDIT MODE)
+   ========================================= */
+.profile-input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s;
+  background-color: #f9f9f9;
+}
+
+.profile-input:focus {
+  border-color: #0b7741;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(11, 119, 65, 0.1);
+}
+
+/* =========================================
+   7. BUTTONS & ALERTS
+   ========================================= */
+/* Button Edit */
+.btn-edit-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid #0b7741;
+  color: #0b7741;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-edit-profile:hover {
+  background: #0b7741;
+  color: #fff;
+}
+
+/* Action Buttons (Save/Cancel) */
+.edit-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-save {
+  background: #0b7741;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-save:hover {
+  background: #086236;
+}
+
+.btn-cancel {
+  background: #f5f5f5;
+  color: #555;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-cancel:hover {
+  background: #e0e0e0;
+}
+
+/* Alert Messages */
+.alert {
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.alert.success {
+  background-color: #dcfce7;
+  color: #14532d;
+  border: 1px solid #bbf7d0;
+}
+
+.alert.error {
+  background-color: #fee2e2;
+  color: #7f1d1d;
+  border: 1px solid #fecaca;
+}
+
+/* =========================================
+   8. RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 992px) {
+  .content {
+    margin-left: 0; /* Hapus margin sidebar */
+    padding: 20px;
+  }
+
+  .sidebar {
+    display: none; /* Sembunyikan sidebar di layar kecil (Gunakan Navbar Mobile) */
+  }
+
+  .header {
+    display: flex; /* Tampilkan header mobile */
+  }
+
+  .info-list {
+    grid-template-columns: 1fr; /* Stack kolom jadi 1 */
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-card {
+    padding: 25px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .card-header button {
+    width: 100%;
+    justify-content: center;
+  }
 }

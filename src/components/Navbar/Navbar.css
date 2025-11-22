@@ -1,15 +1,20 @@
 /* Navbar Container */
+/* Navbar Container */
+/* Navbar Container */
 nav {
     width: 100%;
     height: 80px;
     background: #ffffff;
-    /* use comfortable horizontal padding and keep navbar in flow */
     padding: 0 24px;
-    position: relative;
+    
+    /* --- PERUBAHAN UTAMA --- */
+    position: fixed; 
+    top: 0;          
+    left: 0;         
     display: flex;
     align-items: center;
     justify-content: space-between;
-    z-index: 10;
+    z-index: 999; 
     box-shadow: 0 5px 4px rgba(0, 0, 0, 0.06);
 }
 

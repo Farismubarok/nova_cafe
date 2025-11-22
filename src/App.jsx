@@ -3,7 +3,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.jsx";
-import Footer from "./components/Footer/Footer.jsx";
+import Footer from "./components/Footer/footer.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 
@@ -39,6 +39,7 @@ function LayoutWrapper() {
   const hideLayoutCustomers = pathname === "/customers";
   const hideLayoutTransaksi = pathname === "/transactions";
   const hideLayoutManagement = pathname === "/management";
+  const hideLayoutPaymentSuccess = pathname === "/payment-success";
 
   return (
     <div className="app">
@@ -47,7 +48,8 @@ function LayoutWrapper() {
         !hideLayoutAdmin &&
         !hideLayoutCustomers &&
         !hideLayoutTransaksi &&
-        !hideLayoutManagement && <Navbar />}
+        !hideLayoutManagement && 
+        !hideLayoutPaymentSuccess && <Navbar />}
 
       <main className="main">
         <Routes>
@@ -123,7 +125,8 @@ function LayoutWrapper() {
         !hideLayoutAdmin &&
         !hideLayoutCustomers &&
         !hideLayoutTransaksi &&
-        !hideLayoutManagement && <Footer />}
+        !hideLayoutManagement && 
+        !hideLayoutPaymentSuccess && <Footer />}
     </div>
   );
 }
