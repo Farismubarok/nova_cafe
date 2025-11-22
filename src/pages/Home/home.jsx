@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+// src/pages/Home/home.jsx
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { BsFillBasket2Fill } from "react-icons/bs";
 import '../Home/Home.css';
 
-// Gambar dan ikon
+// Import Services
+import { menuService } from '../../services/menuService'; // Import service menu
+
+// Gambar dan ikon (Aset Statis)
 import heroBg from '../../assets/image/herobg.jpg';
 import iconNext from '../../assets/icon/next.svg';
 import feature1 from '../../assets/icon/coffee-beans.svg';
@@ -12,14 +16,13 @@ import feature3 from '../../assets/icon/clock.svg';
 import feature4 from '../../assets/icon/experience.svg';
 import cafeImg from '../../assets/image/green-cafe.jpg';
 
-// Produk
-import productImg1 from '../../assets/image/Oops!.jpg';
-import productImg2 from '../../assets/image/kate laine.jpg';
-import productImg3 from '../../assets/image/hot matcha.jpg';
-import productImg4 from '../../assets/image/gingerbread.jpg';
-import productImg5 from '../../assets/image/gingerbread latte.jpg';
-import productImg6 from '../../assets/image/garifulina.jpg';
-import menu from '../../assets/image/bublegum.png';
+// Produk Statis (Hanya untuk winter special, menu popular pakai DB)
+import oops from '../../assets/image/Oops!.jpg';
+import kateLaine from '../../assets/image/kate laine.jpg';
+import matcha from '../../assets/image/hot matcha.jpg';
+import gingerbread from '../../assets/image/gingerbread.jpg';
+import gingerbreadLatte from '../../assets/image/gingerbread latte.jpg';
+import garifulina from '../../assets/image/garifulina.jpg';
 
 // Avatar pelanggan
 import avatar1 from '../../assets/image/pavel.jpg';
@@ -28,49 +31,60 @@ import avatar3 from '../../assets/image/eric.jpg';
 import avatar4 from '../../assets/image/divaris.jpg';
 import avatar5 from '../../assets/image/christina.jpg';
 
-// alias imports
+// Alias imports untuk about section
 const interiorCafe = cafeImg;
 const greenCafe = cafeImg;
-const oops = productImg1;
-const kateLaine = productImg2;
-const matcha = productImg3;
-const gingerbread = productImg4;
-const gingerbreadLatte = productImg5;
-const garifulina = productImg6;
 
 const Home = () => {
-  const products = [1, 2, 3, 4];
+  const navigate = useNavigate();
+  
+  // State untuk Menu Populer dari Database
+  const [popularItems, setPopularItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // ===== TESTIMONIALS DATA + STATE =====
+  // State Testimoni
+  const [activeIndex, setActiveIndex] = useState(2); 
   const testimonials = [
-    {
-      name: "Christina",
-      text: "Kopinya luar biasa lembut dan wangi, bikin semangat pagi-pagi!",
-      img: avatar5,
-    },
-    {
-      name: "Eric",
-      text: "Baristanya ramah banget! Aku suka latte art-nya yang unik.",
-      img: avatar3,
-    },
-    {
-      name: "Tommy",
-      text: "Kopi terbaik yang pernah saya coba! Suasana cafe-nya sangat nyaman dan cozy.",
-      img: avatar2,
-    },
-    {
-      name: "Divaris",
-      text: "Tempat yang pas buat kerja santai, Wi-Fi kencang dan suasananya chill.",
-      img: avatar4,
-    },
-    {
-      name: "Rashed",
-      text: "Croissant dan cappuccino-nya kombinasi sempurna. Recommended banget!",
-      img: avatar1,
-    },
+    { name: "Christina", text: "Kopinya luar biasa lembut dan wangi, bikin semangat pagi-pagi!", img: avatar5 },
+    { name: "Eric", text: "Baristanya ramah banget! Aku suka latte art-nya yang unik.", img: avatar3 },
+    { name: "Tommy", text: "Kopi terbaik yang pernah saya coba! Suasana cafe-nya sangat nyaman dan cozy.", img: avatar2 },
+    { name: "Divaris", text: "Tempat yang pas buat kerja santai, Wi-Fi kencang dan suasananya chill.", img: avatar4 },
+    { name: "Rashed", text: "Croissant dan cappuccino-nya kombinasi sempurna. Recommended banget!", img: avatar1 },
   ];
 
-  const [activeIndex, setActiveIndex] = useState(2); // Default: Tommy di tengah
+  // === FETCH DATA DARI DATABASE ===
+  useEffect(() => {
+    const fetchPopularMenu = async () => {
+      try {
+        // Mengambil semua menu (struktur data: array of categories -> items)
+        const data = await menuService.getAllMenus();
+        
+        // Kita perlu menggabungkan (flatten) item dari semua kategori menjadi satu array
+        let allItems = [];
+        if (Array.isArray(data)) {
+          data.forEach(category => {
+            if (category.items) {
+              allItems = [...allItems, ...category.items];
+            }
+          });
+        }
+
+        // Mengambil 4 item pertama sebagai "Popular" (Bisa disesuaikan logikanya)
+        setPopularItems(allItems.slice(0, 4)); 
+      } catch (error) {
+        console.error("Gagal mengambil menu populer:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPopularMenu();
+  }, []);
+
+  const handleAddToCart = (item) => {
+    // Arahkan ke detail order saat tombol diklik
+    navigate("/detail-order", { state: item });
+  };
 
   return (
     <div className="home-container">
@@ -138,7 +152,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Winter Special Section */}
+      {/* Winter Special Section (Static) */}
       <section className="winter-special">
         <div className="winter-content">
           <h2 className="winter-title">
@@ -148,7 +162,7 @@ const Home = () => {
           <p className="winter-text">
             Nikmati kehangatan musim dingin dengan minuman spesial edisi Natal yang manis dan creamy.
           </p>
-          <button className="btn-winter">
+          <button className="btn-winter" onClick={() => navigate('/menu')}>
             Order Now
             <svg width="24" height="24" viewBox="0 0 24 12" fill="none">
               <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#017143" strokeWidth="2" />
@@ -165,24 +179,48 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Popular Menu Section */}
+      {/* === POPULAR MENU SECTION (DATABASE) === */}
       <section className="popular-menu" id="menu">
         <div className="section-header">
           <h2>Popular on the Nova Cafe</h2>
         </div>
 
         <div className="menu-grid-home">
-          {products.map((_, i) => (
-            <div className="menu-card" key={i}>
-              <img src={menu} alt="Frappe Mango" />
-              <p>Frappe mango</p>
-              <h4 className="price-home">Rp. 45.000</h4>
-              <Link to="/detail-order" className="btn-cart">
-                <BsFillBasket2Fill className="icon-small" />
-                Tambah ke Keranjang
-              </Link>
-            </div>
-          ))}
+          {loading ? (
+            <p>Memuat menu populer...</p>
+          ) : (
+            popularItems.map((item) => (
+              <div className="menu-card" key={item.id}>
+                {/* Gambar dari Database */}
+                <img 
+                  src={item.image || "https://via.placeholder.com/150"} 
+                  alt={item.name}
+                  style={{ objectFit: 'cover', height: '150px', width: '100%' }} 
+                  onError={(e) => {
+                    e.target.onerror = null; 
+                    e.target.src = "https://png.pngtree.com/png-vector/20220705/ourmid/pngtree-food-logo-png-image_5687686.png"
+                  }}
+                />
+                
+                {/* Nama Menu */}
+                <p>{item.name}</p>
+                
+                {/* Harga Menu */}
+                <h4 className="price-home">
+                  Rp. {Number(item.price).toLocaleString("id-ID")}
+                </h4>
+                
+                {/* Tombol Action */}
+                <button 
+                  className="btn-cart" 
+                  onClick={() => handleAddToCart(item)}
+                >
+                  <BsFillBasket2Fill className="icon-small" />
+                  Tambah ke Keranjang
+                </button>
+              </div>
+            ))
+          )}
         </div>
 
         <Link to="/menu" className="btn-view-all">
