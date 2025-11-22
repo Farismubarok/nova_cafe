@@ -9,6 +9,8 @@ import categoryRoutes from "./routers/categoryRoutes.js";
 import favoriteRoutes from "./routers/favoriteRoutes.js";
 import orderRoutes from "./routers/orderRoutes.js";
 import cartRoutes from "./routers/cartRoutes.js";
+import userRoutes from './routers/userRoutes.js';
+import appRoutes from './routers/appRoutes.js';
 
 dotenv.config();
 
@@ -27,6 +29,8 @@ app.use('/images', express.static(path.join(__dirname, '../public/images')));
 // Mount routes
 app.use("/auth", authRoutes);
 app.use("/menu", menuRoutes);
+app.use('/api/users', userRoutes); 
+app.use('/api/app', appRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/favorites", favoriteRoutes);
 app.use("/orders", orderRoutes);
