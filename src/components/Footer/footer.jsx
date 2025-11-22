@@ -10,7 +10,7 @@ import Clock from '../../assets/icon/clock.svg';
 
 const Footer = () => {
   return (
-    <footer className="footer">
+    <footer className="footer-main">
       <div className="footer-container">
 
         <div className="footer-section">

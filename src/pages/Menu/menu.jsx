@@ -76,7 +76,7 @@ const MenuPage = () => {
                     }}
                   />
                 </div>
-                <div className="menu-info">
+                <div className="menu-infoo">
 
                   <p>{item.name}</p>
                   <h4>Rp. {item.price.toLocaleString("id-ID")}</h4>
