@@ -1,3 +1,5 @@
+// farismubarok/nova_cafe/nova_cafe-4d2ccefa63e47d20beda087353411fe508f880b0/src/App.jsx
+
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.jsx";
@@ -18,11 +20,14 @@ import Payment from "./pages/Payment/payment.jsx";
 import PaymentSuccess from "./pages/Popup/PaymentSuccess.jsx"; // ← PERBAIKAN
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
 import UserProfile from "./pages/Profile/userprofile.jsx";
+import HistoryPage from "./pages/History/history.jsx"; // Tambahkan import HistoryPage
+// 💡 Import PrivateRoute
+import PrivateRoute from "./context/PrivateRoute.jsx";
 
 import Customers from "./pages/Custumer/custumer.jsx";
 import Transaksi from "./pages/Transaksi/transactions.jsx";
 import Management from "./pages/Management/management.jsx";
-import HistoryPage from "./pages/History/history.jsx";
+// import HistoryPage from "./pages/History/history.jsx"; // Sudah dipindahkan ke atas
 
 function LayoutWrapper() {
   const location = useLocation();
@@ -46,18 +51,66 @@ function LayoutWrapper() {
 
       <main className="main">
         <Routes>
+          {/* Page Publik */}
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/payment-success" element={<PaymentSuccess />} /> {/* ← TAMBAHKAN */}
-          <Route path="/detail-order" element={<DetailOrder />} />
-          <Route path="/userprofile" element={<UserProfile />} />
-          <Route path="/history" element={<HistoryPage />} />
+          
+          {/* page yang butuh login */}
+          <Route
+            path="/detail-order"
+            element={
+              <PrivateRoute>
+                <DetailOrder />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <PrivateRoute>
+                <Cart />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <PrivateRoute>
+                <Payment />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/payment-success"
+            element={
+              <PrivateRoute>
+                <PaymentSuccess />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/userprofile"
+            element={
+              <PrivateRoute>
+                <UserProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/history"
+            element={
+              <PrivateRoute>
+                <HistoryPage />
+              </PrivateRoute>
+            }
+          />
+          
+          {/* Rute Admin */}
+          {/* Catatan: Untuk Admin seharusnya menggunakan AdminRoute, tapi di sini hanya rute biasa */}
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/transactions" element={<Transaksi />} />
