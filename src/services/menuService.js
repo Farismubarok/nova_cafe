@@ -82,5 +82,17 @@ export const menuService = {
       console.error('Error deleting menu item:', error);
       throw error;
     }
-  }
+  },
+  
+  // 💡 FUNGSI BARU: Get menu options and toppings by ID
+  async getMenuOptionsAndToppings(id) {
+    try {
+      const response = await fetch(`${API_URL}/menu/${id}/options`); // 💡 Panggil API baru
+      if (!response.ok) throw new Error('Failed to fetch menu options');
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching menu options:', error);
+      throw error;
+    }
+  },
 };

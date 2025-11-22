@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { authService } from "../../services/authService";
 import "./Login.css";
 import logo from "../../assets/logo.jpg";
 
@@ -14,58 +15,39 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  // Simulasi akun (sementara)
-  const defaultEmail = "user@example.com";
-  const defaultPassword = "123456";
+    try {
+      const userData = await authService.login({ email, password });
+      
+      // User data from backend includes: id, name, email
+      login(userData); // This will be stored in AuthContext & localStorage
 
-  const adminEmail = "admin@nova.com";
-  const adminPassword = "admin123";
+      // Simpan riwayat login
+      const history = JSON.parse(localStorage.getItem("loginHistory")) || [];
+      const newEntry = {
+        email: userData.email,
+        time: new Date().toLocaleString(),
+      };
+      localStorage.setItem("loginHistory", JSON.stringify([...history, newEntry]));
 
-  // Login admin
-  if (email === adminEmail && password === adminPassword) {
-    const userData = { email, role: "admin" };
-    login(userData);
-
-    // Simpan riwayat login
-    const history = JSON.parse(localStorage.getItem("loginHistory")) || [];
-    const newEntry = {
-      email: userData.email,
-      time: new Date().toLocaleString(),
-    };
-    localStorage.setItem("loginHistory", JSON.stringify([...history, newEntry]));
-
-    navigate("/admin"); // ✅ Arahkan ke halaman admin
-    return;
-  }
-
-  // Login user biasa
-  if (email === defaultEmail && password === defaultPassword) {
-    const userData = { email, role: "user" };
-    login(userData);
-
-    const history = JSON.parse(localStorage.getItem("loginHistory")) || [];
-    const newEntry = {
-      email: userData.email,
-      time: new Date().toLocaleString(),
-    };
-    localStorage.setItem("loginHistory", JSON.stringify([...history, newEntry]));
-
-    navigate("/"); // ✅ Arahkan ke home
-  } else {
-    setError("Email atau password salah");
-  }
+      // Check role and redirect
+      if (email === "admin@nova.com") { // You might want to add proper role check from backend
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+    } catch (err) {
+      setError(err.message || "Email atau password salah");
+    }
 };
-
   return (
     <div className="login-wrapper">
       {/* Logo di kiri atas */}
       <div className="login-header">
         <img src={logo} alt="Nova Cafe" className="login-logo" />
       </div>
-
       <div className="login-container">
         {/* Bagian kiri */}
         <div className="login-left">
@@ -81,7 +63,6 @@ const Login = () => {
               <li>⭐ Kumpulkan Poin setiap pembelian</li>
             </ul>
           </div>
-
           {/* Tambahkan tombol ke riwayat login */}
           <div className="history-link">
             <Link to="/loginhistory" className="btn-history">
@@ -89,24 +70,16 @@ const Login = () => {
             </Link>
           </div>
         </div>
-
         {/* Bagian kanan */}
         <div className="login-right">
           <div className="auth-tabs">
             <button
               className={isLogin ? "active" : ""}
-              onClick={() => setIsLogin(true)}
-            >
-              Login
-            </button>
+              onClick={() => setIsLogin(true)}> Login</button>
             <button
               className={!isLogin ? "active" : ""}
-              onClick={() => setIsLogin(false)}
-            >
-              Register
-            </button>
+              onClick={() => setIsLogin(false)}> Register</button>
           </div>
-
           <form onSubmit={handleSubmit} className="auth-form">
             <small>* indicates required field</small>
 

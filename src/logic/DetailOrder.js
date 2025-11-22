@@ -1,36 +1,43 @@
-// src/logic/detailOrder/DetailOrderLogic.js
-
-// Topping untuk minuman
-export const drinkToppings = [
-  { name: "Whipped Cream", price: 5000 },
-  { name: "Extra Whipped Cream", price: 15000 },
-  { name: "Caramel Drizzle", price: 5000 },
-  { name: "Mocha Drizzle", price: 6000 },
-  { name: "Caramel Syrup", price: 5000 },
-  { name: "Vanilla Syrup", price: 5000 },
-];
-
-// Topping untuk makanan
-export const foodToppings = [
-  { name: "Telur Ceplok", price: 5000 },
-  { name: "Ayam", price: 15000 },
-  { name: "Bakso", price: 5000 },
-  { name: "Sosis", price: 6000 },
-  { name: "Ati Ampela", price: 5000 },
-  { name: "Seafood", price: 5000 },
-];
-
-// Format harga ke Rupiah
-export const formatPrice = (price) => "Rp. " + price.toLocaleString("id-ID");
-
-// Hitung total harga berdasarkan topping dan jumlah
-export const calculateTotal = (basePrice, toppings, quantity, toppingList) => {
-  const toppingTotal = toppings.reduce((sum, t) => {
-    const found = toppingList.find((item) => item.name === t);
-    return sum + (found ? found.price : 0);
-  }, 0);
-  return (basePrice + toppingTotal) * quantity;
+export const formatPrice = (price) => {
+  if (!price && price !== 0) return "0";
+  return price.toLocaleString("id-ID");
 };
 
-// Opsi umum untuk ukuran/porsi/pedas
-export const commonOptions = ["Small", "Medium", "Large"];
+export const calculateTotal = (
+  basePrice, 
+  selectedToppings, 
+  quantity, 
+  availableToppings, 
+  selectedOptions, 
+  availableOptions // { 'size': [{ value: 'Medium', price: 5000 }, ...], ... }
+) => {
+  let totalExtraPrice = 0;
+
+  // 1. Hitung total harga Topping
+  const toppingTotal = selectedToppings.reduce((sum, toppingName) => {
+    const found = availableToppings.find((item) => item.name === toppingName);
+    return sum + (found ? Number(found.price) : 0);
+  }, 0);
+  
+  // 2. Hitung total harga Opsi (Size, Sugar, Ice, Portion, dll.)
+  for (const optionName in selectedOptions) {
+    const selectedValue = selectedOptions[optionName];
+    
+    // Pastikan nama opsi di selectedOptions (misal: 'portion') cocok dengan availableOptions
+    const optionsForName = availableOptions[optionName]; 
+    
+    if (optionsForName) {
+        // Cari harga tambahan untuk nilai yang dipilih (misal: 'Medium')
+        const foundOption = optionsForName.find(opt => opt.value === selectedValue);
+        
+        if (foundOption) {
+            totalExtraPrice += Number(foundOption.price);
+        }
+    }
+  }
+
+  // Total = (base price + total extra options + total extra topping) * quantity
+  const finalTotal = (Number(basePrice) + totalExtraPrice + toppingTotal) * quantity;
+  
+  return finalTotal;
+};

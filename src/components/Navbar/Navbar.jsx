@@ -6,7 +6,6 @@ import "./navbar.css";
 import logo from "../../assets/logo.svg";
 import userLogo from "../../assets/icon/user.svg";
 import historyLogo from "../../assets/icon/history.svg";
-import favoriteIcon from "../../assets/icon/fav-fill.svg";
 import bagLogo from "../../assets/icon/shopping bag.svg";
 
 const Navbar = () => {
@@ -46,7 +45,7 @@ const Navbar = () => {
         {!isLoggedIn ? (
           <div className="navbar-auth">
             <button className="btn-login" onClick={() => navigate('/login')}>Log in</button>
-            <button className="btn-signup" onClick={() => navigate('/signup')}>Sign Up</button>
+            <button className="btn-signup" onClick={() => navigate('/register')}>Sign Up</button>
           </div>
         ) : (
           <div className="navbar-user">
@@ -58,15 +57,11 @@ const Navbar = () => {
               <img src={userLogo} alt="Account" />
               <span>Account</span>
             </div>
-            <div className="nav-item">
+            <div className="nav-item" onClick={() => navigate("/history")} style={{ cursor: "pointer" }}>
               <img src={historyLogo} alt="History" />
               <span>History</span>
             </div>
-            <div className="nav-item">
-              <img src={favoriteIcon} alt="Favorite" />
-              <span>Favorite</span>
-            </div>
-            <div className="nav-item cart" onClick={() => navigate("/cart")}>
+            <div className="nav-item cart" onClick={() => navigate("/cart")} style={{ cursor: "pointer" }}>
               <div className="cart-icon-wrapper">
                 <img src={bagLogo} alt="Cart" />
                 {itemCount > 0 && <span className="cart-badge">{itemCount}</span>}

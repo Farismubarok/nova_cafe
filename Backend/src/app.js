@@ -6,6 +6,8 @@ import { fileURLToPath } from 'url';
 import authRoutes from "./routers/authRoutes.js";
 import menuRoutes from "./routers/menuRoutes.js";
 import categoryRoutes from "./routers/categoryRoutes.js";
+import favoriteRoutes from "./routers/favoriteRoutes.js";
+import orderRoutes from "./routers/orderRoutes.js";
 
 dotenv.config();
 
@@ -25,6 +27,8 @@ app.use('/images', express.static(path.join(__dirname, '../public/images')));
 app.use("/auth", authRoutes);
 app.use("/menu", menuRoutes);
 app.use("/categories", categoryRoutes);
+app.use("/favorites", favoriteRoutes);
+app.use("/orders", orderRoutes);
 
 // Basic health endpoint
 app.get("/", (req, res) => {

@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.jsx";
@@ -14,20 +13,21 @@ import Menu from "./pages/Menu/menu.jsx";
 import Contact from "./pages/Contact/contact.jsx";
 import Cart from "./pages/Cart/cart.jsx";
 import Login from "./pages/Login/login.jsx";
+import Register from "./pages/Register/register.jsx";
 import Payment from "./pages/Payment/payment.jsx";
+import PaymentSuccess from "./pages/Popup/PaymentSuccess.jsx"; // ← PERBAIKAN
 import DetailOrder from "./pages/DetailOrder/detail-order.jsx";
 import UserProfile from "./pages/Profile/userprofile.jsx";
 
 import Customers from "./pages/Custumer/custumer.jsx";
 import Transaksi from "./pages/Transaksi/transactions.jsx";
-import Management from "./pages/Management/management.jsx"; // tambahkan jika ada
+import Management from "./pages/Management/management.jsx";
 
-// ====== HANYA bagian ini yang diperbaiki ======
 function LayoutWrapper() {
-  const location = useLocation(); // ✅ gunakan hook, bukan window.location
-  const pathname = location.pathname; // ✅ tetap sesuai struktur aslimu
-
-  // logika asli tetap sama
+  const location = useLocation();
+  const pathname = location.pathname;
+  
+  // Halaman yang menyembunyikan Navbar & Footer
   const hideLayout = pathname === "/userprofile";
   const hideLayoutAdmin = pathname === "/admin";
   const hideLayoutCustomers = pathname === "/customers";
@@ -36,7 +36,7 @@ function LayoutWrapper() {
 
   return (
     <div className="app">
-      {/* Navbar tetap pakai kondisi seperti semula */}
+      {/* Navbar */}
       {!hideLayout &&
         !hideLayoutAdmin &&
         !hideLayoutCustomers &&
@@ -51,18 +51,19 @@ function LayoutWrapper() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} /> {/* ← TAMBAHKAN */}
           <Route path="/detail-order" element={<DetailOrder />} />
           <Route path="/userprofile" element={<UserProfile />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/transactions" element={<Transaksi />} />
           <Route path="/management" element={<Management />} />
-          {/* <Route path="/loginhistory" element={<LoginHistory />} /> */}
         </Routes>
       </main>
 
-      {/* Footer tetap pakai kondisi seperti semula */}
+      {/* Footer */}
       {!hideLayout &&
         !hideLayoutAdmin &&
         !hideLayoutCustomers &&
@@ -71,7 +72,6 @@ function LayoutWrapper() {
     </div>
   );
 }
-// ====== SAMPAI SINI ======
 
 function App() {
   return (
