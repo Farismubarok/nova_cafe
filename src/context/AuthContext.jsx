@@ -1,18 +1,38 @@
 // src/context/AuthContext.js
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loginHistory, setLoginHistory] = useState([]);
+  // state will be initialized synchronously from localStorage below
 
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    const storedHistory = JSON.parse(localStorage.getItem("loginHistory")) || [];
-    if (storedUser) setUser(storedUser);
-    setLoginHistory(storedHistory);
-  }, []);
+  // Initialize from localStorage synchronously so pages don't redirect on refresh
+  const [initializedUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('user')) || null;
+    } catch (e) {
+      return null;
+    }
+  });
+
+  const [initializedHistory] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('loginHistory')) || [];
+    } catch (e) {
+      return [];
+    }
+  });
+
+  // Set initial states using the synchronous values
+  const [userState, setUserState] = useState(initializedUser);
+  const [historyState, setHistoryState] = useState(initializedHistory);
+
+  // Replace variables to use the initialized state names
+  // (keep `user` and `setUser` names for compatibility)
+  const user = userState;
+  const setUser = setUserState;
+  const loginHistory = historyState;
+  const setLoginHistory = setHistoryState;
 
   const login = (userData) => {
   setUser(userData);

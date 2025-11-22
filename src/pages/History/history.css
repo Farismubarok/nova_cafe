@@ -1,0 +1,79 @@
+.history-page {
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: #f5f5f5;
+}
+
+.main-content {
+  padding: 2rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.recent-orders table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.recent-orders th, .recent-orders td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+/* Order card styles (reuse cart look) */
+.order-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.order-date {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.cart-items { /* reuse cart-items spacing from cart.css if not available */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-paid {
+  color: #0b8344;
+  font-weight: 700;
+}
+
+.status-pending {
+  color: #d97706;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .history-page { flex-direction: column; }
+  .sidebar { width: 100%; }
+}
